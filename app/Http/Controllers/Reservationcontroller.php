@@ -9,9 +9,10 @@ class Reservationcontroller extends Controller
 {
     public function index()
     {
-        $reservations = Reservation::paginate(4);
+        $reservations = Reservation::orderBy('id', 'desc')->paginate(4);
         return view('admin.reservation.index', compact('reservations'));
     }
+
 
 
     public function store(Request $request)
@@ -38,6 +39,4 @@ class Reservationcontroller extends Controller
 
         return redirect()->back()->with('success', 'Reservation made successfully!');
     }
-
-
 }

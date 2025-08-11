@@ -45,6 +45,11 @@ Route::get('/logout', [Usercontroller::class, 'logout'])->name('logout');
  Route::get('/orders/today', [DashboardControler::class, 'todayOrders'])->name('orders.today');
  Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
+ //reservation
+ Route::post('/register', [Reservationcontroller::class, 'store'])->name('register.store');
+ Route::get('/reversation', [Reservationcontroller::class, 'index'])->name('reservation.index');
+
+
 
 // Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
@@ -77,9 +82,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/food/update{id}', [FoodController::class, 'update'])->name('food.update');
     Route::delete('/food/delete{id}', [FoodController::class, 'destroy'])->name('food.delete');
 
-    //reservation
-    Route::post('/register', [Reservationcontroller::class, 'store'])->name('register.store');
-    Route::get('/reversation', [Reservationcontroller::class, 'index'])->name('reservation.index');
 
     //chefs
     Route::get('/chefs', [ChefController::class, 'index'])->name('chefs.index');

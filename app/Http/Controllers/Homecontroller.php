@@ -15,7 +15,7 @@ class Homecontroller extends Controller
 
     public function login()
     {
-        return view('user.login'); // រូបរាង login.blade.php
+        return view('users.login'); // រូបរាង login.blade.php
     }
 
     public function index()

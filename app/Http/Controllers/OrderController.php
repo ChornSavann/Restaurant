@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('food')->paginate(10); // adjust pagination
+        $orders = Order::with('food')->orderBy('id', 'desc')->paginate(7); // paginate 10 per page
         return view('admin.Foods.orders.index', compact('orders'));
     }
 

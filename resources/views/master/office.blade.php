@@ -43,7 +43,7 @@
                                                         <h4>{{$food->title}}</h4>
                                                         <p style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">{{$food->desc}}</p>
                                                         <div class="price">
-                                                            <h6>$10.50</h6>
+                                                            <h6>${{$food->price}}</h6>
                                                         </div>
                                                     </div>
                                                 </div>

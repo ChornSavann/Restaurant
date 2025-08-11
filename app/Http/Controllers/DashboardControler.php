@@ -27,6 +27,7 @@ class DashboardControler extends Controller
 
         return view('admin.Foods.orders.show', compact('orders'));
     }
+    
     public function show($id)
     {
         $order = Order::with('food')->findOrFail($id);

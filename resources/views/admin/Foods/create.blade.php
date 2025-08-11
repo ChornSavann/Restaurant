@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <!-- Title -->
                         <div class="mb-3">
-                            <label for="title" class="form-label fw-semibold">Title</label>
+                            <label for="title" class="form-label fw-semibold">Title<span class="text-danger">*</label>
                             <input value="{{ old('title') }}" type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" />
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -32,7 +32,7 @@
 
                         <!-- Price -->
                         <div class="mb-3">
-                            <label for="price" class="form-label fw-semibold">Price</label>
+                            <label for="price" class="form-label fw-semibold">Price<span class="text-danger">*</label>
                             <input value="{{ old('price') }}" type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" />
                             @error('price')
                                 <div class="invalid-feedback">{{ $message }}</div>

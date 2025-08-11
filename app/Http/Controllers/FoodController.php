@@ -12,7 +12,7 @@ class FoodController extends Controller
 {
     public function index()
     {
-        $foods = Foods::with('category')->Orderby('id', 'desc')->paginate(10);
+        $foods = Foods::with('category')->Orderby('id', 'desc')->paginate(6);
         return view('admin.Foods.index', compact('foods'));
     }
 

@@ -27,8 +27,9 @@
 
         <div class="card shadow-sm">
             <div class="card-body">
-                <form action="{{ route('category.update', $category->id) }}" method="POST">
+                <form action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                   
 
                     <div class="mb-3">
                         <label for="name" class="form-label fw-semibold">Category Name <span class="text-danger">*</span></label>
@@ -40,14 +41,24 @@
                         <textarea id="description" name="description" class="form-control" rows="3">{{ old('description', $category->description) }}</textarea>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="image" class="form-label fw-semibold">Category Image</label>
+                        <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                        @if ($category->image)
+                            <small>Current Image:</small><br>
+                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" style="width: 120px; margin-top: 5px;">
+                        @endif
+                    </div>
+
                     <button type="submit" class="btn btn-danger fw-semibold">
                         <i class="fa-solid fa-pen me-1"></i> Update Category
                     </button>
                     <a href="{{ route('category.index') }}" class="btn btn-secondary">
-                        <i class="fa-solid fa-ban"></i>
-                        Cancel
+                        <i class="fa-solid fa-ban"></i> Cancel
                     </a>
                 </form>
+
+
             </div>
         </div>
     </div>

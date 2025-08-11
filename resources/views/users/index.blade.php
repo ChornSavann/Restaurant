@@ -19,15 +19,13 @@
 
 
             <!-- Usage inside alert -->
+
             @if (session('success'))
-                <div class="alert alert-success d-flex align-items-center" role="alert">
-                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
-                        <use xlink:href="#check-circle-fill" />
-                    </svg>
-                    <div>{{ session('success') }}</div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fa fa-check-circle me-2"></i> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
-
             @if (session('error'))
                 <div class="alert alert-danger d-flex align-items-center" role="alert">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Error:">
@@ -36,20 +34,6 @@
                     <div>{{ session('error') }}</div>
                 </div>
             @endif
-
-
-            <!-- Bootstrap Icons SVG Sprites -->
-            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-                    <path
-                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03l-3.47-3.47 1.41-1.41 2.06 2.06 4.59-4.59 1.41 1.41-6 6z" />
-                </symbol>
-                <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-                    <path
-                        d="M8 0c-.69 0-1.32.34-1.71.88L.34 13.23c-.4.57-.08 1.32.66 1.32h13.99c.74 0 1.07-.75.66-1.32L9.71.88A2 2 0 0 0 8 0zm.93 4.41a.5.5 0 0 1-.86 0L6.16 7.54a.5.5 0 0 0 .43.76h2.82a.5.5 0 0 0 .43-.76L8.93 4.41zM8 11a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-                </symbol>
-            </svg>
-
 
             <!-- User Detail Table -->
             <div class="card shadow-sm">

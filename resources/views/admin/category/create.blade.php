@@ -27,7 +27,7 @@
 
         <div class="card shadow-sm">
             <div class="card-body">
-                <form action="{{ route('category.store') }}" method="POST">
+                <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label fw-semibold">Category Name <span class="text-danger">*</span></label>
@@ -39,14 +39,21 @@
                         <textarea id="description" name="description" class="form-control" rows="3">{{ old('description') }}</textarea>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="image" class="form-label fw-semibold">Category Image</label>
+                        <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                    </div>
+
                     <button type="submit" class="btn btn-primary fw-semibold">
-                        <i class="fa-solid fa-plus me-1"></i> Create Category
+                        <i class="fa-solid fa-plus me-1"></i>
+                        Create Category
                     </button>
                     <a href="{{ route('category.index') }}" class="btn btn-secondary">
                         <i class="fa-solid fa-ban"></i>
                         Cancel
                     </a>
                 </form>
+
             </div>
         </div>
     </div>

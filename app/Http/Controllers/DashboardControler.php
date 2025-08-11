@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
+
 class DashboardControler extends Controller
 {
     public function index()
     {
-        $orders=Order::all();
-        return view('admin.Dashboard.index',compact('orders'));
+        $orders = Order::all();
+        $user = Auth::user();
+        return view('admin.Dashboard.index', compact('orders','user'));
     }
 
     public function todayOrders()
@@ -30,4 +33,6 @@ class DashboardControler extends Controller
 
         return view('admin.Foods.orders.show', compact('order'));
     }
+
+
 }

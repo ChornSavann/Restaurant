@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <!-- Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold">Name</label>
+                            <label for="name" class="form-label fw-semibold">Name<span class="text-danger">*</label>
                             <input value="{{ old('name') }}" type="text" class="form-control
                             @error('title') is-invalid @enderror"id="name" name="name" />
 
@@ -36,7 +36,7 @@
 
                         <!-- Price (label error fixed) -->
                         <div class="mb-3">
-                            <label for="speciality" class="form-label fw-semibold">Spaciality</label>
+                            <label for="speciality" class="form-label fw-semibold">Spaciality<span class="text-danger">*</label>
                             <input value="{{ old('speciality') }}" type="text" class="form-control @error('price') is-invalid @enderror" id="speciality" name="speciality" />
                             @error('speciality')
                                 <div class="invalid-feedback">{{ $message }}</div>

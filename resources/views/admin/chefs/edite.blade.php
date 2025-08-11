@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <!-- Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold">Name</label>
+                            <label for="name" class="form-label fw-semibold">Name<span class="text-danger">*</label>
                             <input value="{{ old('name',$chef->name) }}" type="text" class="form-control
                             @error('title') is-invalid @enderror"id="name" name="name" />
 

@@ -31,6 +31,7 @@ class Usercontroller extends Controller
 
     public function logincheck(Request $request)
     {
+        // $user=User::all();
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -67,6 +68,7 @@ class Usercontroller extends Controller
 
     public function godashboard()
     {
+
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Please login first.');
         }
@@ -199,5 +201,11 @@ class Usercontroller extends Controller
         $user->delete();
 
         return redirect()->route('user.index')->with('success', 'User deleted successfully.');
+    }
+
+    public function dashboard()
+    {
+        $user = Auth::user(); // user logged in
+        return view('admin.Dashboard.index', compact('user'));
     }
 }

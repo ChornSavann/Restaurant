@@ -11,7 +11,7 @@
                     <h3 class="mb-0" style="font-family: Cambria;font-wwidth:bold">User Details</h3>
                 </div>
                 <div class="col-md-6 text-end">
-                    <a href="{{route('user.index')}}" class="btn btn-primary">
+                    <a href="{{route('user.index')}}" class="btn btn-secondary">
                         <i class="fa-solid fa-backward-step"></i>
                         Back
                     </a>
@@ -26,7 +26,7 @@
                     <div class="card-body">
                         <!-- Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold">Name</label>
+                            <label for="name" class="form-label fw-semibold">Name<span class="text-danger">*</label>
                             <input value="{{ old('name') }}" type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" />
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -35,7 +35,7 @@
 
                         <!-- Email -->
                         <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold">Email address</label>
+                            <label for="email" class="form-label fw-semibold">Email address<span class="text-danger">*</label>
                             <input value="{{ old('email') }}" type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" />
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>

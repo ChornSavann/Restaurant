@@ -20,11 +20,11 @@
             <div class="card card-primary card-outline mb-4">
                 <form action="{{ route('food.update', $food->id) }}" method="POST" name="foodForm" id="userForm" enctype="multipart/form-data">
                     @csrf
-                   
+
                     <div class="card-body">
                         <!-- Title -->
                         <div class="mb-3">
-                            <label for="title" class="form-label fw-semibold">Title</label>
+                            <label for="title" class="form-label fw-semibold">Title<span class="text-danger">*</label>
                             <input value="{{ old('title', $food->title) }}" type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" />
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -33,7 +33,7 @@
 
                         <!-- Price -->
                         <div class="mb-3">
-                            <label for="price" class="form-label fw-semibold">Price</label>
+                            <label for="price" class="form-label fw-semibold"><span class="text-danger">*</label>
                             <input value="{{ old('price', $food->price) }}" type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" />
                             @error('price')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -58,7 +58,7 @@
 
                         <!-- Description -->
                         <div class="mb-3">
-                            <label for="desc" class="form-label fw-semibold">Description</label>
+                            <label for="desc" class="form-label fw-semibold">Description<span class="text-danger">*</label>
                             <textarea class="form-control @error('desc') is-invalid @enderror" id="desc" name="desc" rows="3">{{ old('desc', $food->desc) }}</textarea>
                             @error('desc')
                                 <div class="invalid-feedback">{{ $message }}</div>

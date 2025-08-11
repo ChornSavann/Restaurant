@@ -41,7 +41,7 @@ Route::post('/user/update{id}',[Usercontroller::class,'update'])->name('user.upd
 Route::delete('/user/delete{id}',[Usercontroller::class,'destroy'])->name('user.delete');
 
 //category
-Route::get('/category',[Categorycontroller::class,'index'])->name('category.index');
+Route::get('/category/index', [CategoryController::class, 'index'])->name('category.index');
 Route::get('/category/create',[Categorycontroller::class,'create'])->name('category.create');
 Route::post('/category/store',[Categorycontroller::class,'store'])->name('category.store');
 Route::get('/category/edit/{id}',[Categorycontroller::class,'edit'])->name('category.edit');

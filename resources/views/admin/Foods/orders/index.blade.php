@@ -26,15 +26,12 @@
                 <table class="table table-striped align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th style="width: 10px;">#</th>
-                            <th>Food Image</th>
-                            <th>Food Name</th>
+                            <th>#</th>
                             <th>Customer Name</th>
                             <th>Phone</th>
                             <th>Address</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
-                            <th>Notes</th>
+                            <th>Order Items</th>
+                            <th>Total Amount</th>
                             <th>Ordered At</th>
                         </tr>
                     </thead>
@@ -42,22 +39,28 @@
                         @foreach ($orders as $index => $order)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>
-                                    @if ($order->food && $order->food->image)
-                                        <img src="{{ asset('foods/image/' . $order->food->image) }}" alt="{{ $order->food->title }}"
-                                             style="max-width: 60px; height: auto; border-radius: 5px;">
-                                    @else
-                                        <img src="{{ asset('images/default-food.png') }}" alt="Default Food"
-                                             style="max-width: 60px; height: auto; border-radius: 5px;">
-                                    @endif
-                                </td>
-                                <td>{{ $order->food_name ?? ($order->food->title ?? '-') }}</td>
                                 <td>{{ $order->customer_name }}</td>
                                 <td>{{ $order->phone }}</td>
                                 <td>{{ $order->address }}</td>
-                                <td>{{ $order->quantity }}</td>
-                                <td>${{ number_format($order->total_price, 2) }}</td>
-                                <td>{{ $order->notes ?? '-' }}</td>
+                                <td>
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach ($order->orderItems as $item)
+                                            <li class="d-flex align-items-center mb-2">
+                                                @if ($item->food && $item->food->image)
+                                                    <img src="{{ asset('foods/image/' . $item->food->image) }}"
+                                                        alt="{{ $item->food_name }}"
+                                                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 8px;">
+                                                @else
+                                                    <img src="{{ asset('images/default-food.png') }}"
+                                                        alt="No Image"
+                                                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 8px;">
+                                                @endif
+                                                <span>{{ $item->food_name }} (x{{ $item->quantity }})</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>${{ number_format($order->total_amount, 2) }}</td>
                                 <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
                             </tr>
                         @endforeach

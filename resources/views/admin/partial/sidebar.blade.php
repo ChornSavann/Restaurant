@@ -78,10 +78,31 @@
                                 <p>Food</p>
                             </a>
                         </li>
+
+                    </ul>
+                </li>
+
+                <li class="nav-item  @yield('menu-open')">
+                    <a class="nav-link active">
+                        <i class="fa-brands fa-jedi-order"></i>
+                        <p>
+                            Orders
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+
                         <li class="nav-item">
                             <a href="{{route('orders.index')}}" class="nav-link @yield('order')">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Order</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('orders.items')}}" class="nav-link @yield('item')">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Item</p>
                             </a>
                         </li>
                     </ul>

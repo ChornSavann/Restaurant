@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <th>Order ID</th>
-                    <th>Item</th>
+                    <th>Items</th>
                     <th>Status</th>
                     <th>Popularity</th>
                 </tr>
@@ -17,7 +17,11 @@
                                 {{ $order->order_number }}
                             </a>
                         </td>
-                        <td>{{ $order->food_name }}</td>
+                        <td>
+                            @foreach ($order->orderItems as $item)
+                                <div>{{ $item->food_name }} (x{{ $item->quantity }})</div>
+                            @endforeach
+                        </td>
                         <td>
                             <span class="badge text-bg-{{ $order->statusBadgeClass() }}">
                                 {{ ucfirst($order->status) }}

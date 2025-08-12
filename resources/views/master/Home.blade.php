@@ -78,6 +78,7 @@ https://templatemo.com/tm-558-klassy-cafe
                             </li>
                         -->
                             <li class="scroll-to-section"><a href="#menu">Menu</a></li>
+                            <li class="scroll-to-section"><a href="#order">Order</a></li>
                             <li class="scroll-to-section"><a href="#chefs">Chefs</a></li>
                             {{-- <li class="scroll-to-section"><a href="javascript">Orders</a></li> --}}
                             {{-- <li class="submenu">
@@ -181,6 +182,11 @@ https://templatemo.com/tm-558-klassy-cafe
     @include('master.food')
     <!-- ***** Menu Area Ends ***** -->
 
+
+    <!-- ***** Order Area Starts ***** -->
+    @include('master.orders.order')
+    <!-- ***** order Area Ends ***** -->
+
     <!-- ***** Chefs Area Starts ***** -->
     @include('master.chefs')
     <!-- ***** Chefs Area Ends ***** -->
@@ -248,23 +254,39 @@ https://templatemo.com/tm-558-klassy-cafe
     <script src="assets/js/lightbox.js"></script>
     <script src="assets/js/isotope.js"></script>
 
+    {{-- <script src="assets/js/jquery-2.1.0.min.js"></script> --}}
+
+
+
     <!-- Global Init -->
     <script src="assets/js/custom.js"></script>
     <script>
-        $(function() {
-            var selectedClass = "";
-            $("p").click(function() {
-                selectedClass = $(this).attr("data-rel");
-                $("#portfolio").fadeTo(50, 0.1);
-                $("#portfolio div").not("." + selectedClass).fadeOut();
-                setTimeout(function() {
-                    $("." + selectedClass).fadeIn();
-                    $("#portfolio").fadeTo(50, 1);
-                }, 500);
+        // $(function() {
+        //     var selectedClass = "";
+        //     $("p").click(function() {
+        //         selectedClass = $(this).attr("data-rel");
+        //         $("#portfolio").fadeTo(50, 0.1);
+        //         $("#portfolio div").not("." + selectedClass).fadeOut();
+        //         setTimeout(function() {
+        //             $("." + selectedClass).fadeIn();
+        //             $("#portfolio").fadeTo(50, 1);
+        //         }, 500);
 
+        //     });
+        // });
+
+
+        $(document).ready(function() {
+            $(".scroll-to-section a").on("click", function(e) {
+                e.preventDefault();
+                var target = $(this).attr("href");
+                $("html, body").animate({
+                    scrollTop: $(target).offset().top
+                }, 70); // 800ms = smooth
             });
         });
     </script>
+
 </body>
 
 </html>

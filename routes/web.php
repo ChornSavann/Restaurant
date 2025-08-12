@@ -42,12 +42,13 @@ Route::get('/logout', [Usercontroller::class, 'logout'])->name('logout');
  //Ordre
  Route::get('/orders/index', [OrderController::class, 'index'])->name('orders.index');
  Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
- Route::get('/orders/today', [DashboardControler::class, 'todayOrders'])->name('orders.today');
+ Route::get('/orders-today', [DashboardControler::class, 'todayOrders'])->name('orders.today');
+
 //  Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 Route::get('/orders/items', [OrderController::class, 'item'])->name('orders.items');
 
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-
+Route::get('/menu', [OrderController::class, 'showMenu'])->name('menu');
 
 
 

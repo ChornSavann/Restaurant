@@ -20,7 +20,6 @@ class DashboardControler extends Controller
     {
         $today = Carbon::today();
 
-        // Eager load order items and their food details
         $orders = Order::with('orderItems.food')
             ->whereDate('created_at', $today)
             ->orderBy('created_at', 'desc')
@@ -28,6 +27,9 @@ class DashboardControler extends Controller
 
         return view('admin.Foods.orders.show', compact('orders'));
     }
+
+
+
 
     public function show($id)
     {

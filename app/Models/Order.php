@@ -16,8 +16,6 @@ class Order extends Model
         return $this->belongsTo(Foods::class, 'food_id');
     }
 
-
-
     protected $fillable = [
         'customer_name',
         'phone',

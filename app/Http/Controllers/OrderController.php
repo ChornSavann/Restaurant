@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Foods;
 use App\Models\Order;
 use App\Models\orderItem;
@@ -11,32 +12,26 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    // public function index()
-    // {
-    //     $orders = Order::with('food')->orderBy('id', 'desc')->paginate(7); // paginate 10 per page
-    //     return view('admin.Foods.orders.index', compact('orders'));
-    // }
-
     public function index()
     {
-        $orders = Order::with('orderItems.food')->paginate(5);
+        $orders = Order::with('food')->orderBy('id', 'desc')->paginate(7); // paginate 10 per page
         return view('admin.Foods.orders.index', compact('orders'));
     }
+
+
 
     public function item()
     {
         $orders = Order::with('orderItems.food')
             ->orderBy('id', 'desc')
-            ->paginate(3);
+            ->paginate(4);
 
         return view('admin.Foods.orders.item', compact('orders'));
     }
 
-
-
     public function store(Request $request)
     {
-        // Validate required fields
+        // Validate as usual
         $validated = $request->validate([
             'customer_name' => 'required|string|max:255',
             'phone' => 'required|string|max:50',
@@ -53,14 +48,14 @@ class OrderController extends Controller
 
         $cartItems = json_decode($validated['cart_data'], true);
 
-        if (empty($cartItems)) {
-            return redirect()->back()->withErrors(['cart_data' => 'Cart cannot be empty']);
+        if (empty($cartItems))
+        {
+            return response()->json(['success' => false, 'message' => 'Cart cannot be empty'], 422);
         }
 
         DB::beginTransaction();
 
         try {
-            // Create order
             $order = Order::create([
                 'customer_name' => $validated['customer_name'],
                 'phone' => $validated['phone'],
@@ -74,8 +69,8 @@ class OrderController extends Controller
                 'cvc' => $request->input('cvc'),
             ]);
 
-            // Create order items
-            foreach ($cartItems as $item) {
+            foreach ($cartItems as $item)
+            {
                 $order->orderItems()->create([
                     'food_id' => $item['id'],
                     'food_name' => $item['title'],
@@ -87,10 +82,13 @@ class OrderController extends Controller
 
             DB::commit();
 
-            return redirect()->route('orders.success')->with('success', 'Order placed successfully!');
-        } catch (\Exception $e) {
+            return response()->json(['success' => true, 'message' => 'Order placed successfully!']);
+        }
+        catch (\Exception $e)
+        {
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'Failed to place order: ' . $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Failed to place order: ' . $e->getMessage()], 500);
         }
     }
+
 }

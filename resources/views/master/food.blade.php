@@ -64,10 +64,6 @@
     </div>
 </section>
 
-
-
-
-
 <!-- View Recipe Modal with 3D card style -->
 <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
@@ -98,65 +94,6 @@
         </div>
     </div>
 </div>
-
-<!-- Order Modal -->
-{{-- <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-        <div class="modal-content rounded-4 shadow-lg border-0" style="transform: perspective(1000px) rotateX(2deg);">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold" id="orderModalLabel">
-                    Place Your Order
-                    <p>
-                        <span class="text-warning ms-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </span>
-                    </p>
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <form action="{{ route('orders.store') }}" method="POST">
-                @csrf
-                <div class="modal-body pt-2">
-                    <div class="text-center mb-2">
-                        <img id="modalFoodImage" src="" alt="" class="rounded-3 shadow-sm w-100" style="max-height: 150px; object-fit: cover;">
-                    </div>
-
-                    <h6 id="modalFoodTitle" class="fw-bold mb-1"></h6>
-                    <p id="modalFoodPrice" class="text-warning fw-semibold mb-3"></p>
-
-                    <input type="hidden" name="food_id" id="modalFoodId">
-
-                    <div class="mb-2">
-                        <input type="text" name="customer_name" class="form-control form-control-sm" placeholder="Customer Name" required>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" name="phone" class="form-control form-control-sm" placeholder="Phone" required>
-                    </div>
-                    <div class="mb-2">
-                        <textarea name="address" class="form-control form-control-sm" rows="2" placeholder="Address" required></textarea>
-                    </div>
-                    <div class="mb-2">
-                        <textarea name="notes" class="form-control form-control-sm" rows="2" placeholder="Note" required></textarea>
-                    </div>
-                    <div class="mb-2 d-flex align-items-center">
-                        <input type="number" id="orderQuantity" name="quantity" value="1" min="1" class="form-control form-control-sm me-2" style="width: 70px;">
-                        <span class="fw-bold">Total: <span id="orderTotal" class="text-success"></span></span>
-                    </div>
-                </div>
-
-                <div class="modal-footer border-0 pt-0">
-                    <button type="submit" class="btn btn-warning w-100 fw-semibold shadow-sm">
-                        Confirm Order
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> --}}
 
 <script>
     // View Recipe Modal
@@ -333,11 +270,14 @@
         border-radius: 10px;
     }
 </style>
+
+
+{{-- //Test --}}
 <section class="section py-5" id="menu">
     <div class="container">
         <div class="row">
-            <!-- Menu Items -->
-            <div class="col-lg-8">
+            <!-- Menu Items with vertical scroll -->
+            <div class="col-lg-8" style="max-height: 600px; overflow-y: auto;">
                 <div class="row">
                     @foreach ($foods as $food)
                         <div class="col-md-4 mb-4">
@@ -348,6 +288,9 @@
                                     <h5 class="card-title">{{ $food->title }}</h5>
                                     <div class="star-rating" aria-label="5 star rating">
                                         <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                    </div>
+                                    <div class="order-description mb-2">
+                                        {{ Str::limit($food->desc, 100) }}
                                     </div>
                                     <p class="price-text">${{ number_format($food->price, 2) }}</p>
                                     <button type="button" class="btn btn-sm btn-warning mt-auto add-to-cart"
@@ -365,27 +308,15 @@
 
             <!-- Order Cart -->
             <div class="col-lg-4">
+                <div id="alert-container"></div>
+
                 <div class="card shadow-sm">
                     <div class="card-header bg-warning text-white fw-bold fs-5">
                         Your Order
                     </div>
-                    @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                    <form action="{{ route('orders.store') }}" method="POST" id="cart-form" class="card-body d-flex flex-column">
+                    <form action="{{ route('orders.store') }}" method="POST" id="cart-form"
+                        class="card-body d-flex flex-column">
                         @csrf
 
                         <div id="cart-items" style="flex-grow:1; overflow-y:auto; min-height: 150px;">
@@ -393,52 +324,51 @@
                         </div>
 
                         <div class="mt-3">
-                            <!-- Total -->
                             <div class="d-flex justify-content-between fw-bold mb-2 fs-5">
                                 <span>Total:</span>
                                 <span id="cart-total">$0.00</span>
                             </div>
 
-                            <!-- Customer Payment -->
                             <div class="mb-2">
-                                <label class="fw-semibold" for="customer-pay">Customer Pay</label>
+                                <label for="customer-pay" class="fw-semibold">Customer Pay</label>
                                 <input type="number" step="0.01" id="customer-pay" name="customer_pay_visible"
                                     class="form-control form-control-sm" placeholder="Enter amount">
                             </div>
 
-                            <!-- Change -->
                             <div class="mb-2">
-                                <label class="fw-semibold" for="customer-change">Change</label>
+                                <label for="customer-change" class="fw-semibold">Change</label>
                                 <input type="text" id="customer-change" class="form-control form-control-sm" readonly>
                             </div>
 
-                            <!-- Customer Info -->
                             <div class="mb-2">
-                                <label class="fw-semibold" for="customer-name">Customer Name</label>
-                                <input type="text" id="customer-name" name="customer_name" class="form-control form-control-sm" placeholder="Enter customer name" required>
+                                <label for="customer-name" class="fw-semibold">Customer Name</label>
+                                <input type="text" id="customer-name" name="customer_name" required
+                                    class="form-control form-control-sm" placeholder="Enter customer name">
                             </div>
 
                             <div class="mb-2">
-                                <label class="fw-semibold" for="customer-phone">Phone</label>
-                                <input type="tel" id="customer-phone" name="phone" class="form-control form-control-sm" placeholder="Enter phone number" required pattern="[\d\s\-\+\(\)]{7,}">
+                                <label for="customer-phone" class="fw-semibold">Phone</label>
+                                <input type="tel" id="customer-phone" name="phone" required
+                                    pattern="[\d\s\-\+\(\)]{7,}"
+                                    class="form-control form-control-sm" placeholder="Enter phone number">
                             </div>
 
                             <div class="mb-2">
-                                <label class="fw-semibold" for="address">Address</label>
-                                <input type="text" id="address" name="address" class="form-control form-control-sm" placeholder="Enter address" required>
+                                <label for="address" class="fw-semibold">Address</label>
+                                <input type="text" id="address" name="address" required
+                                    class="form-control form-control-sm" placeholder="Enter address">
                             </div>
 
-                            <!-- Payment Method -->
                             <div class="mb-2">
-                                <label class="fw-semibold" for="payment-method">Payment Method</label>
-                                <select name="payment_method_visible" id="payment-method" class="form-control form-control-sm">
+                                <label for="payment-method" class="fw-semibold">Payment Method</label>
+                                <select name="payment_method_visible" id="payment-method"
+                                    class="form-control form-control-sm">
                                     <option value="cash">Cash</option>
                                     <option value="credit">Credit/Debit Card</option>
                                     <option value="paypal">PayPal</option>
                                 </select>
                             </div>
 
-                            <!-- Payment Details (card) -->
                             <div id="payment-details" style="display:none;">
                                 <div class="mb-2">
                                     <input type="text" id="card_number" name="card_number"
@@ -452,7 +382,7 @@
                                 </div>
                             </div>
 
-                            <!-- Hidden fields to submit -->
+                            <!-- Hidden inputs -->
                             <input type="hidden" name="cart_data" id="cart-data">
                             <input type="hidden" name="payment_selected" id="payment-selected">
                             <input type="hidden" name="total_amount" id="total-amount">
@@ -466,14 +396,12 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Elements
+    document.addEventListener("DOMContentLoaded", function () {
         const cartItemsContainer = document.getElementById("cart-items");
         const totalEl = document.getElementById("cart-total");
         const payInput = document.getElementById("customer-pay");
@@ -489,18 +417,18 @@
         const paymentMethodSelect = document.getElementById("payment-method");
         const paymentDetails = document.getElementById("payment-details");
 
-        // Cart state
-        let cart = []; // items: {id, title, price, qty, image}
+        const alertContainer = document.getElementById("alert-container");
+
+        let cart = [];
         let cartTotalValue = 0;
 
-        // Helpers
         function formatMoney(num) {
             return '$' + Number(num).toFixed(2);
         }
 
         function escapeHtml(text) {
             if (!text) return '';
-            return text.replace(/[&<>"']/g, function(m) {
+            return text.replace(/[&<>"']/g, function (m) {
                 return {
                     '&': '&amp;',
                     '<': '&lt;',
@@ -538,7 +466,6 @@
             changeHidden.value = change >= 0 ? change.toFixed(2) : 0;
         }
 
-        // Render cart items with quantity controls and star icon
         function renderCart() {
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = `<p class="text-muted">No items added yet.</p>`;
@@ -547,33 +474,32 @@
             }
 
             cartItemsContainer.innerHTML = `
-        <ul class="list-group">
-          ${cart.map((item, index) => `
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="d-flex align-items-center">
-                <img src="${item.image}" alt="${escapeHtml(item.title)}" style="width:50px; height:50px; object-fit:cover; border-radius:6px; margin-right:10px;">
-                <div>
-                  <div>${escapeHtml(item.title)} <span class="star-icon">★ ★ ★ ★ ★</span></div>
-                  <small class="text-muted">Unit Price: ${formatMoney(item.price)}</small>
-                  <div class="qty-controls mt-1">
-                    <button class="btn btn-secondary btn-sm qty-btn qty-decrease" data-index="${index}">−</button>
-                    <span class="mx-2">Qty: ${item.qty}</span>
-                    <button class="btn btn-secondary btn-sm qty-btn qty-increase" data-index="${index}">+</button>
-                  </div>
-                </div>
-              </div>
-              <div>${formatMoney(item.price * item.qty)}</div>
-            </li>
-          `).join('')}
-        </ul>
-      `;
+                <ul class="list-group">
+                    ${cart.map((item, index) => `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="${item.image}" alt="${escapeHtml(item.title)}" style="width:50px; height:50px; object-fit:cover; border-radius:6px; margin-right:10px;">
+                                <div>
+                                    <div>${escapeHtml(item.title)} <span class="star-icon">★ ★ ★ ★ ★</span></div>
+                                    <small class="text-muted">Unit Price: ${formatMoney(item.price)}</small>
+                                    <div class="qty-controls mt-1">
+                                        <button class="btn btn-secondary btn-sm qty-btn qty-decrease" data-index="${index}">−</button>
+                                        <span class="mx-2">Qty: ${item.qty}</span>
+                                        <button class="btn btn-secondary btn-sm qty-btn qty-increase" data-index="${index}">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>${formatMoney(item.price * item.qty)}</div>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
 
             updateCartTotal();
         }
 
-        // Add to cart event (with quantity increase if exists)
         document.querySelectorAll(".add-to-cart").forEach(btn => {
-            btn.addEventListener("click", function() {
+            btn.addEventListener("click", function () {
                 const id = this.dataset.id;
                 const title = this.dataset.title;
                 const price = parseFloat(this.dataset.price) || 0;
@@ -596,8 +522,7 @@
             });
         });
 
-        // Quantity buttons event (increase/decrease)
-        cartItemsContainer.addEventListener("click", function(e) {
+        cartItemsContainer.addEventListener("click", function (e) {
             const target = e.target;
             const idx = target.dataset.index ? parseInt(target.dataset.index) : null;
             if (idx === null) return;
@@ -614,11 +539,9 @@
             }
         });
 
-        // Pay input event
         payInput.addEventListener("input", calculateChange);
 
-        // Payment method toggle
-        paymentMethodSelect.addEventListener("change", function() {
+        paymentMethodSelect.addEventListener("change", function () {
             const value = this.value;
             paymentSelected.value = value;
             if (value === 'credit') {
@@ -628,30 +551,21 @@
             }
         });
 
-        // Form submit validation & hidden fields update
-        document.getElementById("cart-form").addEventListener("submit", function(e) {
+        // AJAX submit with disable button to prevent double submit
+        document.getElementById("cart-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
             if (cart.length === 0) {
-                e.preventDefault();
                 alert('Cart is empty. Add items before placing order.');
                 return;
             }
+
             const customerName = document.getElementById("customer-name").value.trim();
             const customerPhone = document.getElementById("customer-phone").value.trim();
             const address = document.getElementById("address").value.trim();
 
-            if (!customerName) {
-                e.preventDefault();
-                alert('Please enter customer name.');
-                return;
-            }
-            if (!customerPhone) {
-                e.preventDefault();
-                alert('Please enter phone number.');
-                return;
-            }
-            if (!address) {
-                e.preventDefault();
-                alert('Please enter address.');
+            if (!customerName || !customerPhone || !address) {
+                alert('Please fill in all required customer info.');
                 return;
             }
 
@@ -660,11 +574,56 @@
             payHidden.value = (parseFloat(payInput.value) || 0).toFixed(2);
             changeHidden.value = (parseFloat(changeInput.value.replace(/[^\d.-]/g, '')) || 0).toFixed(2);
             paymentSelected.value = paymentMethodSelect.value;
+
+            const submitBtn = checkoutBtn;
+            submitBtn.disabled = true; // Disable submit button immediately
+
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                },
+                body: new FormData(this)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alertContainer.innerHTML = `
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                ${data.message}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+
+                        this.reset();
+                        cart = [];
+                        renderCart();
+                        payInput.value = '';
+                        changeInput.value = '';
+                        paymentDetails.style.display = 'none';
+                    } else {
+                        alertContainer.innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                ${data.message || 'Failed to place order.'}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+                    }
+                    submitBtn.disabled = false; // Enable button again after response
+                })
+                .catch(() => {
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            An unexpected error occurred.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
+                    submitBtn.disabled = false;
+                });
         });
 
-        // Initialize default state
         paymentSelected.value = paymentMethodSelect.value;
         renderCart();
     });
 </script>
-

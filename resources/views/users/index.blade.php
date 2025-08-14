@@ -1,5 +1,6 @@
 @extends('admin.layout.app')
 @section('title', 'user')
+@section('user-menu-open','user-menu-open')
 @section('active', 'user')
 @section('content')
     <div class="app-content-header py-3">

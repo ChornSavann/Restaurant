@@ -41,8 +41,4 @@
     <a href="{{ route('orders.index') }}" class="btn btn-sm btn-secondary float-end">
         View All Orders
     </a>
-    {{-- <div class="my-2 px-3">
-        {{ $orders->links() }}
-
-    </div> --}}
 </div>

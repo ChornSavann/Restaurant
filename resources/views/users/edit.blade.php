@@ -38,16 +38,18 @@
                         </div>
 
                         <!-- Password (optional) -->
-                        {{-- <div class="mb-3">
+                        <div class="mb-3">
                             <label for="password" class="form-label fw-semibold">New Password (optional)</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Leave blank to keep current password">
                         </div>
 
                         <!-- Confirm Password -->
                         <div class="mb-3">
                             <label for="com_password" class="form-label fw-semibold">Confirm Password</label>
-                            <input type="password" class="form-control" id="com_password" name="com_password">
-                        </div> --}}
+                            <input type="password" class="form-control" id="com_password" name="com_password"
+                            placeholder="Leave blank to keep current password">
+                        </div>
 
                         <!-- User Type -->
                         <div class="mb-3">

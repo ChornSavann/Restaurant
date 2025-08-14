@@ -80,45 +80,13 @@ https://templatemo.com/tm-558-klassy-cafe
                             <li class="scroll-to-section"><a href="#menu">Menu</a></li>
                             <li class="scroll-to-section"><a href="#order">Order</a></li>
                             <li class="scroll-to-section"><a href="#chefs">Chefs</a></li>
-                            {{-- <li class="scroll-to-section"><a href="javascript">Orders</a></li> --}}
-                            {{-- <li class="submenu">
-                                <a href="javascript:;">Features</a>
-                                <ul>
-                                    <li><a href="#">Features Page 1</a></li>
-                                    <li><a href="#">Features Page 2</a></li>
-                                    <li><a href="#">Features Page 3</a></li>
-                                    <li><a href="#">Features Page 4</a></li>
-                                </ul>
-                            </li> --}}
-                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
+
                             <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
                             <li class="scroll-to-section"><a href="{{ route('logout') }}">Logout</a></li>
-                            {{--
-                            <li>
-                                @if (Route::has('login'))
-                                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                                    @auth
-                                    <x-app-layout>
 
-                                    </x-app-layout>
-                                    @else
-                                       <li><a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900
-                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a></li>
-
-                                        @if (Route::has('register'))
-                                           <li> <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900
-                                            :outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a></li>
-                                        @endif
-                                    @endauth
-                                </div>
-                            @endif
-                            </li> --}}
 
                         </ul>
-                        {{-- <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a> --}}
-                        <!-- ***** Menu End ***** -->
+
                     </nav>
                 </div>
             </div>
@@ -261,30 +229,30 @@ https://templatemo.com/tm-558-klassy-cafe
     <!-- Global Init -->
     <script src="assets/js/custom.js"></script>
     <script>
-        // $(function() {
-        //     var selectedClass = "";
-        //     $("p").click(function() {
-        //         selectedClass = $(this).attr("data-rel");
-        //         $("#portfolio").fadeTo(50, 0.1);
-        //         $("#portfolio div").not("." + selectedClass).fadeOut();
-        //         setTimeout(function() {
-        //             $("." + selectedClass).fadeIn();
-        //             $("#portfolio").fadeTo(50, 1);
-        //         }, 500);
+        $(function() {
+            var selectedClass = "";
+            $("p").click(function() {
+                selectedClass = $(this).attr("data-rel");
+                $("#portfolio").fadeTo(50, 0.1);
+                $("#portfolio div").not("." + selectedClass).fadeOut();
+                setTimeout(function() {
+                    $("." + selectedClass).fadeIn();
+                    $("#portfolio").fadeTo(50, 1);
+                }, 80);
 
-        //     });
-        // });
-
-
-        $(document).ready(function() {
-            $(".scroll-to-section a").on("click", function(e) {
-                e.preventDefault();
-                var target = $(this).attr("href");
-                $("html, body").animate({
-                    scrollTop: $(target).offset().top
-                }, 70); // 800ms = smooth
             });
         });
+
+
+        // $(document).ready(function() {
+        //     $(".scroll-to-section a").on("click", function(e) {
+        //         e.preventDefault();
+        //         var target = $(this).attr("href");
+        //         $("html, body").animate({
+        //             scrollTop: $(target).offset().top
+        //         }, 70); // 800ms = smooth
+        //     });
+        // });
     </script>
 
 </body>

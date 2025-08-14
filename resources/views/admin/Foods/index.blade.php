@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 @section('title', 'Food')
-@section('food', 'menu-open')
+@section('food', 'food-menu-open')
 @section('content')
     <div class="app-content-header py-3">
         <!--begin::Container-->

@@ -4,11 +4,13 @@
 @section('content')
 
 <div class="container my-4">
-    <h3 class="mb-4" style="font-family: Cambria; font-weight: bold;">Orders List</h3>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle">
-            <thead class="table-dark">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h4 class="card-title mb-0">All Orders</h4>
+        </div>
+        <table class="table table-striped align-middle mb-0">
+            <thead class="table-light">
                 <tr>
                     <th>Order ID</th>
                     <th>Customer Name</th>
@@ -22,10 +24,14 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $counter = 1; // initialize counter
+                @endphp
+
                 @foreach ($orders as $order)
                     @foreach ($order->orderItems as $item)
                         <tr>
-                            <td>{{ $order->id }}</td>
+                            <td>{{ $counter++ }}</td> <!-- Serial number -->
                             <td>{{ $order->customer_name }}</td>
                             <td>{{ $order->phone }}</td>
                             <td>{{ $order->address }}</td>
@@ -45,11 +51,12 @@
                         </tr>
                     @endforeach
                 @endforeach
-            </tbody>
+                </tbody>
+
         </table>
     </div>
 
-    <div class="d-flex justify-content-center mt-4">
+    <div class="m-1 mt-2">
         {{ $orders->links() }}
     </div>
 </div>

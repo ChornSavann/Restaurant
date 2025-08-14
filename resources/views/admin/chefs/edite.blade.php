@@ -36,7 +36,7 @@
 
                         <!-- Price (label error fixed) -->
                         <div class="mb-3">
-                            <label for="speciality" class="form-label fw-semibold">Spaciality</label>
+                            <label for="speciality" class="form-label fw-semibold">Spaciality<span class="text-danger">*</label>
                             <input value="{{ old('speciality',$chef->speciality) }}" type="text" class="form-control @error('price') is-invalid @enderror" id="speciality" name="speciality" />
                             @error('speciality')
                                 <div class="invalid-feedback">{{ $message }}</div>

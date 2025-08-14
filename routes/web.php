@@ -24,10 +24,6 @@ use App\Models\Chef;
 */
 
 
-//front
-Route::get('/', [HomeController::class, 'login'])
-    ->middleware('auth')
-    ->name('home.index');
 
 //usercontroller
 // Route::get('/home',[Usercontroller::class,'home'])->name('master.home');
@@ -39,29 +35,19 @@ Route::post('/signup', [Usercontroller::class, 'registercheck'])->name('user.reg
 Route::get('/dashboard', [Usercontroller::class, 'godashboard'])->name('dashboard');
 Route::get('/logout', [Usercontroller::class, 'logout'])->name('logout');
 
- //Ordre
- Route::get('/orders/index', [OrderController::class, 'index'])->name('orders.index');
- Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
- Route::get('/orders-today', [DashboardControler::class, 'todayOrders'])->name('orders.today');
 
-//  Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-Route::get('/orders/items', [OrderController::class, 'item'])->name('orders.items');
-
+//Ordre
+Route::get('/orders/index', [OrderController::class, 'index'])->name('orders.index');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-Route::get('/menu', [OrderController::class, 'showMenu'])->name('menu');
+Route::get('/orders-today', [DashboardControler::class, 'todayOrders'])->name('orders.today');
+
+//reservation
+Route::post('/register', [Reservationcontroller::class, 'store'])->name('register.store');
+Route::get('/reversation', [Reservationcontroller::class, 'index'])->name('reservation.index');
 
 
 
 
-
-
- //reservation
- Route::post('/register', [Reservationcontroller::class, 'store'])->name('register.store');
- Route::get('/reversation', [Reservationcontroller::class, 'index'])->name('reservation.index');
-
-
-
-// Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 // Admin Dashboard
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -76,6 +62,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/user/create', [Usercontroller::class, 'store'])->name('user.store');
     Route::post('/user/update{id}', [Usercontroller::class, 'update'])->name('user.update');
     Route::delete('/user/delete{id}', [Usercontroller::class, 'destroy'])->name('user.delete');
+
+    //profile
+
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('user.profile.edit');
+    Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('user.profile.update');
+
+
+
 
     //category
     Route::get('/category/index', [CategoryController::class, 'index'])->name('category.index');
@@ -101,14 +96,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/update/{id}', [ChefController::class, 'update'])->name('chefs.update');
     Route::delete('/delete/{id}', [ChefController::class, 'destroy'])->name('chefs.delete');
 
-
+    //item
+    Route::get('/orders/items', [OrderController::class, 'item'])->name('orders.items');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/menu', [OrderController::class, 'showMenu'])->name('menu');
 });
 
 // User Dashboard (Home page)
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 
+
 });
 
-//dashboaard
-// Route::get('/dashboard',[DashboardControler::class,'index'])->name('dashboard.index');
+

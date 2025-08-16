@@ -11,38 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Orders table
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('order_number')->unique();
             $table->string('customer_name');
-            $table->string('phone');
+            $table->string('phone', 50);
             $table->text('address');
             $table->decimal('total_amount', 10, 2);
             $table->decimal('customer_pay', 10, 2);
             $table->decimal('change_amount', 10, 2);
-            $table->string('payment_method');
+            $table->string('payment_method'); // cash, card, etc.
             $table->string('card_number')->nullable();
             $table->string('expiry')->nullable();
             $table->string('cvc')->nullable();
-            $table->timestamps();
-        });
-
-        // Order Items table
-        Schema::create('order_items', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-            $table->foreignId('food_id')->constrained('foods')->onDelete('restrict');
-            $table->string('food_name');
-            $table->integer('quantity');
-            $table->decimal('unit_price', 10, 2);
-            $table->decimal('total_price', 10, 2);
+            $table->string('image')->nullable(); // optional order image
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
         Schema::dropIfExists('orders');
     }
 };

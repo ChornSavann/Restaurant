@@ -94,14 +94,14 @@
             <!-- Menu Footer-->
             <li class="user-footer">
                 <a href="{{ route('user.profile') }}" class="btn btn-default btn-flat">Profile</a>
-                <a href="{{ route('logout') }}"
+                {{-- <a href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                   class="btn btn-default btn-flat float-end">Sign out</a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                   class="btn btn-default btn-flat float-end">Sign out</a> --}}
+                <a href="{{route('logout')}}"class="btn btn-default btn-flat">Sign Up</a>
+                {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                     @method('Post')
-                </form>
+                </form> --}}
             </li>
         </ul>
     </li>

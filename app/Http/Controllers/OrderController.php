@@ -8,8 +8,7 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log as FacadesLog;
@@ -96,81 +95,117 @@ class OrderController extends Controller
     // }
 
 
+    // public function store(Request $request)
+    // {
+    //     // Validate request
+    //     $request->validate([
+    //         'customer_name' => 'required|string|max:255',
+    //         'phone' => 'required|string|max:50',
+    //         'address' => 'required|string',
+    //         'total_amount' => 'required|numeric|min:0',
+    //         'customer_pay' => 'required|numeric|min:0',
+    //         'payment_method' => 'required|string',
+    //         'items' => 'required|array|min:1',
+    //         'items.*.food_id' => 'required|exists:foods,id',
+    //         'items.*.quantity' => 'required|integer|min:1',
+    //     ]);
+
+    //     // Generate unique order number
+    //     $orderNumber = 'ORD-' . strtoupper(Str::random(8));
+
+    //     // Create Order
+    //     $order = Order::create([
+    //         'order_number' => $orderNumber,
+    //         'customer_name' => $request->customer_name,
+    //         'phone' => $request->phone,
+    //         'address' => $request->address,
+    //         'total_amount' => $request->total_amount,
+    //         'customer_pay' => $request->customer_pay,
+    //         'change_amount' => $request->customer_pay - $request->total_amount,
+    //         'payment_method' => $request->payment_method,
+    //         'card_number' => $request->card_number ?? null,
+    //         'expiry' => $request->expiry ?? null,
+    //         'cvc' => $request->cvc ?? null,
+    //     ]);
+
+    //     // Save order items
+    //     foreach ($request->items as $item) {
+    //         $food = Foods::find($item['food_id']);
+
+    //         OrderItem::create([
+    //             'order_id' => $order->id,
+    //             'food_id' => $food->id,
+    //             'food_name' => $food->name,
+    //             'quantity' => $item['quantity'],
+    //             'unit_price' => $food->price,
+    //             'total_price' => $food->price * $item['quantity'],
+    //         ]);
+    //     }
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'order_number' => $order->order_number,
+    //         'order_id' => $order->id,
+    //     ]);
+    // }
+
     public function store(Request $request)
     {
-        try {
-            // Validate request
-            $validated = $request->validate([
-                'customer_name'     => 'required|string|max:255',
-                'phone'             => 'required|string|max:50',
-                'address'           => 'required|string',
-                'cart_data'         => 'required|json',
-                'total_amount'      => 'required|numeric|min:0',
-                'customer_pay'      => 'required|numeric|min:0',
-                'payment_selected'  => 'required|string|in:cash,credit,paypal',
-                'card_number'       => 'required_if:payment_selected,credit|nullable|string',
-                'expiry'            => 'required_if:payment_selected,credit|nullable|string',
-                'cvc'               => 'required_if:payment_selected,credit|nullable|string',
-            ]);
+        $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:50',
+            'address' => 'required|string',
+            'cart_data' => 'required|json',
+            'total_amount' => 'required|numeric|min:0',
+            'customer_pay' => 'required|numeric|min:0',
+        ]);
 
-            // Decode cart data
-            $cart = json_decode($validated['cart_data'], true);
-            if (!$cart || !is_array($cart) || count($cart) === 0) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Cart is empty or invalid.'
-                ], 422);
-            }
+        $cart = json_decode($request->cart_data, true);
 
-            // Calculate change amount on server
-            $changeAmount = max(0, $validated['customer_pay'] - $validated['total_amount']);
+        if (empty($cart)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cart is empty.'
+            ], 400);
+        }
 
-            // Create order
-            $order = Order::create([
-                'customer_name'  => $validated['customer_name'],
-                'phone'          => $validated['phone'],
-                'address'        => $validated['address'],
-                'total_amount'   => $validated['total_amount'],
-                'customer_pay'   => $validated['customer_pay'],
-                'change_amount'  => $changeAmount,
-                'payment_method' => $validated['payment_selected'],
-                'card_number'    => $validated['card_number'] ?? null,
-                'expiry'         => $validated['expiry'] ?? null,
-                'cvc'            => $validated['cvc'] ?? null,
-            ]);
+        $orderNumber = 'ORD-' . strtoupper(Str::random(8));
 
-            // Save order items
-            foreach ($cart as $item) {
-                $order->items()->create([
-                    'food_id' => $item['id'] ?? null,
-                    'title'   => $item['title'] ?? '',
-                    'price'   => $item['price'] ?? 0,
-                    'qty'     => $item['qty'] ?? 1,
-                    'image'   => $item['image'] ?? null,
+        $order = Order::create([
+            'order_number'   => $orderNumber,
+            'customer_name'  => $request->customer_name,
+            'phone'          => $request->phone,
+            'address'        => $request->address,
+            'total_amount'   => $request->total_amount,
+            'customer_pay'   => $request->customer_pay,
+            'change_amount'  => $request->customer_change ?? ($request->customer_pay - $request->total_amount),
+            'payment_method' => $request->payment_selected ?? 'cash',
+            'card_number'    => $request->card_number,
+            'expiry'         => $request->expiry,
+            'cvc'            => $request->cvc,
+        ]);
+
+        foreach ($cart as $item) {
+            $food = Foods::find($item['id']); // ✅ your model
+            if ($food) {
+                OrderItem::create([
+                    'order_id'   => $order->id,
+                    'food_id'    => $food->id,
+                    'food_name'  => $food->name,
+                    'quantity'   => $item['quantity'],
+                    'unit_price' => $food->price,
+                    'total_price' => $item['total'],
                 ]);
             }
-
-            return response()->json([
-                'success'  => true,
-                'message'  => 'Order placed successfully!',
-                'order_id' => $order->id
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            // Handle validation errors
-            return response()->json([
-                'success' => false,
-                'errors'  => $e->errors(),
-            ], 422);
-        } catch (\Exception $e) {
-            Log::error('Order store failed: ' . $e->getMessage());
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An unexpected error occurred.'
-            ], 500);
         }
-    }
 
+        return response()->json([
+            'success' => true,
+            'order_number' => $orderNumber,
+            'message' => "Order #$orderNumber placed successfully!"
+        ]);
+    }
+}
 
 
 
@@ -216,5 +251,3 @@ class OrderController extends Controller
     //         return response()->json(['success'=>false,'message'=>'An unexpected error occurred.'],500);
     //     }
     // }
-
-}

@@ -40,9 +40,11 @@ Route::get('/logout', [Usercontroller::class, 'logout'])->name('logout');
 
 
 //Ordre
+
 Route::get('/orders/index', [OrderController::class, 'index'])->name('orders.index');
-// Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-Route::post('/orders', [OrderController::class, 'store'])->name('orders.store')->middleware('auth');
+
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
 
 
 

@@ -1,4 +1,4 @@
-{{-- <section class="section py-5" id="order">
+<section class="section py-5" id="order">
     <div class="container">
         <div class="row mb-4">
             <div class="col-lg-4">
@@ -133,10 +133,10 @@
             </div>
         </div>
     </div>
-</section> --}}
+</section>
 
 <!-- JS Script -->
-{{-- <script>
+<script>
     document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById('menu-search');
         const menuItems = document.querySelectorAll('.menu-item');
@@ -282,7 +282,7 @@
             totalHidden.value = cart.reduce((sum, i) => sum + (i.price * i.qty), 0).toFixed(2);
             payHidden.value = (parseFloat(payInput.value) || 0).toFixed(2);
             changeHidden.value = (parseFloat(changeInput.value.replace(/[^\d.-]/g, '')) || 0).toFixed(
-            2);
+                2);
             paymentSelected.value = paymentMethodSelect.value;
 
             const submitBtn = checkoutBtn;
@@ -290,9 +290,10 @@
             fetch(this.action, {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json',
-                    },
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+
                     body: new FormData(this)
                 })
                 .then(async res => {
@@ -348,269 +349,6 @@
         paymentSelected.value = paymentMethodSelect.value;
         renderCart();
     });
-</script> --}}
+</script>
 
 {{-- testing --}}
-<section class="section py-5" id="order">
-    <div class="container">
-        <div class="row mb-4">
-            <div class="col-lg-4">
-                <div class="section-heading">
-                    <h6 class="text-warning fw-semibold">Our Orders</h6>
-                    <h2 class="fw-bold">Our selection of cake for Orders Please..!</h2>
-                </div>
-            </div>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="row mb-3">
-            <div class="col-lg-8">
-                <input type="text" id="menu-search" class="form-control" placeholder="Search for a food...">
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Menu Items -->
-            <div class="col-lg-8" style="max-height: 600px; overflow-y: auto;">
-                <div class="row" id="menu-items">
-                    @foreach ($foods as $food)
-                    <div class="col-md-4 mb-4 menu-item" data-title="{{ strtolower($food->title) }}" data-desc="{{ strtolower($food->desc) }}">
-                        <div class="card h-100 shadow-sm">
-                            <img src="{{ asset('foods/image/' . $food->image) }}" class="card-img-top" style="height:150px; object-fit:cover; border-top-left-radius:12px; border-top-right-radius:12px;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ $food->title }}</h5>
-                                <div class="star-rating text-warning">★★★★★</div>
-                                <div class="order-description mb-2">{{ Str::limit($food->desc, 100) }}</div>
-                                <p class="price-text fw-bold text-warning mb-3">${{ number_format($food->price, 2) }}</p>
-                                <button type="button" class="btn btn-outline-warning w-100 fw-semibold add-to-cart"
-                                    data-id="{{ $food->id }}" data-title="{{ $food->title }}" data-price="{{ $food->price }}" data-image="{{ asset('foods/image/' . $food->image) }}">
-                                    Add
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <!-- Order Cart -->
-            <div class="col-lg-4">
-                <div id="alert-container"></div>
-                <div class="card shadow-sm">
-                    <div class="card-header bg-warning text-white fw-bold fs-5">Your Order</div>
-                    <form action="{{ route('orders.store') }}" method="POST" id="cart-form" class="card-body d-flex flex-column">
-                        @csrf
-                        <div id="cart-items" style="flex-grow:1; overflow-y:auto; min-height: 150px;">
-                            <p class="text-muted">No items added yet.</p>
-                        </div>
-
-                        <div class="mt-3">
-                            <div class="d-flex justify-content-between fw-bold mb-2 fs-5">
-                                <span>Total:</span>
-                                <span id="cart-total">$0.00</span>
-                            </div>
-
-                            <div class="mb-2">
-                                <label for="customer-pay" class="fw-semibold">Customer Pay</label>
-                                <input type="number" step="0.01" id="customer-pay" class="form-control form-control-sm" placeholder="Enter amount">
-                            </div>
-
-                            <div class="mb-2">
-                                <label for="customer-change" class="fw-semibold">Change</label>
-                                <input type="text" id="customer-change" class="form-control form-control-sm" readonly>
-                            </div>
-
-                            <div class="mb-2">
-                                <label for="customer-name" class="fw-semibold">Customer Name</label>
-                                <input type="text" id="customer-name" name="customer_name" required class="form-control form-control-sm" placeholder="Enter customer name">
-                            </div>
-
-                            <div class="mb-2">
-                                <label for="customer-phone" class="fw-semibold">Phone</label>
-                                <input type="tel" id="customer-phone" name="phone" required pattern="[\d\s\-\+\(\)]{7,}" class="form-control form-control-sm" placeholder="Enter phone number">
-                            </div>
-
-                            <div class="mb-2">
-                                <label for="address" class="fw-semibold">Address</label>
-                                <input type="text" id="address" name="address" required class="form-control form-control-sm" placeholder="Enter address">
-                            </div>
-
-                            <div class="mb-2">
-                                <label for="payment-method" class="fw-semibold">Payment Method</label>
-                                <select id="payment-method" name="payment_selected" class="form-control form-control-sm">
-                                    <option value="cash">Cash</option>
-                                    <option value="credit">Credit/Debit Card</option>
-                                    <option value="paypal">PayPal</option>
-                                </select>
-                            </div>
-
-                            <div id="payment-details" style="display:none;">
-                                <div class="mb-2">
-                                    <input type="text" id="card_number" name="card_number" class="form-control form-control-sm" placeholder="Card Number">
-                                </div>
-                                <div class="mb-2 d-flex gap-2">
-                                    <input type="text" id="expiry" name="expiry" class="form-control form-control-sm" placeholder="MM/YY">
-                                    <input type="text" id="cvc" name="cvc" class="form-control form-control-sm" placeholder="CVC">
-                                </div>
-                            </div>
-
-                            <input type="hidden" name="cart_data" id="cart-data">
-                            <input type="hidden" name="total_amount" id="total-amount">
-                            <input type="hidden" name="customer_pay" id="customer-pay-hidden">
-                            <input type="hidden" name="customer_change" id="customer-change-hidden">
-
-                            <button type="submit" class="btn btn-success w-100 mt-2" id="checkout-btn" disabled>Place Order</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    let cart = [];
-    const cartItemsEl = document.getElementById("cart-items");
-    const cartTotalEl = document.getElementById("cart-total");
-    const customerPayEl = document.getElementById("customer-pay");
-    const customerChangeEl = document.getElementById("customer-change");
-    const checkoutBtn = document.getElementById("checkout-btn");
-    const cartDataInput = document.getElementById("cart-data");
-    const totalAmountInput = document.getElementById("total-amount");
-    const customerPayHidden = document.getElementById("customer-pay-hidden");
-    const customerChangeHidden = document.getElementById("customer-change-hidden");
-    const paymentMethodSelect = document.getElementById("payment-method");
-    const paymentDetails = document.getElementById("payment-details");
-    const alertContainer = document.getElementById("alert-container");
-
-    // Toggle payment details
-    paymentMethodSelect.addEventListener("change", function() {
-        const val = this.value;
-        paymentDetails.style.display = (val === "credit" || val === "paypal") ? "block" : "none";
-    });
-
-    // Add to cart
-    document.querySelectorAll(".add-to-cart").forEach(btn => {
-        btn.addEventListener("click", function() {
-            const id = this.dataset.id;
-            const title = this.dataset.title;
-            const price = parseFloat(this.dataset.price);
-            const image = this.dataset.image;
-            const existing = cart.find(item => item.id === id);
-            if (existing) existing.qty++;
-            else cart.push({id, title, price, qty:1, image});
-            renderCart();
-        });
-    });
-
-    function renderCart() {
-        cartItemsEl.innerHTML = "";
-        if (cart.length === 0) {
-            cartItemsEl.innerHTML = `<p class="text-muted">No items added yet.</p>`;
-            checkoutBtn.disabled = true;
-            updateTotal();
-            return;
-        }
-        cart.forEach((item, index) => {
-            const row = document.createElement("div");
-            row.className = "d-flex justify-content-between align-items-center mb-2";
-            row.innerHTML = `
-                <div class="d-flex align-items-center gap-2">
-                    <img src="${item.image}" width="50" height="50" class="rounded">
-                    <div><strong>${item.title}</strong><br><small>$${item.price.toFixed(2)} × ${item.qty}</small></div>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-1" data-index="${index}" data-action="decrease">-</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-1" data-index="${index}" data-action="increase">+</button>
-                    <button type="button" class="btn btn-sm btn-outline-danger" data-index="${index}" data-action="remove">×</button>
-                </div>
-            `;
-            cartItemsEl.appendChild(row);
-        });
-
-        cartItemsEl.querySelectorAll("button").forEach(btn => {
-            btn.addEventListener("click", function() {
-                const idx = parseInt(this.dataset.index);
-                const action = this.dataset.action;
-                if (action === "increase") cart[idx].qty++;
-                if (action === "decrease") cart[idx].qty = Math.max(1, cart[idx].qty - 1);
-                if (action === "remove") cart.splice(idx, 1);
-                renderCart();
-            });
-        });
-
-        updateTotal();
-    }
-
-    function updateTotal() {
-        const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-        cartTotalEl.textContent = `$${total.toFixed(2)}`;
-        totalAmountInput.value = total.toFixed(2);
-        cartDataInput.value = JSON.stringify(cart);
-        updateChange();
-        checkoutBtn.disabled = cart.length === 0;
-    }
-
-    function updateChange() {
-        const total = parseFloat(totalAmountInput.value) || 0;
-        const pay = parseFloat(customerPayEl.value) || 0;
-        const change = Math.max(0, pay - total);
-        customerChangeEl.value = `$${change.toFixed(2)}`;
-        customerPayHidden.value = pay.toFixed(2);
-        customerChangeHidden.value = change.toFixed(2);
-    }
-
-    customerPayEl.addEventListener("input", updateChange);
-
-    // Search filter
-    document.getElementById("menu-search").addEventListener("input", function() {
-        const term = this.value.toLowerCase();
-        document.querySelectorAll(".menu-item").forEach(item => {
-            const title = item.dataset.title;
-            const desc = item.dataset.desc;
-            item.style.display = (title.includes(term) || desc.includes(term)) ? "" : "none";
-        });
-    });
-
-    // AJAX submit
-    document.getElementById("cart-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        if (cart.length === 0) { alert("Cart is empty!"); return; }
-
-        cartDataInput.value = JSON.stringify(cart);
-        totalAmountInput.value = cart.reduce((sum, i) => sum + i.price * i.qty, 0).toFixed(2);
-
-        const formData = new FormData(this);
-        fetch(this.action, {
-            method: 'POST',
-            headers: {'Accept':'application/json'},
-            body: formData
-        })
-        .then(res => res.text())
-        .then(text => {
-            let data;
-            try { data = JSON.parse(text); }
-            catch(err) { throw new Error("Invalid JSON response: "+text.substring(0,200)); }
-
-            alertContainer.innerHTML = "";
-            if (data.success) {
-                alertContainer.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-                cart = [];
-                renderCart();
-                this.reset();
-                paymentDetails.style.display = "none";
-            } else {
-                let errorsHtml = "";
-                if (data.errors) {
-                    errorsHtml = "<ul>" + Object.values(data.errors).flat().map(err=>`<li>${err}</li>`).join("") + "</ul>";
-                }
-                alertContainer.innerHTML = `<div class="alert alert-danger">${data.message || "Failed to place order."}${errorsHtml}</div>`;
-            }
-        })
-        .catch(err => { alertContainer.innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`; });
-    });
-
-    renderCart();
-});
-</script>

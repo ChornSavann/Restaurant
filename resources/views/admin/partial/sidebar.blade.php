@@ -82,7 +82,7 @@
                 </li>
 
                 <!-- Orders -->
-                <li class="nav-item {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
                     <a class="nav-link {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'active' : '' }}">
                         <i class="fa-brands fa-jedi-order"></i>
                         <p>
@@ -106,7 +106,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <!-- Chefs -->
                 <li class="nav-item">

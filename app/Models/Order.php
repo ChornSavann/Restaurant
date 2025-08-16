@@ -17,19 +17,12 @@ class Order extends Model
     }
 
     protected $fillable = [
-        'customer_name',
-        'phone',
-        'address',
-        'total_amount',
-        'customer_pay',
-        'change_amount',
-        'payment_method',
-        'card_number',
-        'expiry',
-        'cvc'
+        'order_number', 'customer_name', 'phone', 'address',
+        'total_amount', 'customer_pay', 'change_amount',
+        'payment_method', 'card_number', 'expiry', 'cvc', 'image'
     ];
 
-    public function orderItems()
+    public function items()
     {
         return $this->hasMany(OrderItem::class);
     }

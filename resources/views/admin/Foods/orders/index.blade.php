@@ -60,7 +60,7 @@
                                         @endforeach
                                     </ul>
                                 </td>
-                                <td>${{ number_format($order->total_amount, 2) }}</td>
+                                <td class="fw-bold text-success">${{ number_format($order->total_amount, 2) }}</td>
                                 <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
                             </tr>
                         @endforeach

@@ -36,6 +36,20 @@
                             <input type="email" class="form-control" id="email" name="email"
                                 value="{{ old('email', $user->email) }}" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label fw-semibold">Phone <span class="text-danger">*</span></label>
+                            <input
+                                value="{{ old('phone', $user->phone) }}"
+                                type="text"
+                                class="form-control @error('phone') is-invalid @enderror"
+                                id="phone"
+                                name="phone"
+                                required
+                            />
+                            @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <!-- Password (optional) -->
                         <div class="mb-3">

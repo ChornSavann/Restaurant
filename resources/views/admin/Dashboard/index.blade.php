@@ -209,6 +209,7 @@
         </div>
         <!--end::Row-->
 
+
         <!--begin::Row-->
         {{-- <div class="row">
             <!-- Start col -->
@@ -386,10 +387,12 @@
                                     <div class="flex-grow-1">
                                         <!-- Title + Price -->
                                         <div class="d-flex justify-content-between align-items-start mb-1">
-                                            <a href="#" class="fw-bold text-primary" style="max-width: 70%; word-break: break-word;">
+                                            <a href="#" class="fw-bold text-primary"
+                                                style="max-width: 70%; word-break: break-word;">
                                                 {{ $product->title }}
                                             </a>
-                                            <span class="badge
+                                            <span
+                                                class="badge
                                                 @if ($product->price <= 3) text-bg-danger
                                                 @elseif($product->price <= 10) text-bg-info
                                                 @elseif($product->price <= 15) text-bg-warning
@@ -418,9 +421,72 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row">
+            <!-- Start col -->
+            <div class="col-lg-7 connectedSortable">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Sales Value</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="revenue-chart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Pass PHP data to JS --}}
+            <script>
+                const months = @json($months);
+                const totals = @json($totals);
+            </script>
+
+            {{-- Chart.js Script --}}
+            {{-- <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script> --}}
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const ctx = document.getElementById('revenue-chart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: months,
+                        datasets: [{
+                            label: 'Sales ($)',
+                            data: totals,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: true },
+                            tooltip: { enabled: true }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+            </script>
+
+            <!-- /.Start col -->
+            <!-- Start col -->
+
+            <!-- /.Start col -->
+        </div>
+
+        {{-- <div class="row">
             <!-- Start col -->
             <div class="col-md-8">
                 <!--begin::Row-->
@@ -443,10 +509,11 @@
             <!-- /.col -->
 
             <!-- /.col -->
-        </div>
+        </div> --}}
         <!--end::Row-->
     </div>
     <!--end::Container-->
     </div>
+
 
 @endsection

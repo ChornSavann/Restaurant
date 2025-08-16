@@ -28,6 +28,20 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label fw-semibold">Phone <span class="text-danger">*</span></label>
+                        <input
+                            value="{{ old('phone', $user->phone) }}"
+                            type="text"
+                            class="form-control @error('phone') is-invalid @enderror"
+                            id="phone"
+                            name="phone"
+                            required
+                        />
+                        @error('phone')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                     <!-- Email -->
                     <div class="mb-3">

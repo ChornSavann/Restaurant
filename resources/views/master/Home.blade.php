@@ -5,7 +5,6 @@
 
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -13,10 +12,10 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {{-- <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> --}}
 
-    <title>Klassy Cafe - Restaurant HTML Template</title>
+    <title>Klassy Cafe - Restaurant </title>
     <!--
 
 TemplateMo 558 Klassy Cafe
@@ -34,7 +33,6 @@ https://templatemo.com/tm-558-klassy-cafe
     <link rel="stylesheet" href="assets/css/owl-carousel.css">
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
-
 
 </head>
 
@@ -82,8 +80,9 @@ https://templatemo.com/tm-558-klassy-cafe
                             <li class="scroll-to-section"><a href="#chefs">Chefs</a></li>
 
                             <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
-                            <li class="scroll-to-section"><a href="{{ route('logout') }}">Logout</a></li>
-
+                            <li class="scroll-to-section">
+                                <a href="{{ route('logout') }}" id="logout-link">Logout</a>
+                            </li>
 
                         </ul>
 

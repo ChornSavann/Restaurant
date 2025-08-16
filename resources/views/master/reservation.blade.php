@@ -142,7 +142,7 @@
             </div>
         </div>
     </div>
-    <script>
+    {{-- <script>
         $('#contact').submit(function() {
             var dateInput = $('#date').val(); // in dd/mm/yyyy format
             var parts = dateInput.split('/');
@@ -152,5 +152,5 @@
                 $('#date').val(formattedDate);
             }
         });
-    </script>
+    </script> --}}
 </section>

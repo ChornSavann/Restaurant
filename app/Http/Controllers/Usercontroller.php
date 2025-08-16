@@ -86,16 +86,6 @@ class Usercontroller extends Controller
     }
 
 
-    // public function logout(Request $request)
-    // {
-    //     Auth::logout();
-
-    //     $request->session()->invalidate();
-    //     $request->session()->regenerateToken();
-
-    //     return redirect()->route('user.login');
-    // }
-
 
     public function index()
     {
@@ -113,6 +103,7 @@ class Usercontroller extends Controller
         $validated = $request->validate([
             'name'         => 'required|string|max:255',
             'email'        => 'required|email|unique:users,email',
+            'phone'        =>'required|numeric',
             'password'     => 'required|min:6|same:com_password',
             'com_password' => 'required|min:6',
             'usertype'     => 'required|in:user,admin',
@@ -126,7 +117,8 @@ class Usercontroller extends Controller
         $user = new User();
         $user->name = $validated['name'];
         $user->email = $validated['email'];
-        $user->password = $validated['password']; // ✅ Use hashed password
+        $user->phone=$validated['phone'];
+        $user->password = $validated['password'];
         $user->usertype = $validated['usertype'];
 
         // Handle image upload
@@ -157,6 +149,7 @@ class Usercontroller extends Controller
         $validated = $request->validate([
             'name'         => 'required|string|max:255',
             'email'        => 'required|email|unique:users,email,' . $id,
+            'phone'        =>'required|numeric',
             'password'     => 'nullable|min:6|same:com_password',
             'com_password' => 'nullable|min:6',
             'image'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -165,6 +158,7 @@ class Usercontroller extends Controller
 
         $user->name = $validated['name'];
         $user->email = $validated['email'];
+        $user->phone=$validated['phone'];
         $user->usertype = $validated['usertype'];
 
         if (!empty($validated['password'])) {
@@ -203,72 +197,13 @@ class Usercontroller extends Controller
         return redirect()->route('user.index')->with('success', 'User deleted successfully.');
     }
 
-    // Profile
-    public function profile()
-    {
-        $user = Auth::user();
-        return view('users.profile', compact('user'));
-    }
-
-    public function editProfile()
-    {
-        $user = Auth::user();
-        return view('admin.user.edit', compact('user'));
-    }
-
-    public function updateProfile(Request $request)
-    {
-        $user = Auth::user();
-
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:6|same:com_password',
-            'com_password' => 'nullable|min:6',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
-
-        if (!empty($validated['password'])) {
-            $user->password = Hash::make($validated['password']);
-        }
-
-        if ($request->hasFile('image'))
-        {
-            $image = $request->file('image');
-            $imagename = time() . '.' . $image->getClientOriginalExtension();
-
-            // Ensure folder exists
-            $path = public_path('images/users');
-            if (!file_exists($path)) {
-                mkdir($path, 0755, true);
-            }
-
-            // Delete old image
-            if ($user->image && File::exists($path . '/' . $user->image)) {
-                File::delete($path . '/' . $user->image);
-            }
-
-            $image->move($path, $imagename);
-            $user->image = $imagename;
-
-        }
-
-        $user->save();
-
-        return redirect()->route('user.index')->with('success', 'Profile updated successfully.');
-    }
-
-    // Logout
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::logout(); // correct method
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('user.login'); // redirect to login or home
     }
 
 

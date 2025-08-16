@@ -147,7 +147,6 @@
     </div>
 </div>
 @endforeach
-
-
+@include('admin.msg.index')
 
 @endsection

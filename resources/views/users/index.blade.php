@@ -50,6 +50,7 @@
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>Email</th>
+                                <th>Contact</th>
                                 <th>Type</th>
                                 <th style="width:150px">Actions</th>
                             </tr>
@@ -70,6 +71,7 @@
 
                                     </td>
                                     <td>{{ $user->email }}</td>
+                                    <td>{{ $user->phone }}</td>
                                     <td>
                                         <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-secondary' }}">
                                             {{ ucfirst($user->usertype) }}
@@ -189,6 +191,7 @@
                     <div class="col-8 ps-2">
                         <p class="mb-1"><strong>Name  :</strong> {{ $user->name }}</p>
                         <p class="mb-1"><strong>Email :</strong> {{ $user->email }}</p>
+                        <p class="mb-1"><strong>Phone :</strong> {{ $user->phone ?? 'N/A' }}</p>
                         <p class="mb-0"><strong>Type  :</strong>
                             <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-secondary' }}">
                                 {{ ucfirst($user->usertype) }}

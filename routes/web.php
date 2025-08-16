@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardControler;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\Homecontroller;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Profilecontroller;
 use App\Http\Controllers\Reservationcontroller;
 use App\Http\Controllers\Usercontroller;
 use Illuminate\Support\Facades\Route;
@@ -27,20 +28,27 @@ use App\Models\Chef;
 
 //usercontroller
 // Route::get('/home',[Usercontroller::class,'home'])->name('master.home');
-Route::get('/login', [UserController::class, 'login'])->name('user.login');
+Route::get('/', [UserController::class, 'login'])->name('user.login');
 Route::get('/sigup', [Usercontroller::class, 'signup'])->name('user.signup');
 Route::post('/signup/login', [Usercontroller::class, 'logincheck'])->name('user.logincheck');
 Route::post('/signup', [Usercontroller::class, 'registercheck'])->name('user.registercheck');
 
 Route::get('/dashboard', [Usercontroller::class, 'godashboard'])->name('dashboard');
 Route::get('/logout', [Usercontroller::class, 'logout'])->name('logout');
+// Route::post('/logout', [Usercontroller::class, 'logout'])->name('logout');
+
 
 
 //Ordre
 Route::get('/orders/index', [OrderController::class, 'index'])->name('orders.index');
-Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-Route::get('/orders-today', [DashboardControler::class, 'todayOrders'])->name('orders.today');
+// Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store')->middleware('auth');
 
+
+
+//dashboard
+Route::get('/orders-today', [DashboardControler::class, 'todayOrders'])->name('orders.today');
+Route::get('/sales-data', [DashboardControler::class, 'salesData'])->name('sales.data');
 //reservation
 Route::post('/register', [Reservationcontroller::class, 'store'])->name('register.store');
 Route::get('/reversation', [Reservationcontroller::class, 'index'])->name('reservation.index');
@@ -65,10 +73,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     //profile
 
-    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
-    Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('user.profile.edit');
-    Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('user.profile.update');
+    Route::get('/profile', [Profilecontroller::class, 'profile'])->name('user.profile');
+    Route::get('/profile/edit', [Profilecontroller::class, 'editProfile'])->name('user.profile.edit');
+    Route::put('/profile/update', [Profilecontroller::class, 'updateProfile'])->name('user.profile.update');
+    // Route::middleware(['auth'])->group(function () {
+    //     // Show profile page
 
+    // });
+    Route::get('/myprofile',[Profilecontroller::class,'myprofile'])->name('user.myprofile');
+    Route::put('/myprofile/update', [Profilecontroller::class, 'updatemyProfile'])->name('user.updateProfile');
+    Route::put('/profile/password', [Profilecontroller::class, 'updatePassword'])->name('user.updatePassword');
 
 
 
@@ -105,6 +119,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // User Dashboard (Home page)
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+    // Route::get('/orders/index', [OrderController::class, 'index'])->name('orders.index');
+    // Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
 
 });

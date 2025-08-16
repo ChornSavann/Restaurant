@@ -1,26 +1,21 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-    <!--begin::Sidebar Brand-->
+    <!-- Sidebar Brand -->
     <div class="sidebar-brand">
-        <!--begin::Brand Link-->
-        <a href="./index.html" class="brand-link">
-            <!--begin::Brand Image-->
-            <img src="{{ asset('admin/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                class="brand-image opacity-75 shadow" />
-            <!--end::Brand Image-->
-            <!--begin::Brand Text-->
+        <a href="{{ route('dashboard.index') }}" class="brand-link">
+            <img src="{{ asset('admin/assets/img/AdminLTELogo.png') }}"
+                 alt="AdminLTE Logo" class="brand-image opacity-75 shadow" />
             <span class="brand-text fw-light">Restaurent</span>
-            <!--end::Brand Text-->
         </a>
-        <!--end::Brand Link-->
     </div>
-    <!--end::Sidebar Brand-->
-    <!--begin::Sidebar Wrapper-->
+
+    <!-- Sidebar Wrapper -->
     <div class="sidebar-wrapper">
         <nav class="mt-2">
-            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
+            <ul class="nav sidebar-menu flex-column"
+                data-lte-toggle="treeview" role="navigation"
                 aria-label="Main navigation" data-accordion="false" id="navigation">
 
-                {{-- Dashboard --}}
+                <!-- Dashboard -->
                 <li class="nav-item">
                     <a href="{{ route('dashboard.index') }}"
                        class="nav-link {{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
@@ -29,7 +24,7 @@
                     </a>
                 </li>
 
-                {{-- User --}}
+                <!-- User -->
                 <li class="nav-item {{ request()->routeIs('user.*') || request()->routeIs('type.*') ? 'menu-open' : '' }}">
                     <a class="nav-link {{ request()->routeIs('user.*') || request()->routeIs('type.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-users"></i>
@@ -43,20 +38,21 @@
                             <a href="{{ route('user.index') }}"
                                class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
+                                <p>Create User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('user.myprofile') }}"
+                               class="nav-link {{ request()->routeIs('user.myprofile') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
                                 <p>Profile</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{route('user.changePasswordForm')}}"
-                               class="nav-link {{ request()->routeIs('type.index') ? 'active' : '' }}">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Change Password</p>
-                            </a>
-                        </li> --}}
+
                     </ul>
                 </li>
 
-                {{-- Category --}}
+                <!-- Category -->
                 <li class="nav-item">
                     <a href="{{ route('category.index') }}"
                        class="nav-link {{ request()->routeIs('category.*') ? 'active' : '' }}">
@@ -65,7 +61,7 @@
                     </a>
                 </li>
 
-                {{-- Foods --}}
+                <!-- Foods -->
                 <li class="nav-item {{ request()->routeIs('food.*') ? 'menu-open' : '' }}">
                     <a class="nav-link {{ request()->routeIs('food.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-bowl-food"></i>
@@ -85,7 +81,7 @@
                     </ul>
                 </li>
 
-                {{-- Orders --}}
+                <!-- Orders -->
                 <li class="nav-item {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
                     <a class="nav-link {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'active' : '' }}">
                         <i class="fa-brands fa-jedi-order"></i>
@@ -112,7 +108,7 @@
                     </ul>
                 </li>
 
-                {{-- Chefs --}}
+                <!-- Chefs -->
                 <li class="nav-item">
                     <a href="{{ route('chefs.index') }}"
                        class="nav-link {{ request()->routeIs('chefs.*') ? 'active' : '' }}">
@@ -121,19 +117,18 @@
                     </a>
                 </li>
 
-                {{-- Reservation --}}
+                <!-- Reservation -->
                 <li class="nav-item">
                     <a href="{{ route('reservation.index') }}"
                        class="nav-link {{ request()->routeIs('reservation.*') ? 'active' : '' }}">
-                        <i class="nav-icon bi bi-palette"></i>
+                        <i class="nav-icon bi bi-calendar-event"></i>
                         <p>Reservation</p>
                     </a>
                 </li>
 
-                {{-- Logout --}}
+                <!-- Logout -->
                 <li class="nav-item">
-                    <a href="{{ route('logout') }}"
-                       class="nav-link {{ request()->routeIs('logout') ? 'active' : '' }}">
+                    <a href="{{ route('logout') }}" class="nav-link">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <p>Logout</p>
                     </a>
@@ -142,7 +137,5 @@
             </ul>
         </nav>
     </div>
-
-
-    <!--end::Sidebar Wrapper-->
+    <!-- End Sidebar Wrapper -->
 </aside>

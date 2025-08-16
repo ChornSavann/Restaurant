@@ -39,6 +39,22 @@
                         @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <label for="phone" class="form-label fw-semibold">Phone <span class="text-danger">*</span></label>
+                        <input
+                            value="{{ old('phone') }}"
+                            type="text"
+                            class="form-control @error('phone') is-invalid @enderror"
+                            id="phone"
+                            name="phone"
+                            required
+                        />
+                        @error('phone')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+
                     <!-- Password -->
                     <div class="mb-3">
                         <label for="password" class="form-label fw-semibold">Password</label>
@@ -88,4 +104,5 @@
         </div>
     </div>
 </div>
+@include('admin.msg.index')
 @endsection

@@ -29,7 +29,7 @@
             <div class="card-body">
                 <form action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                   
+
 
                     <div class="mb-3">
                         <label for="name" class="form-label fw-semibold">Category Name <span class="text-danger">*</span></label>
@@ -46,7 +46,7 @@
                         <input type="file" id="image" name="image" class="form-control" accept="image/*">
                         @if ($category->image)
                             <small>Current Image:</small><br>
-                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" style="width: 120px; margin-top: 5px;">
+                            <img src="{{ asset('category/images/'.$category->image) }}" alt="{{ $category->name }}" style="max-width: 100px; height: auto; border-radius: 5px;">
                         @endif
                     </div>
 

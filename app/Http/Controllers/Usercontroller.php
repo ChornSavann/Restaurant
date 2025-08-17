@@ -37,15 +37,11 @@ class Usercontroller extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials))
-        {
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            if ($user->usertype === 'admin')
-            {
+            if ($user->usertype === 'admin') {
                 return redirect()->route('admin.dashboard');
-            }
-            elseif ($user->usertype === 'user')
-            {
+            } elseif ($user->usertype === 'user') {
                 return redirect()->route('home.index');
             }
         }
@@ -79,31 +75,16 @@ class Usercontroller extends Controller
 
         $user = Auth::user();
 
-        if ($user->usertype === 'admin')
-        {
+        if ($user->usertype === 'admin') {
             return view('admin.Dashboard.index');
-        }
-        elseif ($user->usertype === 'user')
-        {
+        } elseif ($user->usertype === 'user') {
             return view('master.Home');
-        }
-        else
-        {
+        } else {
             Auth::logout(); // optional: logout unknown roles
             return redirect()->route('login')->with('error', 'Access denied.');
         }
     }
 
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('user.login');
-    }
 
 
     public function index()
@@ -122,6 +103,7 @@ class Usercontroller extends Controller
         $validated = $request->validate([
             'name'         => 'required|string|max:255',
             'email'        => 'required|email|unique:users,email',
+            'phone'        =>'required|numeric',
             'password'     => 'required|min:6|same:com_password',
             'com_password' => 'required|min:6',
             'usertype'     => 'required|in:user,admin',
@@ -135,7 +117,8 @@ class Usercontroller extends Controller
         $user = new User();
         $user->name = $validated['name'];
         $user->email = $validated['email'];
-        $user->password = $validated['password']; // ✅ Use hashed password
+        $user->phone=$validated['phone'];
+        $user->password = $validated['password'];
         $user->usertype = $validated['usertype'];
 
         // Handle image upload
@@ -166,6 +149,7 @@ class Usercontroller extends Controller
         $validated = $request->validate([
             'name'         => 'required|string|max:255',
             'email'        => 'required|email|unique:users,email,' . $id,
+            'phone'        =>'required|numeric',
             'password'     => 'nullable|min:6|same:com_password',
             'com_password' => 'nullable|min:6',
             'image'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -174,6 +158,7 @@ class Usercontroller extends Controller
 
         $user->name = $validated['name'];
         $user->email = $validated['email'];
+        $user->phone=$validated['phone'];
         $user->usertype = $validated['usertype'];
 
         if (!empty($validated['password'])) {
@@ -212,9 +197,14 @@ class Usercontroller extends Controller
         return redirect()->route('user.index')->with('success', 'User deleted successfully.');
     }
 
-    // public function dashboard()
-    // {
-    //     $user = Auth::user(); // user logged in
-    //     return view('admin.Dashboard.index', compact('user'));
-    // }
+    public function logout(Request $request)
+    {
+        Auth::logout(); // correct method
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('user.login'); // redirect to login or home
+    }
+
+
 }

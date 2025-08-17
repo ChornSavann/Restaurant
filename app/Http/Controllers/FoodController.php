@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Foods;
 use Illuminate\Http\Request;
 
@@ -115,4 +116,6 @@ class FoodController extends Controller
 
         return redirect()->route('food.index')->with('success', 'Food deleted successfully!');
     }
+
+   
 }

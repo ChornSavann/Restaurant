@@ -4,6 +4,7 @@
 @section('active', 'user')
 
 @section('content')
+@include('admin.font.index')
     <div class="app-content-header py-3">
         <div class="container-fluid">
             <div class="row align-items-center mb-3">
@@ -36,18 +37,34 @@
                             <input type="email" class="form-control" id="email" name="email"
                                 value="{{ old('email', $user->email) }}" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label fw-semibold">Phone <span class="text-danger">*</span></label>
+                            <input
+                                value="{{ old('phone', $user->phone) }}"
+                                type="text"
+                                class="form-control @error('phone') is-invalid @enderror"
+                                id="phone"
+                                name="phone"
+                                required
+                            />
+                            @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <!-- Password (optional) -->
-                        {{-- <div class="mb-3">
+                        <div class="mb-3">
                             <label for="password" class="form-label fw-semibold">New Password (optional)</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Leave blank to keep current password">
                         </div>
 
                         <!-- Confirm Password -->
                         <div class="mb-3">
                             <label for="com_password" class="form-label fw-semibold">Confirm Password</label>
-                            <input type="password" class="form-control" id="com_password" name="com_password">
-                        </div> --}}
+                            <input type="password" class="form-control" id="com_password" name="com_password"
+                            placeholder="Leave blank to keep current password">
+                        </div>
 
                         <!-- User Type -->
                         <div class="mb-3">

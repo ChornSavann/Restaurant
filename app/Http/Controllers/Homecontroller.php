@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Chef;
+use App\Models\Discount;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Foods;
 use App\Models\Reservation;
@@ -20,10 +21,11 @@ class Homecontroller extends Controller
 
     public function index()
     {
+        $discounts = Discount::with(['stock', 'food.category'])->latest()->paginate(10);
         $foods = Foods::all();
         $chefs=Chef::all();
         $category=Category::all();
-        return view('master.Home', compact('foods','chefs','category'));
+        return view('master.Home', compact('foods','chefs','category','discounts'));
     }
 
 

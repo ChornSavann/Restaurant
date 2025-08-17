@@ -8,16 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Foods extends Model
 {
     use HasFactory;
-    protected $table = 'food'; // if your table is named 'food'
-    // app/Models/Food.php
+    protected $table = 'food';
+    protected $fillable = ['title', 'price','category_id', 'desc', 'image'];
 
     public function categoryid()
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
+    public function stocks()
+    {
+        return $this->hasOne(Stocks::class, 'food_id', 'id'); // assuming 1 stock per food
+    }
+
+
 
 }

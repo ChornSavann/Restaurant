@@ -26,6 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'image',
         'usertype',
@@ -36,12 +37,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
-    ];
+    // protected $hidden = [
+    //     'password',
+    //     'remember_token',
+    //     'two_factor_recovery_codes',
+    //     'two_factor_secret',
+    // ];
 
     /**
      * The attributes that should be cast.

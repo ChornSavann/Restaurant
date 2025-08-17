@@ -13,18 +13,11 @@ class orderItem extends Model
         'order_id', 'food_id', 'food_name', 'quantity', 'unit_price', 'total_price'
     ];
 
-    public function order()
-    {
+    public function order() {
         return $this->belongsTo(Order::class);
     }
 
-    public function food()
-    {
-        return $this->belongsTo(Foods::class, 'food_id');
-    }
-
-    public function orderItems()
-    {
-        return $this->hasMany(OrderItem::class);
+    public function food() {
+        return $this->belongsTo(Foods::class);
     }
 }

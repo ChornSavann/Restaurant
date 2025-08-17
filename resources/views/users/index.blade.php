@@ -3,13 +3,14 @@
 @section('user-menu-open','user-menu-open')
 @section('active', 'user')
 @section('content')
+@include('admin.font.index')
     <div class="app-content-header py-3">
         <!--begin::Container-->
         <div class="container-fluid">
             <!-- Page Header -->
             <div class="row align-items-center mb-3">
                 <div class="col-md-6">
-                    <h3 class="mb-0" style="font-family: Cambria;font-wwidth:bold">User Details</h3>
+                    <h3 class="mb-0 fw-bold"style="font-family: Cambria;font-wwidth:bold">User Details</h3>
                 </div>
                 <div class="col-md-6 text-end">
                     <a href="{{ route('user.create') }}" class="btn btn-primary">

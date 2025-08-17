@@ -11,16 +11,18 @@ class Order extends Model
     use HasFactory;
 
     // In Order.php
-    public function food()
-    {
-        return $this->belongsTo(Foods::class, 'food_id');
+    protected $fillable = [
+        'customer_id', 'total_amount', 'customer_pay', 'change_amount',
+        'payment_method', 'card_number', 'expiry', 'cvc', 'status'
+    ];
+
+    public function orderItems() {
+        return $this->hasMany(OrderItem::class);
     }
 
-    protected $fillable = [
-        'order_number', 'customer_name', 'phone', 'address',
-        'total_amount', 'customer_pay', 'change_amount',
-        'payment_method', 'card_number', 'expiry', 'cvc', 'image'
-    ];
+    public function customer() {
+        return $this->belongsTo(Customer::class);
+    }
 
     public function items()
     {
@@ -52,4 +54,6 @@ class Order extends Model
             default => 'secondary',
         };
     }
+
+    
 }

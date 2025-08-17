@@ -4,6 +4,7 @@
 @section('active', 'user')
 
 @section('content')
+@include('admin.font.index')
     <div class="app-content-header py-3">
         <div class="container-fluid">
             <div class="row align-items-center mb-3">

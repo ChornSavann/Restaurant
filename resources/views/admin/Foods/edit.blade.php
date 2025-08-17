@@ -3,6 +3,7 @@
 @section('active', 'food')
 
 @section('content')
+@include('admin.font.index')
 <div class="app-content-header py-3">
     <div class="container-fluid">
         <!-- Page Header -->

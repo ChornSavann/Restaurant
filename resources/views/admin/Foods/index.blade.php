@@ -2,15 +2,7 @@
 @section('title', 'Food')
 @section('food', 'food-menu-open')
 @section('content')
-    <!-- Google Font: Battambang -->
-    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        .kh-battambang {
-            font-family: 'Battambang', cursive, sans-serif;
-        }
-    </style>
-
-
+@include('admin.font.index')
     <div class="app-content-header py-3">
         <div class="container-fluid d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0" style="font-family: Cambria; font-weight:bold;">Foods Details</h3>
@@ -50,7 +42,7 @@
                             <th>ឈ្មោះម្ហូប</th>
                             <th>ប្រភេទ</th>
                             <th>ពណ៌នា</th>
-                            <th style="width: 180px;">សកម្មភាព</th>
+                            <th style="width: 230px;">សកម្មភាព</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -112,9 +104,6 @@
                     </tbody>
                 </table>
             </div>
-
-
-
 
             {{-- Pagination --}}
             <div class="m-2 mt-2">
@@ -188,7 +177,6 @@
             </div>
         </div>
     @endforeach
-
 
     {{-- Auto-dismiss alert after 5 seconds --}}
     <script>

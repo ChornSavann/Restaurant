@@ -2,13 +2,11 @@
 @section('title', 'User Profile')
 @section('active', 'profile')
 @section('content')
-
+@include('admin.font.index')
     @php
         $user = auth()->user();
         $profileImage = $user->image ? asset('images/users/' . $user->image) : asset('admin/images/undraw_profile.svg');
     @endphp
-
-
 
     <section class="container-fluid">
         <div class="row justify-content-center align-items-center" style="min-height: 80vh;">

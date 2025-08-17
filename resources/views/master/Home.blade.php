@@ -2,9 +2,8 @@
 <html lang="en">
 
 <head>
-
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
     <meta charset="utf-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -80,9 +79,20 @@ https://templatemo.com/tm-558-klassy-cafe
                             <li class="scroll-to-section"><a href="#chefs">Chefs</a></li>
 
                             <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
-                            <li class="scroll-to-section">
+                            {{-- <li class="scroll-to-section">
                                 <a href="{{ route('logout') }}" id="logout-link">Logout</a>
+                            </li> --}}
+                            <li class="scroll-to-section">
+                                <a href="#" id="logout-link"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                   Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </li>
+
 
                         </ul>
 
@@ -226,7 +236,7 @@ https://templatemo.com/tm-558-klassy-cafe
 
 
     <!-- Global Init -->
-    <script src="assets/js/custom.js"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
     <script>
         $(function() {
             var selectedClass = "";

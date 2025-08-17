@@ -68,14 +68,14 @@
     <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <img src="{{ Auth::user()->image ? asset('images/users/' . Auth::user()->image) : asset('admin/assets/img/credit/gamming.jpg') }}"
-                 class="user-image rounded-circle shadow" alt="User Image" />
+                class="user-image rounded-circle shadow" alt="User Image" />
             <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
             <!-- User Image -->
             <li class="user-header text-bg-primary">
                 <img src="{{ Auth::user()->image ? asset('images/users/' . Auth::user()->image) : asset('admin/assets/img/credit/gamming.jpg') }}"
-                     class="rounded-circle shadow" alt="User Image" />
+                    class="rounded-circle shadow" alt="User Image" />
                 <p>
                     {{ Auth::user()->name }} - {{ ucfirst(Auth::user()->usertype) }}
                     <small>Member since {{ Auth::user()->created_at->format('M. Y') }}</small>
@@ -93,15 +93,12 @@
 
             <!-- Menu Footer-->
             <li class="user-footer">
-                <a href="{{ route('user.profile') }}" class="btn btn-default btn-flat">Profile</a>
-                {{-- <a href="{{ route('logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                   class="btn btn-default btn-flat float-end">Sign out</a> --}}
-                <a href="{{route('logout')}}"class="btn btn-default btn-flat">Sign Up</a>
-                {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                    @method('Post')
-                </form> --}}
+                <a href="{{ route('user.profile') }}" class="btn btn-primary btn-flat">Profile</a>
+
+                <a href="{{ route('logout') }}" class="btn btn-danger btn-flat float-end">
+                    Logout
+                </a>
+
             </li>
         </ul>
     </li>

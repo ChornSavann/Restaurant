@@ -2,6 +2,7 @@
 @section('title', 'Chefs')
 @section('chefs', 'active')
 @section('content')
+@include('admin.font.index')
     <div class="app-content-header py-3">
         <!--begin::Container-->
         <div class="container-fluid">

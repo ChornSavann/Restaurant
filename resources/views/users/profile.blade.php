@@ -1,6 +1,7 @@
 @extends('admin.layout.app')
 @section('title', 'User Profile')
 @section('content')
+@include('admin.font.index')
 <div class="app-content-header py-3">
     <div class="container-fluid">
         <div class="row align-items-center mb-3">
@@ -13,7 +14,6 @@
                 </a>
             </div>
         </div>
-
         <div class="card card-primary card-outline mb-4">
             <form action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf

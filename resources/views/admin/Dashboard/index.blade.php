@@ -2,6 +2,7 @@
 @section('title', 'Dashboaard')
 @section('dashboard', 'active')
 @section('content')
+@include('admin.font.index')
     <div class="app-content-header">
         <!--begin::Container-->
         <div class="container-fluid">

@@ -9,27 +9,26 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('order_number')->unique();
-            $table->string('customer_name');
-            $table->string('phone', 50);
-            $table->text('address');
+            $table->unsignedBigInteger('customer_id')->nullable();
             $table->decimal('total_amount', 10, 2);
-            $table->decimal('customer_pay', 10, 2);
-            $table->decimal('change_amount', 10, 2);
-            $table->string('payment_method'); // cash, card, etc.
+            $table->decimal('customer_pay', 10, 2)->nullable();
+            $table->decimal('change_amount', 10, 2)->nullable();
+            $table->string('payment_method')->default('cash'); // cash, credit, paypal
+            $table->string('status')->default('pending'); // pending, preparing, served, completed
             $table->string('card_number')->nullable();
             $table->string('expiry')->nullable();
             $table->string('cvc')->nullable();
-            $table->string('image')->nullable(); // optional order image
             $table->timestamps();
+
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
         });
     }
 
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('orders');
     }

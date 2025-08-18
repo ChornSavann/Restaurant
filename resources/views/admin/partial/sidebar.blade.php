@@ -1,9 +1,12 @@
+
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <!-- Sidebar Brand -->
     <div class="sidebar-brand">
         <a href="{{ route('dashboard.index') }}" class="brand-link">
-            <img src="{{ asset('admin/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                class="brand-image opacity-75 shadow" />
+            <img src="{{ asset('admin/assets/img/wholesome-eats-restaurant-logo_11024923.png!w700wp') }}"
+            alt="Restaurant Logo"
+            class="brand-image opacity-100 shadow rounded-circle logo-circle"/>
+
             <span class="brand-text fw-light">Restaurent</span>
         </a>
     </div>
@@ -53,8 +56,8 @@
                     </ul>
                 </li>
 
-                  <!-- Category -->
-                  <li class="nav-item">
+                <!-- Category -->
+                <li class="nav-item">
                     <a href="{{ route('category.index') }}"
                         class="nav-link {{ request()->routeIs('category.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-list"></i>
@@ -62,8 +65,8 @@
                     </a>
                 </li>
 
-                  <!-- Foods -->
-                  <li class="nav-item {{ request()->routeIs('food.*') ? 'menu-open' : '' }}">
+                <!-- Foods -->
+                <li class="nav-item {{ request()->routeIs('food.*') ? 'menu-open' : '' }}">
                     <a class="nav-link {{ request()->routeIs('food.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-bowl-food"></i>
                         <p>
@@ -113,7 +116,7 @@
                         <li class="nav-item">
                             <a href="{{ route('discount.index') }}"
                                 class="nav-link {{ request()->routeIs('stocks.dicount') ? 'active' : '' }}">
-                                 <i class="nav-icon bi bi-circle"></i>
+                                <i class="nav-icon bi bi-circle"></i>
                                 <p>Discount</p>
                             </a>
                         </li>
@@ -125,9 +128,11 @@
 
 
 
-                 <!-- Orders -->
-                 <li class="nav-item {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
-                    <a class="nav-link {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'active' : '' }}">
+                <!-- Orders -->
+                <li
+                    class="nav-item {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
+                    <a
+                        class="nav-link {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'active' : '' }}">
                         <i class="fa-brands fa-jedi-order"></i>
                         <p>
                             Orders
@@ -136,15 +141,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('order.index')}}"
-                               class="nav-link {{ request()->routeIs('orders.index') ? 'active' : '' }}">
+                            <a href="{{ route('order.index') }}"
+                                class="nav-link {{ request()->routeIs('orders.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Order</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('orders.show')}}"
-                               class="nav-link {{ request()->routeIs('orders.items') ? 'active' : '' }}">
+                            <a href="{{ route('orders.show') }}"
+                                class="nav-link {{ request()->routeIs('orders.items') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Order Detail</p>
                             </a>
@@ -296,4 +301,3 @@
         </nav>
     </div>
 </aside> --}}
-

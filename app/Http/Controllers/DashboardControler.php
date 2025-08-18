@@ -41,17 +41,19 @@ class DashboardControler extends Controller
             DB::raw('MONTH(created_at) as month'),
             DB::raw('SUM(total_amount) as total')
         )
-        ->groupBy('month') 
-        ->orderBy('month')
-        ->get();
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
 
-    // Convert month numbers to short month names
-    $months = $salesData->pluck('month')->map(function ($m) {
-        return date('M', mktime(0, 0, 0, $m, 1));
-    });
+        // Convert month numbers to short month names
+        $months = $salesData->pluck('month')->map(function ($m) {
+            return date('M', mktime(0, 0, 0, $m, 1));
+        });
 
-    $totals = $salesData->pluck('total');
-
+        $totals = $salesData->pluck('total');
+        $todayOrders = Order::with(['customer', 'orderItems.food'])
+            ->whereDate('created_at', Carbon::today())
+            ->paginate(4);
         return view('admin.Dashboard.index', compact(
             'orders',
             'user',
@@ -65,6 +67,7 @@ class DashboardControler extends Controller
             'salesData',
             'months',
             'totals',
+            'todayOrders'
         ));
     }
 

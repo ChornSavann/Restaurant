@@ -2,7 +2,7 @@
 @section('title', 'Dashboaard')
 @section('dashboard', 'active')
 @section('content')
-@include('admin.font.index')
+    @include('admin.font.index')
     <div class="app-content-header">
         <!--begin::Container-->
         <div class="container-fluid">
@@ -340,8 +340,8 @@
                             <span class="badge text-bg-danger">{{ $users->count() }} New Members</span>
                         </div>
                     </div>
-                    <div class="card-body p-2">
-                        <div class="row text-center g-2">
+                    <div class="card-body p-4">
+                        <div class="row text-center g-12">
                             @forelse ($users as $user)
                                 <div class="col-2">
                                     <img class="img-fluid rounded-circle"
@@ -350,7 +350,7 @@
                                     <a class="d-block text-truncate fw-bold fs-7 text-secondary" href="#">
                                         {{ $user->name }}
                                     </a>
-                                    <small class="text-muted">{{ $user->created_at->format('d M') }}</small>
+                                    <small class="text-muted">{{ $user->created_at->format('d M Y') }}</small>
                                 </div>
                             @empty
                                 <div class="col-12 text-center py-3 text-muted">
@@ -415,103 +415,85 @@
                         </div>
                     </div>
                     <div class="card-footer clearfix">
-                        {{-- <a href="{{ route('food.index') }}" class="btn btn-sm btn-secondary float-end">
-                            View All Foods
-                        </a> --}}
+
                     </div>
                 </div>
             </div>
         </div>
+
+        {{-- show order today --}}
+        <!-- Table Card -->
         <div class="row">
-            <!-- Start col -->
-            <div class="col-lg-7 connectedSortable">
+            <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Sales Value</h3>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="card-title mb-0">Today’s Orders</h3>
+                        <div>
+                            <button id="exportCsv" class="btn btn-sm btn-outline-primary">Export CSV</button>
+                            <button id="exportPdf" class="btn btn-sm btn-outline-danger">Export PDF</button>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <canvas id="revenue-chart" height="200"></canvas>
+
+                    <div class="card-body full-control">
+                        <table id="ordersTable" class="table table-bordered table-striped table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Customer</th>
+                                    <th>Food Item(s)</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                    <th>Ordered At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($todayOrders as $index => $order)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $order->customer->name ?? 'Walk-in' }}</td>
+                                        <td>
+                                            <ul class="mb-0 ps-3">
+                                                @foreach ($order->orderItems as $item)
+                                                    <li>{{ $item->food->title }}  ({{ $item->quantity }})</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>{{ $order->orderItems->sum('quantity') }}</td>
+                                        <td>${{ number_format($order->total_amount, 2) }}</td>
+                                        <td>{{ $order->created_at->format('H:i A') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">No orders today.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
+                    {{-- <div class="m-1 d-flex justify-content-end">
+                        {{ $todayOrders->links() }}
+                    </div> --}}
+
+
                 </div>
             </div>
+        </div>
 
-            {{-- Pass PHP data to JS --}}
-            <script>
-                const months = @json($months);
-                const totals = @json($totals);
-            </script>
-
-            {{-- Chart.js Script --}}
-            {{-- <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script> --}}
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const ctx = document.getElementById('revenue-chart').getContext('2d');
-
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: months,
-                        datasets: [{
-                            label: 'Sales ($)',
-                            data: totals,
-                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1,
-                            borderRadius: 6
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: { display: true },
-                            tooltip: { enabled: true }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    callback: function (value) {
-                                        return '$' + value.toLocaleString();
-                                    }
-                                }
-                            }
-                        }
-                    }
+        <!-- DataTables Scripts -->
+        <script>
+            $(document).ready(function() {
+                $('#ordersTable').DataTable({
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    lengthChange: true,
+                    pageLength: 10,
+                    responsive: true
                 });
             });
-            </script>
-
-            <!-- /.Start col -->
-            <!-- Start col -->
-
-            <!-- /.Start col -->
-        </div>
-
-        {{-- <div class="row">
-            <!-- Start col -->
-            <div class="col-md-8">
-                <!--begin::Row-->
-
-                <!--end::Row-->
-                <!--begin::Latest Order Widget-->
-                <div class="card">
-                    <div class="card-header form-control">
-                        <h3 class="card-title">Latest Orders</h3>
-
-                    </div>
-                    <!-- /.card-header -->
-                    @include('admin.Foods.orders.show')
-                    <!-- /.card-footer -->
-                </div>
+        </script>
 
 
-                <!-- /.card -->
-            </div>
-            <!-- /.col -->
-
-            <!-- /.col -->
-        </div> --}}
-        <!--end::Row-->
     </div>
     <!--end::Container-->
     </div>

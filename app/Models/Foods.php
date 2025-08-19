@@ -25,6 +25,11 @@ class Foods extends Model
         return $this->hasOne(Stocks::class, 'food_id', 'id'); // assuming 1 stock per food
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'food_id');
+    }
+
 
 
 }

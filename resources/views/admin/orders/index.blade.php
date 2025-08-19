@@ -12,12 +12,26 @@
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <!-- Search Filters -->
+                <div class="col-md-4 mb-2">
+                    <input type="text" id="food-search" class="form-control" placeholder="Search by name...">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <input type="number" id="min-price" class="form-control" placeholder="Min Price">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <input type="number" id="max-price" class="form-control" placeholder="Max Price">
+                </div>
+            </div>
+
             <div class="row">
                 <!-- Menu Items -->
                 <div class="col-lg-8" style="max-height:600px; overflow-y:auto;">
                     <div class="row" id="menu-items">
                         @foreach ($foods as $food)
-                            <div class="col-md-4 mb-4 menu-item">
+                            <div class="col-md-4 mb-4 menu-item" data-title="{{ strtolower($food->title) }}"
+                                data-price="{{ $food->price }}" data-stock="{{ $food->stocks->quantity }}">
                                 <div class="card h-100 shadow-sm">
                                     <img src="{{ asset('foods/image/' . $food->image) }}" class="card-img-top"
                                         style="height:150px; object-fit:cover;">
@@ -86,7 +100,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -94,14 +107,15 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function()
+        {
             let cart = [];
 
+            // Update Cart Function (your existing code)
             function updateCart() {
                 const cartContainer = document.getElementById('cart-items');
                 const totalEl = document.getElementById('cart-total');
                 cartContainer.innerHTML = '';
-
                 if (cart.length === 0) {
                     cartContainer.innerHTML = '<p class="text-muted">No items added yet.</p>';
                     document.getElementById('checkout-btn').disabled = true;
@@ -112,77 +126,56 @@
                 let total = 0;
                 cart.forEach((item, index) => {
                     total += item.price * item.quantity;
-
                     const div = document.createElement('div');
                     div.className =
                         'd-flex justify-content-between align-items-center mb-2 p-2 border rounded shadow-sm bg-light';
-
                     div.innerHTML = `
                         <div class="d-flex flex-column">
                             <strong>${item.name}</strong>
                             <small class="text-muted">$${item.price.toFixed(2)} each</small>
                         </div>
-
                         <div class="d-flex align-items-center gap-2">
                             <button class="btn btn-sm btn-outline-secondary decrement" data-index="${index}">-</button>
                             <span class="px-2 fw-bold">${item.quantity}</span>
                             <button class="btn btn-sm btn-outline-secondary increment" data-index="${index}">+</button>
                         </div>
-
                         <div class="d-flex flex-column align-items-end">
-                            <span class="fw-bold">$${(item.price * item.quantity).toFixed(2)}</span>
+                            <span class="fw-bold">$${(item.price*item.quantity).toFixed(2)}</span>
                             <button class="btn btn-sm btn-danger remove-item mt-1" data-index="${index}">Remove</button>
                         </div>
                     `;
-
                     cartContainer.appendChild(div);
                 });
 
-
-                // Add event listeners for increment/decrement buttons
-                document.querySelectorAll('.increment').forEach(btn => {
-                    btn.addEventListener('click', e => {
-                        const idx = e.target.dataset.index;
-                        cart[idx].quantity++;
+                // Event listeners for increment/decrement/remove
+                document.querySelectorAll('.increment').forEach(btn =>
+                {
+                    btn.addEventListener('click', e =>
+                    {
+                        cart[e.target.dataset.index].quantity++;
                         updateCart();
                     });
                 });
-
                 document.querySelectorAll('.decrement').forEach(btn => {
                     btn.addEventListener('click', e => {
                         const idx = e.target.dataset.index;
-                        if (cart[idx].quantity > 1) {
-                            cart[idx].quantity--;
-                            updateCart();
-                        }
-                    });
-                });
-
-                // Remove item button stays the same
-                document.querySelectorAll('.remove-item').forEach(btn => {
-                    btn.addEventListener('click', e => {
-                        const idx = e.target.dataset.index;
-                        cart.splice(idx, 1);
+                        if (cart[idx].quantity > 1) cart[idx].quantity--;
                         updateCart();
                     });
                 });
-
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', e => {
+                        cart.splice(e.target.dataset.index, 1);
+                        updateCart();
+                    });
+                });
 
                 totalEl.textContent = '$' + total.toFixed(2);
                 document.getElementById('checkout-btn').disabled = false;
-
-                document.querySelectorAll('.remove-item').forEach(btn => {
-                    btn.addEventListener('click', e => {
-                        const idx = e.target.dataset.index;
-                        cart.splice(idx, 1);
-                        updateCart();
-                        updateChange();
-                    });
-                });
-
                 updateChange();
             }
 
+            // Add to cart buttons
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const id = btn.dataset.id;
@@ -204,12 +197,11 @@
                             stock
                         });
                     }
-
                     updateCart();
                 });
             });
 
-
+            // Update Change
             function updateChange() {
                 const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
                 const pay = parseFloat(document.getElementById('customer-pay').value) || 0;
@@ -217,14 +209,15 @@
             }
             document.getElementById('customer-pay').addEventListener('input', updateChange);
 
+            // Payment method toggle
             document.getElementById('payment-method').addEventListener('change', function() {
                 document.getElementById('payment-details').style.display = (this.value === 'credit' || this
                     .value === 'paypal') ? 'block' : 'none';
             });
 
+            // Checkout button (your existing code)
             document.getElementById('checkout-btn').addEventListener('click', async () => {
                 if (cart.length === 0) return alert('Cart is empty!');
-
                 const payload = {
                     customer_name: document.getElementById('customer-name').value,
                     phone: document.getElementById('customer-phone').value,
@@ -239,9 +232,7 @@
                     expiry: document.getElementById('expiry').value || null,
                     cvc: document.getElementById('cvc').value || null
                 };
-
                 const csrf = document.querySelector('meta[name="csrf-token"]').content;
-
                 try {
                     const res = await fetch("{{ route('orders.store') }}", {
                         method: 'POST',
@@ -252,10 +243,8 @@
                         },
                         body: JSON.stringify(payload)
                     });
-
                     const data = await res.json();
                     const alertContainer = document.getElementById('alert-container');
-
                     if (res.ok) {
                         alertContainer.innerHTML =
                             `<div class="alert alert-success">${data.message}</div>`;
@@ -282,6 +271,32 @@
                     console.error(err);
                 }
             });
+
+            // --- Food Search Filter ---
+            const searchInput = document.getElementById('food-search');
+            const minPriceInput = document.getElementById('min-price');
+            const maxPriceInput = document.getElementById('max-price');
+
+            function filterFoods() {
+                const filter = searchInput.value.toLowerCase();
+                const minPrice = parseFloat(minPriceInput.value) || 0;
+                const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    const title = item.dataset.title;
+                    const price = parseFloat(item.dataset.price);
+
+                    if (title.includes(filter) && price >= minPrice && price <= maxPrice) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+
+            searchInput.addEventListener('input', filterFoods);
+            minPriceInput.addEventListener('input', filterFoods);
+            maxPriceInput.addEventListener('input', filterFoods);
 
         });
     </script>

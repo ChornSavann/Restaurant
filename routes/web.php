@@ -8,6 +8,7 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\Homecontroller;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Profilecontroller;
+use App\Http\Controllers\Reportcontroller;
 use App\Http\Controllers\Reservationcontroller;
 use App\Http\Controllers\stockController;
 use App\Http\Controllers\Usercontroller;
@@ -49,7 +50,7 @@ Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateSta
 
 // Optional: view single order details (if needed separate from modal)
 Route::get('/admin/orders/', [OrderController::class, 'show'])->name('orders.show');
-
+Route::get('/invoice/orders/{id}/print', [OrderController::class, 'print'])->name('orders.print');
 
 
 //dashboard
@@ -104,6 +105,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/category/Delete/{id}', [Categorycontroller::class, 'destroy'])->name('category.delete');
     //foods
     Route::get('/food', [FoodController::class, 'index'])->name('food.index');
+    Route::get('/list-food',[FoodController::class,'list'])->name('food.list');
     Route::get('/food/create', [FoodController::class, 'create'])->name('food.create');
     Route::post('/food/store', [FoodController::class, 'store'])->name('food.store');
     Route::get('/food/edit{id}', [FoodController::class, 'edit'])->name('food.edit');
@@ -132,11 +134,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/orders/items', [OrderController::class, 'item'])->name('orders.items');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/menu', [OrderController::class, 'showMenu'])->name('menu');
+    Route::get('/showitem',[OrderController::class,'show'])->name('orders.show');
 
     //Order
     Route::get('/order',[OrderController::class,'index'])->name('order.index');
 
-
+    //report
+    Route::get('/report/sales', [Reportcontroller::class, 'salesReport'])->name('sale.report');
+    Route::get('/report/food', [Reportcontroller::class, 'foods'])->name('report.food');
+    Route::get('/report/customer', [Reportcontroller::class, 'customer'])->name('report.customer');
+    Route::get('/report/stock', [Reportcontroller::class, 'stock'])->name('report.stock');
 
 });
 

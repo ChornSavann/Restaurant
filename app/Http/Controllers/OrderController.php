@@ -182,6 +182,8 @@ class OrderController extends Controller
         return view('admin.orders.index', compact('foods'));
     }
 
+    
+
     public function store(Request $request)
     {
         DB::beginTransaction();

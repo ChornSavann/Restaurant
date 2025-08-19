@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf; // make sure you import
 
 class DashboardControler extends Controller
 {
@@ -54,6 +55,35 @@ class DashboardControler extends Controller
         $todayOrders = Order::with(['customer', 'orderItems.food'])
             ->whereDate('created_at', Carbon::today())
             ->paginate(4);
+        // $odertoday = Order::with('orderItems.food')
+        //     ->whereDate('created_at', now())
+        //     ->latest()
+        //     ->take(10) // បង្ហាញ Order ថ្ងៃនេះ ចំនួន 10
+        //     ->get();
+
+        // dashborad
+        // $ordersThisWeek = Order::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+        //     ->selectRaw('DAYNAME(created_at) as day, COUNT(*) as total')
+        //     ->groupBy('day')->pluck('total')->toArray();
+
+        // $ordersLastWeek = Order::whereBetween('created_at', [now()->subWeek()->startOfWeek(), now()->subWeek()->endOfWeek()])
+        //     ->selectRaw('DAYNAME(created_at) as day, COUNT(*) as total')
+        //     ->groupBy('day')->pluck('total')->toArray();
+
+        // $salesThisYear = Order::whereYear('created_at', date('Y'))
+        //     ->selectRaw('MONTH(created_at) as month, SUM(total_amount) as total')
+        //     ->groupBy('month')->pluck('total')->toArray();
+
+        // $salesLastYear = Order::whereYear('created_at', date('Y', strtotime('-1 year')))
+        //     ->selectRaw('MONTH(created_at) as month, SUM(total_amount) as total')
+        //     ->groupBy('month')->pluck('total')->toArray();
+
+        // $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        // $totalOrdersToday = Order::whereDate('created_at', today())->count();
+        // $totalSalesToday = Order::whereDate('created_at', today())->sum('total_amount');
+        // $ordersPercentChange = 12.5; // calculate percentage
+        // $salesPercentChange = 33.1; // calculate percentage
+
         return view('admin.Dashboard.index', compact(
             'orders',
             'user',
@@ -67,9 +97,32 @@ class DashboardControler extends Controller
             'salesData',
             'months',
             'totals',
-            'todayOrders'
+            'todayOrders',
+            //    ' odertoday'
+            // 'ordersThisWeek',
+            // 'ordersLastWeek',
+            // 'salesThisYear',
+            // 'salesLastYear',
+            // 'months',
+            // 'totalOrdersToday',
+            // 'totalSalesToday',
+            // 'ordersPercentChange',
+            // 'salesPercentChange'
         ));
     }
+
+    // public function print($id)
+    // {
+    //     $order = Order::with('orderItems.food')->findOrFail($id);
+
+    //     // $order = Order::with('orderItems.food')->findOrFail($id);
+
+    //     $pdf = Pdf::loadView('admin.orders.invoice', compact('order'));
+
+    //     return $pdf->download('invoice_' . $order->id . '.pdf');
+    // }
+
+
 
     public function todayOrders()
     {

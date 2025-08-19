@@ -11,12 +11,6 @@
                 <div class="col-sm-6">
                     <h3 class="mb-0">Dashboard</h3>
                 </div>
-                {{-- <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard v2</li>
-                </ol>
-            </div> --}}
             </div>
             <!--end::Row-->
         </div>
@@ -420,10 +414,91 @@
                 </div>
             </div>
         </div>
+        {{-- Last order --}}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Latest Orders</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
+                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Item</th>
+                                <th>Status</th>
+                                <th>Popularity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse (  $todayOrders as $order)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('orders.show', $order->id) }}"
+                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                                            OR{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if ($order->orderItems->count() > 0)
+                                            {{ $order->orderItems->first()->food->title }}
+                                            @if ($order->orderItems->count() > 1)
+                                                + {{ $order->orderItems->count() - 1 }} more
+                                            @endif
+                                        @else
+                                            No items
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @php
+                                            $statusClass = match ($order->status) {
+                                                'completed' => 'success',
+                                                'pending' => 'warning',
+                                                'Delivered' => 'danger',
+                                                'Processing' => 'info',
+                                                default => 'secondary',
+                                            };
+                                        @endphp
+                                        <span class="badge text-bg-{{ $statusClass }}">{{ $order->status }}</span>
+                                    </td>
+                                    <td>
+                                        <div id="table-sparkline-{{ $order->id }}"></div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">No orders today</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <a href="{{ route('orders.index') }}" class="btn btn-sm btn-primary float-start">
+                    Place New Order
+                </a>
+                <a href="{{ route('orders.show') }}" class="btn btn-sm btn-secondary float-end">
+                    View All Orders
+                </a>
+            </div>
 
+        </div>
         {{-- show order today --}}
         <!-- Table Card -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -454,7 +529,7 @@
                                         <td>
                                             <ul class="mb-0 ps-3">
                                                 @foreach ($order->orderItems as $item)
-                                                    <li>{{ $item->food->title }}  ({{ $item->quantity }})</li>
+                                                    <li>{{ $item->food->title }} ({{ $item->quantity }})</li>
                                                 @endforeach
                                             </ul>
                                         </td>
@@ -470,14 +545,9 @@
                             </tbody>
                         </table>
                     </div>
-                    {{-- <div class="m-1 d-flex justify-content-end">
-                        {{ $todayOrders->links() }}
-                    </div> --}}
-
-
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- DataTables Scripts -->
         <script>
@@ -492,11 +562,5 @@
                 });
             });
         </script>
-
-
-    </div>
-    <!--end::Container-->
-    </div>
-
-
-@endsection
+     
+    @endsection

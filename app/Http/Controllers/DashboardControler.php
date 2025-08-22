@@ -126,13 +126,17 @@ class DashboardControler extends Controller
 
     public function todayOrders()
     {
+        // Get today's date
         $today = Carbon::today();
 
+        // Fetch pending orders created today, with related foods
         $orders = Order::with('orderItems.food')
+            ->where('status', 'pending')
             ->whereDate('created_at', $today)
             ->orderBy('created_at', 'desc')
             ->get();
 
+        // Pass orders to view
         return view('admin.Foods.orders.show', compact('orders'));
     }
 

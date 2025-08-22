@@ -3,6 +3,7 @@
 use App\Http\Controllers\Categorycontroller;
 use App\Http\Controllers\ChefController;
 use App\Http\Controllers\DashboardControler;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\Homecontroller;
@@ -145,6 +146,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/report/customer', [Reportcontroller::class, 'customer'])->name('report.customer');
     Route::get('/report/stock', [Reportcontroller::class, 'stock'])->name('report.stock');
 
+
+    //Delivery
+    Route::get('/delivery',[DeliveryController::class,'index'])->name('delivery.index');
+    Route::get('/delivery/create',[DeliveryController::class,'create'])->name('delivery.create');
+    Route::post('/delivery/tore',[DeliveryController::class,'store'])->name('delivery.store');
+    Route::get('/delivery/edit{id}',[DeliveryController::class,'edit'])->name('delivery.edit');
+    Route::post('/delivery/update{id}',[DeliveryController::class,'update'])->name('delivery.update');
+    Route::delete('/delivery/delete{id}',[DeliveryController::class,'destroy'])->name('delivery.delete');
 });
 
 // User Dashboard (Home page)

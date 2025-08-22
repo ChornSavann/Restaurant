@@ -12,15 +12,24 @@ class Order extends Model
 
     // In Order.php
     protected $fillable = [
-        'customer_id', 'total_amount', 'customer_pay', 'change_amount',
-        'payment_method', 'card_number', 'expiry', 'cvc', 'status'
+        'customer_id',
+        'total_amount',
+        'customer_pay',
+        'change_amount',
+        'payment_method',
+        'card_number',
+        'expiry',
+        'cvc',
+        'status'
     ];
 
-    public function orderItems() {
+    public function orderItems()
+    {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function customer() {
+    public function customer()
+    {
         return $this->belongsTo(Customer::class);
     }
 
@@ -55,5 +64,8 @@ class Order extends Model
         };
     }
 
-    
+    public function deliveries()
+    {
+        return $this->hasMany(Delivery::class, 'order_id');
+    }
 }

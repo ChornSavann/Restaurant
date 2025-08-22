@@ -151,6 +151,34 @@
                     </ul>
                 </li>
 
+                {{-- delivery --}}
+                <li
+                    class="nav-item {{ request()->routeIs('delivery.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
+                    <a
+                        class="nav-link {{ request()->routeIs('delivery.*') || request()->routeIs('item.*') ? 'active' : '' }}">
+                        <i class="fa-brands fa-jedi-order"></i>
+                        <p>
+                            Delivery
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('delivery.index') }}"
+                                class="nav-link {{ request()->routeIs('delivery.index') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Delivery Detail</p>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item">
+                 <a href="{{ route('orders.show') }}"
+                     class="nav-link {{ request()->routeIs('orders.show') ? 'active' : '' }}">
+                     <i class="nav-icon bi bi-circle"></i>
+                     <p>Order Detail</p>
+                 </a>
+             </li> --}}
+                    </ul>
+                </li>
                 <!-- Chefs -->
                 <li class="nav-item">
                     <a href="{{ route('chefs.index') }}"
@@ -169,8 +197,10 @@
                     </a>
                 </li>
 
-                {{-- report --}}
 
+
+
+                {{-- report --}}
                 <li class="nav-item {{ request()->routeIs('report.*') ? 'menu-open' : '' }}">
                     <a class="nav-link {{ request()->routeIs('report.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-boxes-stacked"></i>
@@ -188,6 +218,7 @@
                                 <p>Sale Report</p>
                             </a>
                         </li>
+
 
                         {{-- Food Report --}}
                         <li class="nav-item">
@@ -217,6 +248,7 @@
                         </li>
                     </ul>
                 </li>
+
 
                 <!-- Logout -->
                 <li class="nav-item">

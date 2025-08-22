@@ -25,7 +25,7 @@
                                 <th>តម្លៃសរុប</th>
                                 <th>ស្ថានភាព</th>
                                 <th>ថ្ងៃបញ្ជា</th>
-                                <th style="width: 200px">សកម្មភាព</th>
+                                <th style="width: 120px">សកម្មភាព</th>
                             </tr>
                         </thead>
 
@@ -54,16 +54,7 @@
                                                 <i class="fa-solid fa-eye"></i> View
                                             </a>
 
-                                            <!-- Update Status Button -->
-                                            @if ($order->status == 'pending')
-                                                <form action="{{ route('orders.updateStatus', $order->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button class="btn btn-success btn-sm">
-                                                        <i class="fa-solid fa-clipboard-list"></i> Complete
-                                                    </button>
-                                                </form>
-                                            @endif
+
                                         </div>
                                     </td>
 

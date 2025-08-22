@@ -106,7 +106,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/category/Delete/{id}', [Categorycontroller::class, 'destroy'])->name('category.delete');
     //foods
     Route::get('/food', [FoodController::class, 'index'])->name('food.index');
-    Route::get('/list-food',[FoodController::class,'list'])->name('food.list');
+    Route::get('/list-food', [FoodController::class, 'list'])->name('food.list');
     Route::get('/food/create', [FoodController::class, 'create'])->name('food.create');
     Route::post('/food/store', [FoodController::class, 'store'])->name('food.store');
     Route::get('/food/edit{id}', [FoodController::class, 'edit'])->name('food.edit');
@@ -135,10 +135,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/orders/items', [OrderController::class, 'item'])->name('orders.items');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/menu', [OrderController::class, 'showMenu'])->name('menu');
-    Route::get('/showitem',[OrderController::class,'show'])->name('orders.show');
+    Route::get('/showitem', [OrderController::class, 'show'])->name('orders.show');
 
     //Order
-    Route::get('/order',[OrderController::class,'index'])->name('order.index');
+    Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 
     //report
     Route::get('/report/sales', [Reportcontroller::class, 'salesReport'])->name('sale.report');
@@ -148,12 +148,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
     //Delivery
-    Route::get('/delivery',[DeliveryController::class,'index'])->name('delivery.index');
-    Route::get('/delivery/create',[DeliveryController::class,'create'])->name('delivery.create');
-    Route::post('/delivery/tore',[DeliveryController::class,'store'])->name('delivery.store');
-    Route::get('/delivery/edit{id}',[DeliveryController::class,'edit'])->name('delivery.edit');
-    Route::post('/delivery/update{id}',[DeliveryController::class,'update'])->name('delivery.update');
-    Route::delete('/delivery/delete{id}',[DeliveryController::class,'destroy'])->name('delivery.delete');
+    Route::get('/delivery', [DeliveryController::class, 'index'])->name('delivery.index');
+    Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
+    
+    Route::get('/customer/{customer}/orders', [DeliveryController::class, 'getCustomerOrders']);
+
+    Route::post('/delivery/tore', [DeliveryController::class, 'store'])->name('delivery.store');
+    Route::get('/delivery/edit{id}', [DeliveryController::class, 'edit'])->name('delivery.edit');
+    Route::post('/delivery/update{id}', [DeliveryController::class, 'update'])->name('delivery.update');
+    Route::delete('/delivery/delete{id}', [DeliveryController::class, 'destroy'])->name('delivery.delete');
 });
 
 // User Dashboard (Home page)

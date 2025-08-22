@@ -30,14 +30,10 @@
                                 <div class="mb-3">
                                     <label for="customer_id" class="form-label fw-semibold">Customer <span
                                             class="text-danger">*</span></label>
-                                    <select name="customer_id" id="customer_id"
-                                        class="form-select @error('customer_id') is-invalid @enderror" required>
+                                    <select name="customer_id" id="customer_id" class="form-select" required>
                                         <option value="">Select Customer</option>
                                         @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id }}"
-                                                {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
-                                                {{ $customer->name }}
-                                            </option>
+                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('customer_id')
@@ -48,24 +44,13 @@
                             </div>
                             <div class="col-6">
                                 <!-- Order -->
-                                <div class="mb-3">
-                                    <label for="order_id" class="form-label fw-semibold">Order <span
-                                            class="text-danger">*</span></label>
-                                    <select name="order_id" id="order_id"
-                                        class="form-select @error('order_id') is-invalid @enderror" required>
-                                        <option value="">Select Order</option>
-                                        @foreach ($orders as $order)
-                                            <option value="{{ $order->id }}"
-                                                {{ old('order_id') == $order->id ? 'selected' : '' }}>
-                                                #{{ $order->id }} - {{ $order->status }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('order_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                <label for="order" class="form-label fw-semibold">Order <span
+                                        class="text-danger">*</span></label>
+                                <select name="order_id" id="order_id" class="form-select" required>
+                                    <option value="">Select Order</option>
+                                </select>
                             </div>
+
                         </div>
 
                         <!-- Address -->
@@ -140,4 +125,22 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#customer_id').on('change', function() {
+            var customerId = $(this).val();
+            $('#order_id').html('<option value="">Select Order</option>'); // reset
+
+            if (customerId) {
+                $.get('/customer/' + customerId + '/orders', function(data) {
+                    $.each(data, function(key, order) {
+                        $('#order_id').append(
+                            `<option value="${order.id}">#${order.order_number} - ${order.status}</option>`
+                        );
+                    });
+                });
+            }
+        });
+    </script>
+
 @endsection

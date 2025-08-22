@@ -52,8 +52,8 @@
                         <tr>
                             <td class="text-center">{{ $deliveries->firstItem() + $index }}</td>
                             <td class="text-center">{{ $delivery->customer->name ?? '-' }}</td>
-                            <td class="text-center">#{{ $delivery->order->id ?? '-' }}</td>
-                            <td>{{ $delivery->delivery_address }}</td>
+                            <td class="text-center">#{{ $delivery->order->order_number ?? '-' }}</td>
+                            <td class="text-center">{{ $delivery->delivery_address }}</td>
                             <td class="text-center">
                                 <span class="badge bg-{{ $delivery->delivery_status == 'Delivered' ? 'success' : ($delivery->delivery_status == 'In Transit' ? 'info' : ($delivery->delivery_status == 'Cancelled' ? 'danger' : 'secondary')) }}">
                                     {{ $delivery->delivery_status }}

@@ -18,13 +18,25 @@ class DeliveryController extends Controller
 
         return view('admin.delivery.index', compact('customers', 'orders', 'deliveries'));
     }
+
+    public function getCustomerOrders(Customer $customer)
+    {
+        $orders = $customer->orders()->where('status', 'pending')->get();
+        return response()->json($orders);
+    }
+
     public function create()
     {
-        $customers = Customer::all();
-        $orders = Order::all();
+        // Only get customers who have at least one pending order
+        $customers = Customer::whereHas('orders', function ($query) {
+            $query->where('status', 'pending');
+        })->get();
 
+        $orders = Order::where('status', 'pending')->get();
         return view('admin.delivery.create', compact('customers', 'orders'));
     }
+
+
 
     public function store(Request $request)
     {
@@ -42,22 +54,18 @@ class DeliveryController extends Controller
 
         // Update corresponding Order status automatically
         $order = Order::find($validated['order_id']);
-        if($order)
-        {
-            if($delivery->delivery_status == 'Delivered')
-            {
+        if ($order) {
+            if ($delivery->delivery_status == 'Delivered') {
                 $order->status = 'completed';
-            }
-            elseif($delivery->delivery_status == 'Cancelled')
-            {
+            } elseif ($delivery->delivery_status == 'Cancelled') {
                 $order->status = 'cancelled';
-            }
-            else
-            {
+            } else {
                 $order->status = 'pending'; // or 'in progress'
             }
             $order->save();
         }
+
+        return redirect()->route('delivery.index')->with('success','Create delivery successfully...');
     }
     // Show edit form
     public function edit($id)

@@ -156,7 +156,7 @@
                     class="nav-item {{ request()->routeIs('delivery.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
                     <a
                         class="nav-link {{ request()->routeIs('delivery.*') || request()->routeIs('item.*') ? 'active' : '' }}">
-                        <i class="fa-brands fa-jedi-order"></i>
+                        <i class="fa-solid fa-truck-fast me-1"></i>
                         <p>
                             Delivery
                             <i class="nav-arrow bi bi-chevron-right"></i>

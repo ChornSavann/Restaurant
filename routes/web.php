@@ -70,6 +70,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardControler::class, 'index'])->name('admin.dashboard');
     //Dashboard
     Route::get('/dashboard', [DashboardControler::class, 'index'])->name('dashboard.index');
+    Route::get('/admin/reports/sale',[DashboardControler::class, 'salesReport'])
+    ->name('admin.reports.monthly');
+
 
     //user
     Route::get('/user/index', [Usercontroller::class, 'index'])->name('user.index');
@@ -147,10 +150,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/report/stock', [Reportcontroller::class, 'stock'])->name('report.stock');
 
 
+
     //Delivery
     Route::get('/delivery', [DeliveryController::class, 'index'])->name('delivery.index');
     Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
-    
+
     Route::get('/customer/{customer}/orders', [DeliveryController::class, 'getCustomerOrders']);
 
     Route::post('/delivery/tore', [DeliveryController::class, 'store'])->name('delivery.store');

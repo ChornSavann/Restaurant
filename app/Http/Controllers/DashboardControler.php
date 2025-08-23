@@ -6,6 +6,7 @@ use App\Models\Foods;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -147,4 +148,17 @@ class DashboardControler extends Controller
 
         return view('admin.Foods.orders.show', compact('order'));
     }
+
+    public function salesReport()
+    {
+        $totalSales = Order::sum('total_amount');
+        $lastYearSales = Order::whereYear('created_at', now()->year - 1)->sum('total_amount');
+
+        $change_amount = ($lastYearSales > 0)
+            ? (($totalSales - $lastYearSales) / $lastYearSales) * 100
+            : 0;
+
+        return view('admin.report.Salereport', compact('totalSales', 'lastYearSales', 'change_amount'));
+    }
+
 }

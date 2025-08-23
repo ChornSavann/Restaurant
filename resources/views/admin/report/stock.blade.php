@@ -13,8 +13,7 @@
         </div>
 
         <div class="card shadow-sm">
-
-            <table class="table table-bordered ">
+            <table class="table table-striped table-hover align-middle mb-0">
                 <thead class="table-dark">
                     <tr>
                         <th>ល.រ</th>

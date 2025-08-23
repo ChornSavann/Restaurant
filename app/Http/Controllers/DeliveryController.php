@@ -6,6 +6,7 @@ use App\Models\Delivery;
 use App\Models\Order;
 use App\Models\Customer;
 use App\Models\deliveries;
+use App\Models\Foods;
 use Illuminate\Http\Request;
 
 class DeliveryController extends Controller
@@ -14,8 +15,7 @@ class DeliveryController extends Controller
     {
         $customers  = Customer::all();
         $orders     = Order::all();
-        $deliveries = Delivery::with(['customer', 'order'])->paginate(10);
-
+        $deliveries = Delivery::with(['customer', 'order.food'])->paginate(10);
         return view('admin.delivery.index', compact('customers', 'orders', 'deliveries'));
     }
 

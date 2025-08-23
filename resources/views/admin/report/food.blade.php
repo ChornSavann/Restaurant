@@ -39,6 +39,7 @@
                         <ul>
                             @forelse($unsoldFoods as $food)
                                 <li>{{ $food->title }}</li>
+                                {{-- <li>{{ $food->stock->quantity }}</li> --}}
                             @empty
                                 <li class="text-muted">ទាំងអស់មានការលក់</li>
                             @endforelse

@@ -68,4 +68,8 @@ class Order extends Model
     {
         return $this->hasMany(Delivery::class, 'order_id');
     }
+
+    public function food() {
+        return $this->belongsTo(Foods::class);
+    }
 }

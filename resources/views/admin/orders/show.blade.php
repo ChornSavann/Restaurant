@@ -41,7 +41,7 @@
                                             class="badge
                                             @if ($order->status == 'pending') bg-warning
                                             @elseif($order->status == 'completed') bg-success
-                                            @elseif($order->status == 'canceled') bg-danger @endif">
+                                            @elseif($order->status == 'cancelled') bg-danger @endif">
                                             {{ ucfirst($order->status) }}
                                         </span>
                                     </td>

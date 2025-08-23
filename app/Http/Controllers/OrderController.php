@@ -42,14 +42,18 @@ class OrderController extends Controller
             );
 
 
+            $totalAmount   = $request->total_amount;
+            $customerPay   = $request->customer_pay;
+            $changeAmount  = $customerPay - $totalAmount; // calculate here
+
             $order = Order::create([
-                'customer_id' => $customer->id,
-                'total_amount' => $request->total_amount,
+                'customer_id'    => $customer->id,
+                'total_amount'   => $totalAmount,
                 'payment_method' => $request->payment_selected,
-                'customer_pay' => $request->customer_pay,
-                'customer_change' => $request->customer_change,
-                'status' => 'pending',
-                'order_number' => 'OR' . rand(1000, 9999) // or a better generator
+                'customer_pay'   => $customerPay,
+                'change_amount'  => $changeAmount, // calculated, never null
+                'status'         => 'pending',
+                'order_number'   => 'OR' . rand(1000, 9999)
             ]);
 
 
@@ -115,16 +119,19 @@ class OrderController extends Controller
             );
 
 
-            $order = Order::create([
-                'customer_id' => $customer->id,
-                'total_amount' => $request->total_amount,
-                'payment_method' => $request->payment_selected,
-                'customer_pay' => $request->customer_pay,
-                'customer_change' => $request->customer_change,
-                'status' => 'pending',
-                'order_number' => 'OR' . rand(1000, 9999) // or a better generator
-            ]);
+            $totalAmount   = $request->total_amount;
+            $customerPay   = $request->customer_pay;
+            $changeAmount  = $customerPay - $totalAmount; // calculate here
 
+            $order = Order::create([
+                'customer_id'    => $customer->id,
+                'total_amount'   => $totalAmount,
+                'payment_method' => $request->payment_selected,
+                'customer_pay'   => $customerPay,
+                'change_amount'  => $changeAmount, // calculated, never null
+                'status'         => 'pending',
+                'order_number'   => 'OR' . rand(1000, 9999)
+            ]);
 
             $cart = json_decode($request->cart_data, true);
 
@@ -161,6 +168,4 @@ class OrderController extends Controller
             ], 500);
         }
     }
-
-
 }

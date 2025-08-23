@@ -9,6 +9,9 @@
   media="print"
   onload="this.media='all'"
 />
+<link rel="icon" href="{{ asset('assets/images/restaurant-logo-for-you-removebg-preview.png') }}" type="image/png" sizes="64x64">
+{{-- <link rel="icon" href="{{ asset('assets/images/restaurant-logo-for-you-removebg-preview.png') }}" type="image/png" sizes="16x16"> --}}
+
 <!--end::Fonts-->
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
 <link

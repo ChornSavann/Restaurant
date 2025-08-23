@@ -34,7 +34,7 @@
                                 data-price="{{ $food->price }}" data-stock="{{ $food->stocks->quantity }}">
                                 <div class="card h-100 shadow-sm">
                                     <img src="{{ asset('foods/image/' . $food->image) }}" class="card-img-top"
-                                        style="height:150px; object-fit:cover;">
+                                        style="height:230px; ">
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title">{{ $food->title }}</h5>
                                         <p class="price-text fw-bold text-warning mb-2">

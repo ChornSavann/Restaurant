@@ -39,7 +39,7 @@
                         <tr>
                             <th>#</th>
                             <th>Customer</th>
-                            <th>Order Number</th>
+                            <th>Order ID</th>
                             <th>Address</th>
                             <th>Status</th>
                             <th>Date</th>

@@ -74,7 +74,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>
-                                        <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-secondary' }}">
+                                        <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-primary' }}">
                                             {{ ucfirst($user->usertype) }}
                                         </span>
                                     </td>
@@ -194,7 +194,7 @@
                         <p class="mb-1"><strong>Email :</strong> {{ $user->email }}</p>
                         <p class="mb-1"><strong>Phone :</strong> {{ $user->phone ?? 'N/A' }}</p>
                         <p class="mb-0"><strong>Type  :</strong>
-                            <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-secondary' }}">
+                            <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-primary' }}">
                                 {{ ucfirst($user->usertype) }}
                             </span>
                         </p>

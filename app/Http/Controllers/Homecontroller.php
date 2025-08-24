@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class Homecontroller extends Controller
 {
-    
+
     public function login()
     {
         return view('users.login'); // រូបរាង login.blade.php
@@ -26,7 +26,8 @@ class Homecontroller extends Controller
         })->with('stocks')->get();
         $chefs=Chef::all();
         $category=Category::all();
-        return view('master.Home', compact('foods','chefs','category','discounts'));
+        $discount = Discount::with('food')->first(); // single model
+        return view('master.Home', compact('foods','chefs','category','discounts','discount'));
     }
 
 

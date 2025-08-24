@@ -22,10 +22,10 @@
             <div class="col-lg-8" style="max-height:600px; overflow-y:auto;">
                 <div class="row" id="menu-items">
                     @foreach ($foods as $food)
-                        <div class="col-md-4 mb-4 menu-item">
+                        <div class="col-md-3 mb-3 menu-item">
                             <div class="card h-100 shadow-sm">
                                 <img src="{{ asset('foods/image/' . $food->image) }}" class="w-100"
-                                    style="height: 180px; object-fit: cover;">
+                                    style="height: 130px;">
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title">{{ $food->title }}</h5>
                                     <div class="order-description mb-2">

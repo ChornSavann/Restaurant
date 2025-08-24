@@ -61,6 +61,8 @@ Route::get('/sales-data', [DashboardControler::class, 'salesData'])->name('sales
 Route::post('/register', [Reservationcontroller::class, 'store'])->name('register.store');
 Route::get('/reversation', [Reservationcontroller::class, 'index'])->name('reservation.index');
 
+//Discount
+Route::post('/Discount-stock',[OrderController::class,'storediscount'])->name('discount.storediscount');
 
 
 

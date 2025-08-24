@@ -75,13 +75,9 @@ https://templatemo.com/tm-558-klassy-cafe
                             </li>
                         -->
                             <li class="scroll-to-section"><a href="#menu">Menu</a></li>
-                            <li class="scroll-to-section"><a href="#order">Order</a></li>
+                            <li class="scroll-to-section" ><a href="#order">Order</a></li>
                             <li class="scroll-to-section"><a href="#chefs">Chefs</a></li>
-
                             <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
-                            {{-- <li class="scroll-to-section">
-                                <a href="{{ route('logout') }}" id="logout-link">Logout</a>
-                            </li> --}}
                             <li class="scroll-to-section">
                                 <a href="#" id="logout-link"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -92,8 +88,6 @@ https://templatemo.com/tm-558-klassy-cafe
                                     @csrf
                                 </form>
                             </li>
-
-
                         </ul>
 
                     </nav>
@@ -231,10 +225,6 @@ https://templatemo.com/tm-558-klassy-cafe
     <script src="assets/js/lightbox.js"></script>
     <script src="assets/js/isotope.js"></script>
 
-    {{-- <script src="assets/js/jquery-2.1.0.min.js"></script> --}}
-
-
-
     <!-- Global Init -->
     <script src="{{asset('assets/js/custom.js')}}"></script>
     <script>
@@ -252,16 +242,6 @@ https://templatemo.com/tm-558-klassy-cafe
             });
         });
 
-
-        // $(document).ready(function() {
-        //     $(".scroll-to-section a").on("click", function(e) {
-        //         e.preventDefault();
-        //         var target = $(this).attr("href");
-        //         $("html, body").animate({
-        //             scrollTop: $(target).offset().top
-        //         }, 70); // 800ms = smooth
-        //     });
-        // });
     </script>
 
 </body>

@@ -1,72 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Invoice #{{ $order->id }}</title>
-    <style>
-        body {
-            font-family: DejaVu Sans, sans-serif;
+<script>
+    function printReceipt(cart) {
+        if (cart.length === 0) {
+            alert("មិនមានទំនិញក្នុងកន្ត្រកទេ!");
+            return;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+        let shopName = "ភោជនីយ៍ដ្ឋាន CLASSY SAVANN";
+        let cashier = "អ្នកគ្រប់គ្រង SAVANN";
+        let invoiceNo = "INV" + Math.floor(Math.random() * 1000); // Auto generate invoice number
+        let dateNow = new Date().toLocaleString();
 
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
+        let subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        let save = 0; // ប្រសិនបើអ្នកមានបញ្ចុះតម្លៃ អាចគណនានៅទីនេះ
+        let total = subtotal - save;
 
-        th {
-            background: #f2f2f2;
-        }
+        // Build item rows
+        let rows = "";
+        cart.forEach(item => {
+            rows += `
+        <tr>
+            <td>${item.name}</td>
+            <td class="right">${item.quantity}</td>
+            <td class="right">$${item.price.toFixed(2)}</td>
+            <td class="right">0.00</td>
+            <td class="right">$${(item.price * item.quantity).toFixed(2)}</td>
+        </tr>
+    `;
+        });
 
-        h2 {
-            margin-bottom: 0;
-        }
-    </style>
-</head>
+        // Open print window
+        let printWindow = window.open("", "", "width=400,height=600");
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>វិក្កយបត្រ</title>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700&display=swap');
+                    body {
+                        font-family: 'Hanuman', monospace;
+                        font-size: 13px;
+                        width: 58mm;
+                        line-height: 1.4;
+                    }
+                    h2,h3,p { margin: 0; padding: 0; }
+                    .center { text-align: center; }
+                    .right { text-align: right; }
+                    .line { border-top: 1px solid #000; margin: 5px 0; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+                    th, td { font-size: 11px; padding: 2px; }
+                    th { border-bottom: 1px solid #000; }
+                    .totals td { padding: 3px 0; }
+                </style>
+            </head>
+            <body>
+                <div class="center">
+                    <h3>${shopName}</h3>
+                    <p>ដោយ : ${cashier}</p>
+                </div>
+                <p>វិក្កយបត្រ: ${invoiceNo} | ${dateNow}</p>
 
-<body>
-    <h2>Invoice #{{ $order->id }}</h2>
-    <p><strong>Date:</strong> {{ $order->created_at->format('d/m/Y H:i') }}</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ទំនិញ</th>
+                            <th class="right">ចំនួន</th>
+                            <th class="right">តម្លៃ</th>
+                            <th class="right">បញ្ចុះ(%)</th>
+                            <th class="right">សរុប</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                    </table>
 
-    <h3>Customer Information</h3>
-    <p><strong>Name:</strong> {{ $order->customer_name }}</p>
-    <p><strong>Phone:</strong> {{ $order->phone }}</p>
-    <p><strong>Address:</strong> {{ $order->address }}</p>
+                    <div class="line"></div>
+                    <table class="totals">
+                        <tr>
+                            <td><strong>សរុបរង</strong></td>
+                            <td class="right">$${subtotal.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>បានបញ្ចុះ($)</strong></td>
+                            <td class="right">$${save.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>សរុបចុងក្រោយ</strong></td>
+                            <td class="right"><strong>$${total.toFixed(2)}</strong></td>
+                        </tr>
+                    </table>
 
-    <h3>Order Items</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Food</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($order->orderItems as $item)
-                <tr>
-                    <td>{{ $item->food->name ?? 'N/A' }}</td>
-                    <td>{{ $item->quantity }}</td>
-                    <td>${{ number_format($item->price, 2) }}</td>
-                    <td>${{ number_format($item->price * $item->quantity, 2) }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    <div class="line"></div>
+                    <p class="center">សូមអរគុណសម្រាប់ការទិញទំនិញ!</p>
+            </body>
+            </html>
+            `);
 
-    <h3 style="text-align: right; margin-top: 20px;">
-        Total: ${{ number_format($order->total_amount, 2) }}
-    </h3>
-</body>
-
-</html>
-
+        printWindow.document.close();
+        printWindow.print();
+    }
+</script>

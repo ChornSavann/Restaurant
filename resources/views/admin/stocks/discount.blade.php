@@ -3,31 +3,11 @@
 @section('discount', 'active')
 
 @section('content')
-    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        table,
-        .btn,
-        input,
-        textarea,
-        select {
-            font-family: 'Battambang', sans-serif !important;
-        }
-    </style>
-
+    @include('admin.font.index')
     <div class="app-content-header py-3">
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h3 class="mb-0 fw-bold">បញ្ជី Discount Stocks</h3>
-                <a href="#" class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i> បន្ថែម Discount
-                </a>
             </div>
 
             {{-- Success Message --}}

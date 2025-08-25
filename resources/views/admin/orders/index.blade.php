@@ -142,9 +142,9 @@
                                         <input type="text" id="cvc" placeholder="CVC" class="form-control mb-2">
                                     </div>
                                 </div>
-
+                                {{-- <button id="orderBtn" disabled>Order</button> --}}
                                 <button id="checkout-btn" class="btn btn-success w-100 mt-2" disabled>Place Order</button>
-                                <button id="print-btn" class="btn btn-primary w-100 mt-2">🖨️ Print</button>
+                                {{-- <button id="print-btn" class="btn btn-primary w-100 mt-2">🖨️ Print</button> --}}
                             </div>
                         </div>
                     </div>
@@ -157,8 +157,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let cart = [];
 
+            let cart = [];
             // Update Cart Function (your existing code)
             function updateCart() {
                 const cartContainer = document.getElementById('cart-items');
@@ -343,98 +343,17 @@
             searchInput.addEventListener('input', filterFoods);
             minPriceInput.addEventListener('input', filterFoods);
             maxPriceInput.addEventListener('input', filterFoods);
-
-        });
-    </script>
-
-    <script>
-        document.getElementById("print-btn").addEventListener("click", function() {
-            // Get data
-            let cartItems = document.querySelectorAll("#cart-items .cart-item");
-            let total = document.getElementById("cart-total").innerText;
-            let customerName = document.getElementById("customer-name").value;
-            let customerPhone = document.getElementById("customer-phone").value;
-            let customerAddress = document.getElementById("customer-address").value;
-            let customerPay = document.getElementById("customer-pay").value;
-            let customerChange = document.getElementById("customer-change").value;
-            let paymentMethod = document.getElementById("payment-method").value;
-
-            // Build cart rows
-            let rows = "";
-            cartItems.forEach(item => {
-                let qty = item.querySelector(".qty")?.innerText || "1";
-                let desc = item.querySelector(".desc")?.innerText || "Item";
-                let price = item.querySelector(".price")?.innerText || "0.00";
-                let amount = item.querySelector(".amount")?.innerText || price;
-                rows += `
-                <tr>
-                    <td>${qty}</td>
-                    <td>${desc}</td>
-                    <td class="right">${price}</td>
-                    <td class="right">${total}</td>
-                </tr>
-            `;
+            // Checkout
+            document.getElementById('checkout-btn').addEventListener('click', () => {
+                if (cart.length === 0) return alert('Cart is empty!');
+                printReceipt(cart);
             });
 
-            // Open print window
-            let printWindow = window.open("", "", "width=800,height=600");
-            printWindow.document.write(`
-            <html>
-            <head>
-                <title>Sales Receipt</title>
-                <style>
-                    body { font-family: Arial, sans-serif; padding: 20px; }
-                    h2 { text-align: center; margin-bottom: 5px; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-                    th, td { border: 1px solid #000; padding: 6px; text-align: left; }
-                    .right { text-align: right; }
-                    .footer { margin-top: 20px; }
-                    .checkbox { margin-left: 10px; }
-                </style>
-            </head>
-            <body>
-                <h2>SALES RECEIPT</h2>
-                <p>Date: ${new Date().toLocaleDateString()}</p>
-                <p><strong>Customer:</strong> ${customerName || "-"} <br>
-                   <strong>Phone:</strong> ${customerPhone || "-"} <br>
-                   <strong>Address:</strong> ${customerAddress || "-"}</p>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Qty.</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       
-                    </tbody>
-                </table>
 
-                <p class="right"><strong>Subtotal:</strong> ${total}</p>
-                <p class="right"><strong>Paid:</strong> ${customerPay || "0.00"}</p>
-                <p class="right"><strong>Change:</strong> ${customerChange || "0.00"}</p>
-                <p class="right"><strong>Total:</strong> ${total}</p>
-
-                <div class="footer">
-                    <p>Sale Made with :</p>
-                    <p>
-                        <input type="checkbox" ${paymentMethod==="cash"?"checked":""}> Cash<br>
-                        <input type="checkbox" ${paymentMethod==="credit"?"checked":""}> Credit Card<br>
-                        <input type="checkbox" ${paymentMethod==="check"?"checked":""}> Check<br>
-                        <input type="checkbox" ${paymentMethod==="other"?"checked":""}> Other
-                    </p>
-                </div>
-            </body>
-            </html>
-        `);
-            printWindow.document.close();
-            printWindow.print();
         });
     </script>
 
-
+    @include('admin.invoice.index')
 
 @endsection

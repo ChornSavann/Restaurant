@@ -37,11 +37,15 @@ class Usercontroller extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials))
+        {
             $user = Auth::user();
-            if ($user->usertype === 'admin') {
+            if ($user->usertype === 'admin')
+            {
                 return redirect()->route('admin.dashboard');
-            } elseif ($user->usertype === 'user') {
+            }
+            elseif ($user->usertype === 'user')
+            {
                 return redirect()->route('home.index');
             }
         }
@@ -69,17 +73,23 @@ class Usercontroller extends Controller
     public function godashboard()
     {
 
-        if (!Auth::check()) {
+        if (!Auth::check())
+        {
             return redirect()->route('login')->with('error', 'Please login first.');
         }
 
         $user = Auth::user();
 
-        if ($user->usertype === 'admin') {
+        if ($user->usertype === 'admin')
+        {
             return view('admin.Dashboard.index');
-        } elseif ($user->usertype === 'user') {
+        }
+        elseif ($user->usertype === 'user')
+        {
             return view('master.Home');
-        } else {
+        }
+        else
+        {
             Auth::logout(); // optional: logout unknown roles
             return redirect()->route('login')->with('error', 'Access denied.');
         }

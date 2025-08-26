@@ -168,8 +168,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // User Dashboard (Home page)
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
-    // Route::get('/orders/index', [OrderController::class, 'index'])->name('orders.index');
-    // Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-
+   
 
 });

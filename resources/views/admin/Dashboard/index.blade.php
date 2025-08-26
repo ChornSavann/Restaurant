@@ -19,7 +19,9 @@
     <div class="app-content">
         <div class="container-fluid">
             {{-- test --}}
-            @include('admin.TEST.test')
+            {{-- @include('admin.TEST.test') --}}
+            @include('admin.Total_data.dashboardmenu')
+            @include('admin.Total_data.total_data')
             <!--begin::Container-->
 
             <!--end::Row-->

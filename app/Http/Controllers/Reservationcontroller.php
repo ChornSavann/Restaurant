@@ -13,8 +13,6 @@ class Reservationcontroller extends Controller
         return view('admin.reservation.index', compact('reservations'));
     }
 
-
-
     public function store(Request $request)
     {
         $request->validate([

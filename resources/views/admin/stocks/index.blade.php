@@ -95,7 +95,7 @@
                 </div>
 
                 {{-- Pagination --}}
-                <div class="p-3 d-flex justify-content-end">
+                <div class="p-3">
                     {{ $stocks->links() }}
                 </div>
             </div>

@@ -25,6 +25,7 @@
     <!--begin::Accessibility Features-->
     <!-- Skip links will be dynamically added by accessibility.js -->
     <meta name="supported-color-schemes" content="light dark" />
+   
     @include('admin.partial.header')
   </head>
   <body class="layout-fixed sidebar-expand-lg sidebar-mini bg-body-tertiary">

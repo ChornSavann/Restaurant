@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Chef;
+use App\Models\Delivery;
 use App\Models\Discount;
 use App\Models\Foods;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Reservation;
+use App\Models\Stocks;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -58,6 +62,10 @@ class DashboardControler extends Controller
             ->whereDate('created_at', Carbon::today())
             ->paginate(4);
 
+        $countstock=Stocks::count();
+        $countCategory=Category::count();
+        $countchef=Chef::count();
+        $countDelivery=Delivery::count();
 
         return view('admin.Dashboard.index', compact(
             'orders',
@@ -73,7 +81,10 @@ class DashboardControler extends Controller
             'months',
             'totals',
             'todayOrders',
-           
+            'countstock',
+            'countCategory',
+            'countchef',
+            'countDelivery'
 
         ));
     }

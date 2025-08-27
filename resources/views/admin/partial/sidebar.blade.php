@@ -1,33 +1,34 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-    <!--begin::Sidebar Brand-->
+    <!-- Sidebar Brand -->
     <div class="sidebar-brand">
-        <!--begin::Brand Link-->
-        <a href="./index.html" class="brand-link">
-            <!--begin::Brand Image-->
-            <img src="{{ asset('admin/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                class="brand-image opacity-75 shadow" />
-            <!--end::Brand Image-->
-            <!--begin::Brand Text-->
+        <a href="{{ route('dashboard.index') }}" class="brand-link">
+            <img src="{{ asset('admin/assets/img/wholesome-eats-restaurant-logo_11024923.png!w700wp') }}"
+                alt="Restaurant Logo" class="brand-image opacity-100 shadow rounded-circle logo-circle" />
+
             <span class="brand-text fw-light">Restaurent</span>
-            <!--end::Brand Text-->
         </a>
-        <!--end::Brand Link-->
     </div>
-    <!--end::Sidebar Brand-->
-    <!--begin::Sidebar Wrapper-->
+
+    <!-- Sidebar Wrapper -->
     <div class="sidebar-wrapper">
         <nav class="mt-2">
-            <!--begin::Sidebar Menu-->
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
                 aria-label="Main navigation" data-accordion="false" id="navigation">
+
+                <!-- Dashboard -->
                 <li class="nav-item">
-                    <a href="{{ route('dashboard.index') }}" class="nav-link @yield('dashboard')">
+                    <a href="{{ route('dashboard.index') }}"
+                        class="nav-link {{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-palette"></i>
-                        <p>Dasboard</p>
+                        <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item  @yield('menu-open')">
-                    <a class="nav-link active">
+
+                <!-- User -->
+                <li
+                    class="nav-item {{ request()->routeIs('user.*') || request()->routeIs('type.*') ? 'menu-open' : '' }}">
+                    <a
+                        class="nav-link {{ request()->routeIs('user.*') || request()->routeIs('type.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-users"></i>
                         <p>
                             User
@@ -35,35 +36,36 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item ">
-                            <a href="{{route('user.index')}}" class="nav-link @yield('unit')">
+                        <li class="nav-item">
+                            <a href="{{ route('user.index') }}"
+                                class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Create User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('user.myprofile') }}"
+                                class="nav-link {{ request()->routeIs('user.myprofile') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Profile</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link @yield('type')">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Change Password</p>
-                            </a>
-                        </li>
-                        {{-- <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Item</p>
-                            </a>
-                        </li> --}}
 
                     </ul>
                 </li>
+
+                <!-- Category -->
                 <li class="nav-item">
-                    <a href="{{route('category.index')}}" class="nav-link @yield('category')">
+                    <a href="{{ route('category.index') }}"
+                        class="nav-link {{ request()->routeIs('category.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-list"></i>
                         <p>Category</p>
                     </a>
                 </li>
-                <li class="nav-item  @yield('menu-open')">
-                    <a class="nav-link active">
+
+                <!-- Foods -->
+                <li class="nav-item {{ request()->routeIs('food.*') ? 'menu-open' : '' }}">
+                    <a class="nav-link {{ request()->routeIs('food.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-bowl-food"></i>
                         <p>
                             Foods
@@ -71,19 +73,60 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-
-                        <li class="nav-item ">
-                            <a href="{{route('food.index')}}" class="nav-link @yield('food')">
+                        <li class="nav-item">
+                            <a href="{{ route('food.index') }}"
+                                class="nav-link {{ request()->routeIs('food.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Food</p>
                             </a>
                         </li>
-
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('food.list') }}"
+                                class="nav-link {{ request()->routeIs('food.list') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>List foods</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
-                <li class="nav-item  @yield('menu-open')">
-                    <a class="nav-link active">
+                <!-- stocks -->
+                <li class="nav-item {{ request()->routeIs('stocks.*') ? 'menu-open' : '' }}">
+                    <a class="nav-link {{ request()->routeIs('stocks.*') ? 'active' : '' }}">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <p>
+                            Stocks
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('stocks.index') }}"
+                                class="nav-link {{ request()->routeIs('stocks.index') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Create Stock</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('discount.index') }}"
+                                class="nav-link {{ request()->routeIs('stocks.dicount') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Discount</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <!-- Orders -->
+                <li
+                    class="nav-item {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
+                    <a
+                        class="nav-link {{ request()->routeIs('orders.*') || request()->routeIs('item.*') ? 'active' : '' }}">
                         <i class="fa-brands fa-jedi-order"></i>
                         <p>
                             Orders
@@ -91,44 +134,132 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-
-
                         <li class="nav-item">
-                            <a href="{{route('orders.index')}}" class="nav-link @yield('order')">
+                            <a href="{{ route('order.index') }}"
+                                class="nav-link {{ request()->routeIs('orders.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Order</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('orders.items')}}" class="nav-link @yield('item')">
+                            <a href="{{ route('orders.show') }}"
+                                class="nav-link {{ request()->routeIs('orders.show') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Item</p>
+                                <p>Order Detail</p>
                             </a>
                         </li>
                     </ul>
                 </li>
 
+                {{-- delivery --}}
+                <li
+                    class="nav-item {{ request()->routeIs('delivery.*') || request()->routeIs('item.*') ? 'menu-open' : '' }}">
+                    <a
+                        class="nav-link {{ request()->routeIs('delivery.*') || request()->routeIs('item.*') ? 'active' : '' }}">
+                        <i class="fa-solid fa-truck-fast me-1"></i>
+                        <p>
+                            Delivery
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('delivery.index') }}"
+                                class="nav-link {{ request()->routeIs('delivery.index') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Delivery Detail</p>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item">
+                 <a href="{{ route('orders.show') }}"
+                     class="nav-link {{ request()->routeIs('orders.show') ? 'active' : '' }}">
+                     <i class="nav-icon bi bi-circle"></i>
+                     <p>Order Detail</p>
+                 </a>
+             </li> --}}
+                    </ul>
+                </li>
+                <!-- Chefs -->
                 <li class="nav-item">
-                    <a href="{{route('chefs.index')}}" class="nav-link @yield('chefs')">
+                    <a href="{{ route('chefs.index') }}"
+                        class="nav-link {{ request()->routeIs('chefs.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-kitchen-set"></i>
                         <p>Chefs</p>
                     </a>
                 </li>
+
+                <!-- Reservation -->
                 <li class="nav-item">
-                    <a href="{{route('reservation.index')}}" class="nav-link @yield('reservation')">
-                        <i class="nav-icon bi bi-palette"></i>
+                    <a href="{{ route('reservation.index') }}"
+                        class="nav-link {{ request()->routeIs('reservation.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-calendar-event"></i>
                         <p>Reservation</p>
                     </a>
                 </li>
+
+
+
+
+                {{-- report --}}
+                <li class="nav-item {{ request()->routeIs('report.*') ? 'menu-open' : '' }}">
+                    <a class="nav-link {{ request()->routeIs('report.*') ? 'active' : '' }}">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <p>
+                            Report
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        {{-- Sale Report --}}
+                        <li class="nav-item">
+                            <a href="{{ route('sale.report') }}"
+                                class="nav-link {{ request()->routeIs('sale.report') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Sale Report</p>
+                            </a>
+                        </li>
+
+
+                        {{-- Food Report --}}
+                        <li class="nav-item">
+                            <a href="{{ route('report.food') }}"
+                                class="nav-link {{ request()->routeIs('report.food') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Food Report</p>
+                            </a>
+                        </li>
+
+                        {{-- Customer Report --}}
+                        <li class="nav-item">
+                            <a href="{{ route('report.customer') }}"
+                                class="nav-link {{ request()->routeIs('report.customer') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Customer Report</p>
+                            </a>
+                        </li>
+
+                        {{-- Stock Report --}}
+                        <li class="nav-item">
+                            <a href="{{ route('report.stock') }}"
+                                class="nav-link {{ request()->routeIs('report.stock') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Stock Report</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <!-- Logout -->
                 <li class="nav-item">
-                    <a href="{{route('logout')}}" class="nav-link @yield('logout')">
+                    <a href="{{ route('logout') }}" class="nav-link">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <p>Logout</p>
                     </a>
                 </li>
 
-                <!--end::Sidebar Menu-->
+            </ul>
         </nav>
     </div>
-    <!--end::Sidebar Wrapper-->
+    <!-- End Sidebar Wrapper -->
 </aside>

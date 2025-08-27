@@ -2,6 +2,7 @@
 @section('title', 'Add Category')
 @section('category', 'active')
 @section('content')
+@include('admin.font.index')
 <div class="app-content-header py-3">
     <div class="container-fluid">
         <div class="row mb-3">

@@ -1,14 +1,16 @@
 @extends('admin.layout.app')
 @section('title', 'user')
+@section('user-menu-open','user-menu-open')
 @section('active', 'user')
 @section('content')
+@include('admin.font.index')
     <div class="app-content-header py-3">
         <!--begin::Container-->
         <div class="container-fluid">
             <!-- Page Header -->
             <div class="row align-items-center mb-3">
                 <div class="col-md-6">
-                    <h3 class="mb-0" style="font-family: Cambria;font-wwidth:bold">User Details</h3>
+                    <h3 class="mb-0 fw-bold"style="font-family: Cambria;font-wwidth:bold">User Details</h3>
                 </div>
                 <div class="col-md-6 text-end">
                     <a href="{{ route('user.create') }}" class="btn btn-primary">
@@ -49,6 +51,7 @@
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>Email</th>
+                                <th>Contact</th>
                                 <th>Type</th>
                                 <th style="width:150px">Actions</th>
                             </tr>
@@ -69,8 +72,9 @@
 
                                     </td>
                                     <td>{{ $user->email }}</td>
+                                    <td>{{ $user->phone }}</td>
                                     <td>
-                                        <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-secondary' }}">
+                                        <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-primary' }}">
                                             {{ ucfirst($user->usertype) }}
                                         </span>
                                     </td>
@@ -188,8 +192,9 @@
                     <div class="col-8 ps-2">
                         <p class="mb-1"><strong>Name  :</strong> {{ $user->name }}</p>
                         <p class="mb-1"><strong>Email :</strong> {{ $user->email }}</p>
+                        <p class="mb-1"><strong>Phone :</strong> {{ $user->phone ?? 'N/A' }}</p>
                         <p class="mb-0"><strong>Type  :</strong>
-                            <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-secondary' }}">
+                            <span class="badge {{ $user->usertype == 'admin' ? 'bg-danger' : 'bg-primary' }}">
                                 {{ ucfirst($user->usertype) }}
                             </span>
                         </p>

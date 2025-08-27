@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -11,10 +11,10 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {{-- <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> --}}
 
-    <title>Klassy Cafe - Restaurant HTML Template</title>
+    <title>Klassy Cafe - Restaurant </title>
     <!--
 
 TemplateMo 558 Klassy Cafe
@@ -32,7 +32,6 @@ https://templatemo.com/tm-558-klassy-cafe
     <link rel="stylesheet" href="assets/css/owl-carousel.css">
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
-
 
 </head>
 
@@ -76,46 +75,21 @@ https://templatemo.com/tm-558-klassy-cafe
                             </li>
                         -->
                             <li class="scroll-to-section"><a href="#menu">Menu</a></li>
+                            <li class="scroll-to-section" ><a href="#order">Order</a></li>
                             <li class="scroll-to-section"><a href="#chefs">Chefs</a></li>
-                            {{-- <li class="scroll-to-section"><a href="javascript">Orders</a></li> --}}
-                            {{-- <li class="submenu">
-                                <a href="javascript:;">Features</a>
-                                <ul>
-                                    <li><a href="#">Features Page 1</a></li>
-                                    <li><a href="#">Features Page 2</a></li>
-                                    <li><a href="#">Features Page 3</a></li>
-                                    <li><a href="#">Features Page 4</a></li>
-                                </ul>
-                            </li> --}}
-                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
                             <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
-                            <li class="scroll-to-section"><a href="{{ route('logout') }}">Logout</a></li>
-                            {{--
-                            <li>
-                                @if (Route::has('login'))
-                                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                                    @auth
-                                    <x-app-layout>
+                            <li class="scroll-to-section">
+                                <a href="#" id="logout-link"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                   Logout
+                                </a>
 
-                                    </x-app-layout>
-                                    @else
-                                       <li><a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900
-                                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a></li>
-
-                                        @if (Route::has('register'))
-                                           <li> <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900
-                                            :outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a></li>
-                                        @endif
-                                    @endauth
-                                </div>
-                            @endif
-                            </li> --}}
-
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
                         </ul>
-                        {{-- <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a> --}}
-                        <!-- ***** Menu End ***** -->
+
                     </nav>
                 </div>
             </div>
@@ -178,6 +152,11 @@ https://templatemo.com/tm-558-klassy-cafe
     <!-- ***** Menu Area Starts ***** -->
     @include('master.food')
     <!-- ***** Menu Area Ends ***** -->
+
+
+    <!-- ***** Order Area Starts ***** -->
+    @include('master.orders.order')
+    <!-- ***** order Area Ends ***** -->
 
     <!-- ***** Chefs Area Starts ***** -->
     @include('master.chefs')
@@ -247,7 +226,7 @@ https://templatemo.com/tm-558-klassy-cafe
     <script src="assets/js/isotope.js"></script>
 
     <!-- Global Init -->
-    <script src="assets/js/custom.js"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
     <script>
         $(function() {
             var selectedClass = "";
@@ -258,11 +237,13 @@ https://templatemo.com/tm-558-klassy-cafe
                 setTimeout(function() {
                     $("." + selectedClass).fadeIn();
                     $("#portfolio").fadeTo(50, 1);
-                }, 500);
+                }, 80);
 
             });
         });
+
     </script>
+
 </body>
 
 </html>

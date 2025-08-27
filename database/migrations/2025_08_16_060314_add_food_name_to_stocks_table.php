@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('order_number')->nullable(false)->change();
+        Schema::table('stocks', function (Blueprint $table) {
+            $table->string('food_name')->after('id'); // add the column
         });
     }
 
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('order_number')->nullable()->change();
+        Schema::table('stocks', function (Blueprint $table) {
+            $table->dropColumn('food_name');
         });
     }
+
 };

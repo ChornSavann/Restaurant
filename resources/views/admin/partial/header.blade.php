@@ -9,6 +9,9 @@
   media="print"
   onload="this.media='all'"
 />
+<link rel="icon" href="{{ asset('admin/assets/img/wholesome-eats-restaurant-logo_11024923.png!w700wp')}}" type="image/png" sizes="64x64">
+{{-- <link rel="icon" href="{{ asset('assets/images/restaurant-logo-for-you-removebg-preview.png') }}" type="image/png" sizes="16x16"> --}}
+
 <!--end::Fonts-->
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
 <link
@@ -35,3 +38,6 @@
   integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
   crossorigin="anonymous"
 />
+@include('admin.font.index')
+
+

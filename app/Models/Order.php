@@ -11,27 +11,30 @@ class Order extends Model
     use HasFactory;
 
     // In Order.php
-    public function food()
-    {
-        return $this->belongsTo(Foods::class, 'food_id');
-    }
-
-
-
     protected $fillable = [
-        'customer_name',
-        'phone',
-        'address',
+        'customer_id',
         'total_amount',
+        'discount_id',
         'customer_pay',
         'change_amount',
         'payment_method',
         'card_number',
         'expiry',
-        'cvc'
+        'cvc',
+        'status'
     ];
 
     public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function items()
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -60,5 +63,14 @@ class Order extends Model
             'processing' => 'info',
             default => 'secondary',
         };
+    }
+
+    public function deliveries()
+    {
+        return $this->hasMany(Delivery::class, 'order_id');
+    }
+
+    public function food() {
+        return $this->belongsTo(Foods::class);
     }
 }

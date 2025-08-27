@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Foods;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,12 @@ class FoodController extends Controller
     {
         $foods = Foods::with('category')->Orderby('id', 'desc')->paginate(6);
         return view('admin.Foods.index', compact('foods'));
+    }
+
+    public function list()
+    {
+        $foods = Foods::with('category')->Orderby('id', 'desc')->paginate(10);
+        return view('admin.Foods.list', compact('foods'));
     }
 
 
@@ -115,4 +122,6 @@ class FoodController extends Controller
 
         return redirect()->route('food.index')->with('success', 'Food deleted successfully!');
     }
+
+
 }

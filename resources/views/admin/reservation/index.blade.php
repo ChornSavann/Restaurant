@@ -2,6 +2,7 @@
 @section('title', 'Food')
 @section('reservation', 'active')
 @section('content')
+@include('admin.font.index')
     <div class="app-content-header py-3">
         <!--begin::Container-->
         <div class="container-fluid">
@@ -83,11 +84,12 @@
 
 
     <!-- First Modal (User Details) -->
-
     @foreach ($reservations as $reservation)
     <div class="modal fade" id="reservationModal{{ $reservation->id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ $reservation->id }}" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content shadow border-0 rounded-4">
+
+                <!-- Modal Header -->
                 <div class="modal-header bg-primary text-white py-2 px-3 rounded-top-4">
                     <h6 class="modal-title mb-0" id="reservationModalLabel{{ $reservation->id }}">
                         <i class="fas fa-calendar-check me-2"></i> Reservation Details
@@ -95,16 +97,26 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body p-4 text-center">
-                    <p class="mb-3"><strong>Name:</strong> {{ $reservation->name }}</p>
-                    <p class="mb-3"><strong>Email:</strong> {{ $reservation->email }}</p>
-                    <p class="mb-3"><strong>Phone:</strong> {{ $reservation->phone ?? '-' }}</p>
-                    <p class="mb-3"><strong>Guests:</strong> {{ $reservation->guest ?? '-' }}</p>
-                    <p class="mb-3"><strong>Created At:</strong> {{ $reservation->created_at ? $reservation->created_at->format('d-m-Y') : '-' }}</p>
-                    <p class="mb-3"><strong>Time:</strong> {{ $reservation->time ?? '-' }}</p>
-                    <p class="mb-0"><strong>Message:</strong> {{ $reservation->message ?? '-' }}</p>
+                <!-- Modal Body -->
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <p><i class="fas fa-user me-2 text-primary"></i><strong>Name:</strong> {{ $reservation->name }}</p>
+                            <p><i class="fas fa-envelope me-2 text-primary"></i><strong>Email:</strong> {{ $reservation->email }}</p>
+                            <p><i class="fas fa-phone me-2 text-primary"></i><strong>Phone:</strong> {{ $reservation->phone ?? '-' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><i class="fas fa-users me-2 text-primary"></i><strong>Guests:</strong> {{ $reservation->guest ?? '-' }}</p>
+                            <p><i class="fas fa-calendar-alt me-2 text-primary"></i><strong>Created At:</strong> {{ $reservation->created_at ? $reservation->created_at->format('d-m-Y') : '-' }}</p>
+                            <p><i class="fas fa-clock me-2 text-primary"></i><strong>Time:</strong> {{ $reservation->time ?? '-' }}</p>
+                        </div>
+                        <div class="col-12">
+                            <p><i class="fas fa-comment me-2 text-primary"></i><strong>Message:</strong> {{ $reservation->message ?? '-' }}</p>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Modal Footer -->
                 <div class="modal-footer bg-light py-2 px-3 rounded-bottom-4">
                     <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">
                         <i class="fas fa-times me-1"></i> Close
@@ -114,5 +126,6 @@
         </div>
     </div>
     @endforeach
+
 
 @endsection

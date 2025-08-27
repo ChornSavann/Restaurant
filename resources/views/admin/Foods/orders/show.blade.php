@@ -35,6 +35,7 @@
             </tbody>
         </table>
     </div>
+
 </div>
 <div class="card-footer clearfix">
     <a href="{{ route('orders.index') }}" class="btn btn-sm btn-secondary float-end">

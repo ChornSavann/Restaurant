@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('order_number')->unique()->after('id');
+            $table->string('order_number')->unique()->after('id')->nullable();
         });
     }
 
@@ -22,4 +22,5 @@ return new class extends Migration
             $table->dropColumn('order_number');
         });
     }
+
 };

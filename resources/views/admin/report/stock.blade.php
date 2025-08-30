@@ -13,25 +13,38 @@
         </div>
 
         <div class="card shadow-sm">
-            <table class="table table-striped table-hover align-middle mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ល.រ</th>
-                        <th>ឈ្មោះស្តុក</th>
-                        <th>ចំនួននៅសល់</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($stocks as $i => $stock)
+            <div class="scroll">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark">
                         <tr>
-                            <td>{{ $i + 1 }}</td>
-                            <td>{{ $stock->food->title }}</td>
-                            <td>{{ $stock->quantity }}</td>
+                            <th>ល.រ</th>
+                            <th>ឈ្មោះស្តុក</th>
+                            <th>ចំនួននៅសល់</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($stocks as $i => $stock)
+                            <tr>
+                                <td>{{ $i + 1 }}</td>
+                                <td>{{ $stock->food->title }}</td>
+                                <td>{{ $stock->quantity }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>
+    <style>
+        .scroll {
+            display: block;
+            max-height: 400px;
+            /* adjust height */
+            overflow-y: auto;
+            /* vertical scroll */
+            overflow-x: auto;
+            /* horizontal scroll if too many columns */
+        }
+    </style>
 @endsection

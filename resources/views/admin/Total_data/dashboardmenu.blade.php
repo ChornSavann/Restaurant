@@ -48,7 +48,7 @@
             </span>
             <div class="info-box-content">
                 <span class="info-box-text fw-semibold text-secondary">Total Sales</span>
-                <span class="info-box-number fs-5 fw-bold">${{ number_format($totalSales, 2) }}</span>
+                <span class="info-box-number fs-5 fw-bold">$ {{ number_format($totalSales, 2) }}</span>
             </div>
         </div>
     </div>

@@ -1,6 +1,5 @@
-
- <!-- /.col-md-6 -->
- <div class="col-lg-12">
+<!-- /.col-md-6 -->
+<div class="col-lg-12">
     <div class="card mb-4">
         <div class="card-header border-0">
             <div class="d-flex justify-content-between">
@@ -17,10 +16,7 @@
                     <span>Sales Over Time</span>
                 </p>
                 <p class="ms-auto d-flex flex-column text-end">
-                    {{-- <span class="{{ $change_amount >= 0 ? 'text-success' : 'text-danger' }}">
-                        <i class="bi {{ $change_amount >= 0 ? 'bi-arrow-up' : 'bi-arrow-down' }}"></i>
-                        {{ number_format($change_amount, 2) }}%
-                    </span> --}}
+
                     <span class="text-secondary">Since Past Year</span>
                 </p>
 
@@ -46,4 +42,4 @@
     </div>
 </div>
 
-<!-- /.col-md-6 -->
+

@@ -34,75 +34,78 @@
             </div>
 
             <div class="card-body p-0 table-responsive kh-battambang">
-                <table class="table table-striped table-hover align-middle mb-0">
-                    <thead class="table-light text-center">
-                        <tr>
-                            <th style="width: 50px;">#</th>
-                            <th style="width: 70px;">រូបភាព</th>
-                            <th>ឈ្មោះម្ហូប</th>
-                            <th>ប្រភេទ</th>
-                            <th>ពណ៌នា</th>
-                            <th style="width: 230px;">សកម្មភាព</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($foods as $index => $food)
+                <div class="scroll">
+                    <table class="table table-striped table-hover align-middle mb-0">
+                        <thead class="table-light text-center">
                             <tr>
-                                <!-- Number -->
-                                <td class="text-center">{{ $foods->firstItem() + $index }}</td>
-
-                                <!-- Image -->
-                                <td class="text-center">
-                                    <img src="{{ $food->image ? asset('foods/image/' . $food->image) : asset('images/default-food.png') }}"
-                                        alt="{{ $food->title }}" class="rounded border"
-                                        style="width:60px; height:60px; object-fit:cover;">
-                                </td>
-
-                                <!-- Food Name -->
-                                <td class="fw-semibold text-center">{{ $food->title }}</td>
-
-                                <!-- Category -->
-                                <td class="fw-semibold text-center">{{ $food->category->name ?? 'មិនមានប្រភេទ' }}</td>
-
-                                <!-- Description with tooltip -->
-                                <td class="text-truncate" style="max-width: 250px;" title="{{ $food->desc ?? '-' }}">
-                                    {{ $food->desc ?? '-' }}
-                                </td>
-
-                                <!-- Actions -->
-                                <td class="text-center">
-                                    <!-- View -->
-                                    <a href="#" class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal"
-                                        data-bs-target="#foodModal{{ $food->id }}" title="មើលលម្អិត">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-
-                                    <!-- Edit -->
-                                    <a href="{{ route('food.edit', $food->id) }}"
-                                        class="btn btn-sm btn-outline-primary me-1" title="កែប្រែមុខម្ហូប">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-
-                                    <!-- Delete -->
-                                    <form action="{{ route('food.delete', $food->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button onclick="return confirm('តើអ្នកប្រាកដថាចង់លុបម្ហូបនេះ?')"
-                                            class="btn btn-sm btn-outline-danger" title="លុបម្ហូប">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                                <th style="width: 50px;">#</th>
+                                <th style="width: 70px;">រូបភាព</th>
+                                <th>ឈ្មោះម្ហូប</th>
+                                <th>ប្រភេទ</th>
+                                <th>ពណ៌នា</th>
+                                <th style="width: 230px;">សកម្មភាព</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">
-                                    <i class="fa-solid fa-utensils fa-lg me-2"></i>មិនមានម្ហូប។
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse ($foods as $index => $food)
+                                <tr>
+                                    <!-- Number -->
+                                    <td class="text-center">{{ $foods->firstItem() + $index }}</td>
+
+                                    <!-- Image -->
+                                    <td class="text-center">
+                                        <img src="{{ $food->image ? asset('foods/image/' . $food->image) : asset('images/default-food.png') }}"
+                                            alt="{{ $food->title }}" class="rounded border"
+                                            style="width:60px; height:60px; object-fit:cover;">
+                                    </td>
+
+                                    <!-- Food Name -->
+                                    <td class="fw-semibold text-center">{{ $food->title }}</td>
+
+                                    <!-- Category -->
+                                    <td class="fw-semibold text-center">{{ $food->category->name ?? 'មិនមានប្រភេទ' }}</td>
+
+                                    <!-- Description with tooltip -->
+                                    <td class="text-truncate" style="max-width: 250px;" title="{{ $food->desc ?? '-' }}">
+                                        {{ $food->desc ?? '-' }}
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td class="text-center">
+                                        <!-- View -->
+                                        <a href="#" class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal"
+                                            data-bs-target="#foodModal{{ $food->id }}" title="មើលលម្អិត">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+
+                                        <!-- Edit -->
+                                        <a href="{{ route('food.edit', $food->id) }}"
+                                            class="btn btn-sm btn-outline-primary me-1" title="កែប្រែមុខម្ហូប">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+
+                                        <!-- Delete -->
+                                        <form action="{{ route('food.delete', $food->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button onclick="return confirm('តើអ្នកប្រាកដថាចង់លុបម្ហូបនេះ?')"
+                                                class="btn btn-sm btn-outline-danger" title="លុបម្ហូប">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        <i class="fa-solid fa-utensils fa-lg me-2"></i>មិនមានម្ហូប។
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
             {{-- Pagination --}}
@@ -189,4 +192,15 @@
     </script>
 
     @include('admin.msg.index')
+    <style>
+        .scroll {
+            display: block;
+            max-height: 450px;
+            /* adjust height */
+            overflow-y: auto;
+            /* vertical scroll */
+            overflow-x: auto;
+            /* horizontal scroll if too many columns */
+        }
+    </style>
 @endsection

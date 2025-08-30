@@ -27,71 +27,74 @@
                     <h4 class="card-title mb-0">បញ្ជី Stock</h4>
                 </div>
                 <div class="card-body p-0">
-                    <table class="table table-striped table-hover align-middle mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th style="width:10px">#</th>
-                                <th>រូបភាព</th>
-                                <th>ឈ្មោះ</th>
-                                <th>តម្លៃ</th>
-                                <th>ចំនួននៅក្នុងស្តុក</th>
-                                <th>ឯកតា</th>
-                                <th>ពិពណ៌នា</th>
-                                <th style="width:210px">សកម្មភាព</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($stocks as $index => $stock)
+                    <div class="scroll">
+                        <table class="table table-striped table-hover align-middle mb-0">
+                            <thead class="table-light">
                                 <tr>
-                                    <td>{{ $stocks->firstItem() + $index }}</td>
-                                    <td>
-                                        @if ($stock->food && $stock->food->image)
-                                            <img src="{{ asset('foods/image/' . $stock->food->image) }}"
-                                                alt="{{ $stock->food->title }}"
-                                                style="width:80px; height:60px; object-fit:cover; border-radius:5px;">
-                                        @else
-                                            <img src="https://placehold.co/80x60" alt="No Image" style="border-radius:5px;">
-                                        @endif
-                                    </td>
-                                    <td>{{ $stock->food->title ?? '-' }}</td>
-                                    <td>{{ $stock->food ? number_format($stock->food->price, 2) : '-' }}</td>
-                                    <td>{{ $stock->quantity }}</td>
-                                    <td>{{ $stock->unit ?? '-' }}</td>
-                                    <td>{{ $stock->description ?? '-' }}</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-outline-secondary me-1"
-                                            data-bs-toggle="modal" data-bs-target="#stockModal{{ $stock->id }}"
-                                            title="View Details">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                        <a href="{{ route('stocks.edit', $stock->id) }}"
-                                            class="btn btn-sm btn-outline-primary me-1">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <!-- Discount -->
-                                        <a href="#" class="btn btn-sm btn-outline-success me-1" data-bs-toggle="modal"
-                                            data-bs-target="#discountModal{{ $stock->id }}" title="កំណត់ការបញ្ចុះតម្លៃ">
-                                            <i class="fa-solid fa-percent"></i>
-                                        </a>
+                                    <th style="width:10px">#</th>
+                                    <th>រូបភាព</th>
+                                    <th>ឈ្មោះ</th>
+                                    <th>តម្លៃ</th>
+                                    <th>ចំនួននៅក្នុងស្តុក</th>
+                                    <th>ឯកតា</th>
+                                    <th>ពិពណ៌នា</th>
+                                    <th style="width:210px">សកម្មភាព</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($stocks as $index => $stock)
+                                    <tr>
+                                        <td>{{ $stocks->firstItem() + $index }}</td>
+                                        <td>
+                                            @if ($stock->food && $stock->food->image)
+                                                <img src="{{ asset('foods/image/' . $stock->food->image) }}"
+                                                    alt="{{ $stock->food->title }}"
+                                                    style="width:80px; height:60px; object-fit:cover; border-radius:5px;">
+                                            @else
+                                                <img src="https://placehold.co/80x60" alt="No Image" style="border-radius:5px;">
+                                            @endif
+                                        </td>
+                                        <td>{{ $stock->food->title ?? '-' }}</td>
+                                        <td>$ {{ $stock->food ? number_format($stock->food->price, 2) : '-' }}</td>
+                                        <td>{{ $stock->quantity }}</td>
+                                        <td>{{ $stock->unit ?? '-' }}</td>
+                                        <td>{{ $stock->description ?? '-' }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary me-1"
+                                                data-bs-toggle="modal" data-bs-target="#stockModal{{ $stock->id }}"
+                                                title="View Details">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('stocks.edit', $stock->id) }}"
+                                                class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <!-- Discount -->
+                                            <a href="#" class="btn btn-sm btn-outline-success me-1" data-bs-toggle="modal"
+                                                data-bs-target="#discountModal{{ $stock->id }}" title="កំណត់ការបញ្ចុះតម្លៃ">
+                                                <i class="fa-solid fa-percent"></i>
+                                            </a>
 
-                                        <form action="{{ route('stocks.delete', $stock->id) }}" method="POST"
-                                            style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button onclick="return confirm('តើអ្នកប្រាកដថាចង់លុប Stock នេះ?')"
-                                                class="btn btn-sm btn-outline-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="8" class="text-center">មិនមាន Stock ទេ</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                                            <form action="{{ route('stocks.delete', $stock->id) }}" method="POST"
+                                                style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('តើអ្នកប្រាកដថាចង់លុប Stock នេះ?')"
+                                                    class="btn btn-sm btn-outline-danger">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="text-center">មិនមាន Stock ទេ</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
 
                 {{-- Pagination --}}
@@ -197,4 +200,15 @@
             }
         }, 5000);
     </script>
+     <style>
+        .scroll {
+            display: block;
+            max-height: 450px;
+            /* adjust height */
+            overflow-y: auto;
+            /* vertical scroll */
+            overflow-x: auto;
+            /* horizontal scroll if too many columns */
+        }
+    </style>
 @endsection

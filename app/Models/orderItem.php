@@ -10,14 +10,27 @@ class orderItem extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'order_id', 'food_id', 'food_name', 'quantity', 'unit_price', 'total_price'
+        'order_id',
+        'food_id',
+        'food_name',
+        'quantity',
+        'unit_price',
+        'total_price'
     ];
 
-    public function order() {
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
 
-    public function food() {
+    public function food()
+    {
         return $this->belongsTo(Foods::class);
     }
+
+    public function stock()
+    {
+        return $this->hasOne(Stocks::class);
+    }
+
 }

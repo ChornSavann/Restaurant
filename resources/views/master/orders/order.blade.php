@@ -27,7 +27,7 @@
                                 <img src="{{ asset('foods/image/' . $food->image) }}" class="w-100"
                                     style="height: 130px;">
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">{{ $food->title }}</h5>
+                                    <h5 class="card-title fw-bold mb-2 text-dark">{{ $food->title }}</h5>
                                     <div class="order-description mb-2">
                                         {{ Str::limit($food->desc, 100) }}
                                     </div>

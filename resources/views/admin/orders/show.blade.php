@@ -28,12 +28,11 @@
                                 <th style="width: 120px">សកម្មភាព</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             @forelse($orders as $index => $order)
                                 <tr>
                                     <td>{{ $orders->firstItem() + $index }}</td>
-                                    <td>{{ $order->customer->name }}</td>
+                                    <td>{{ $order->customer->name ?? 'N/A'}}</td>
                                     <td>{{ $order->customer->phone }}</td>
                                     <td>${{ number_format($order->total_amount, 2) }}</td>
                                     <td>
@@ -53,7 +52,6 @@
                                                data-bs-target="#orderModal{{ $order->id }}">
                                                 <i class="fa-solid fa-eye"></i> View
                                             </a>
-
 
                                         </div>
                                     </td>

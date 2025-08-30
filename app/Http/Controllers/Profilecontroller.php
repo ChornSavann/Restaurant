@@ -76,7 +76,7 @@ class Profilecontroller extends Controller
          // 5. Save user with try-catch for debugging
          try
          {
-             $user->save();
+            $user->save();
          } catch (\Exception $e) {
              return back()->with('error', 'Failed to save profile: ' . $e->getMessage());
          }

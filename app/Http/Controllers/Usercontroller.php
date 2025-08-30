@@ -70,30 +70,30 @@ class Usercontroller extends Controller
         return redirect()->route('user.login');
     }
 
-    public function godashboard()
-    {
+    // public function godashboard()
+    // {
 
-        if (!Auth::check())
-        {
-            return redirect()->route('login')->with('error', 'Please login first.');
-        }
+    //     if (!Auth::check())
+    //     {
+    //         return redirect()->route('login')->with('error', 'Please login first.');
+    //     }
 
-        $user = Auth::user();
+    //     $user = Auth::user();
 
-        if ($user->usertype === 'admin')
-        {
-            return view('admin.Dashboard.index');
-        }
-        elseif ($user->usertype === 'user')
-        {
-            return view('master.Home');
-        }
-        else
-        {
-            Auth::logout(); // optional: logout unknown roles
-            return redirect()->route('login')->with('error', 'Access denied.');
-        }
-    }
+    //     if ($user->usertype === 'admin')
+    //     {
+    //         return view('admin.Dashboard.index');
+    //     }
+    //     elseif ($user->usertype === 'user')
+    //     {
+    //         return view('master.Home');
+    //     }
+    //     else
+    //     {
+    //         Auth::logout(); // optional: logout unknown roles
+    //         return redirect()->route('login')->with('error', 'Access denied.');
+    //     }
+    // }
 
 
 
@@ -177,7 +177,8 @@ class Usercontroller extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($user->image && File::exists(public_path('images/users/' . $user->image))) {
+            if ($user->image && File::exists(public_path('images/users/' . $user->image)))
+            {
                 File::delete(public_path('images/users/' . $user->image));
             }
 

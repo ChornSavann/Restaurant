@@ -92,15 +92,18 @@
                     </ul>
                 </li>
 
-                <!-- stocks -->
-                <li class="nav-item {{ request()->routeIs('stocks.*') ? 'menu-open' : '' }}">
-                    <a class="nav-link {{ request()->routeIs('stocks.*') ? 'active' : '' }}">
+                <!-- Stocks Menu -->
+                <li
+                    class="nav-item {{ request()->routeIs('stocks.*') || request()->routeIs('discount.*') ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ request()->routeIs('stocks.*') || request()->routeIs('discount.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <p>
                             Stocks
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
+
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('stocks.index') }}"
@@ -109,18 +112,17 @@
                                 <p>Create Stock</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
+
                         <li class="nav-item">
                             <a href="{{ route('discount.index') }}"
-                                class="nav-link {{ request()->routeIs('stocks.dicount') ? 'active' : '' }}">
+                                class="nav-link {{ request()->routeIs('discount.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Discount</p>
                             </a>
                         </li>
                     </ul>
-
                 </li>
+
 
                 <!-- Orders -->
                 <li
@@ -197,18 +199,17 @@
                     </a>
                 </li>
 
-
-
-
-                {{-- report --}}
-                <li class="nav-item {{ request()->routeIs('report.*') ? 'menu-open' : '' }}">
-                    <a class="nav-link {{ request()->routeIs('report.*') ? 'active' : '' }}">
+                {{-- Report Menu --}}
+                <li class="nav-item {{ request()->routeIs('sale.report', 'report.*') ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ request()->routeIs('sale.report', 'report.*') ? 'active' : '' }}">
                         <i class="fa-solid fa-boxes-stacked"></i>
                         <p>
                             Report
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
+
                     <ul class="nav nav-treeview">
                         {{-- Sale Report --}}
                         <li class="nav-item">
@@ -218,7 +219,6 @@
                                 <p>Sale Report</p>
                             </a>
                         </li>
-
 
                         {{-- Food Report --}}
                         <li class="nav-item">
@@ -248,7 +248,6 @@
                         </li>
                     </ul>
                 </li>
-
 
                 <!-- Logout -->
                 <li class="nav-item">

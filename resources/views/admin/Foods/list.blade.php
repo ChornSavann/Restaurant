@@ -20,50 +20,53 @@
             </div>
 
             <div class="card-body p-0 table-responsive kh-battambang">
-                <table class="table table-striped table-hover align-middle mb-0">
-                    <thead class="table-light text-center">
-                        <tr>
-                            <th style="width: 50px;">ល.រ</th>
-                            <th>ឈ្មោះម្ហូប</th>
-                            <th>ប្រភេទ</th>
-                            <th>ពណ៌នា</th>
-                            <th style="width: 120px;">សកម្មភាព</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($foods as $index => $food)
+                <div class="scroll">
+                    <table class="table table-striped table-hover align-middle mb-0">
+                        <thead class="table-light text-center">
                             <tr>
-                                <!-- Number -->
-                                <td class="text-center">{{ $foods->firstItem() + $index }}</td>
-
-                                <!-- Food Name -->
-                                <td class="fw-semibold text-center">{{ $food->title }}</td>
-
-                                <!-- Category -->
-                                <td class="fw-semibold text-center">{{ $food->category->name ?? 'មិនមានប្រភេទ' }}</td>
-
-                                <!-- Description with tooltip -->
-                                <td class="text-truncate" style="max-width: 250px;" title="{{ $food->desc ?? '-' }}">
-                                    {{ $food->desc ?? '-' }}
-                                </td>
-
-                                <!-- Actions -->
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-sm btn-default me-1" data-bs-toggle="modal"
-                                        data-bs-target="#foodModal{{ $food->id }}" title="មើលលម្អិត">
-                                        <i class="fa-solid fa-eye"></i> មើល
-                                    </a>
-                                </td>
+                                <th style="width: 50px;">ល.រ</th>
+                                <th>ឈ្មោះម្ហូប</th>
+                                <th>ប្រភេទ</th>
+                                <th>ពណ៌នា</th>
+                                <th style="width: 120px;">សកម្មភាព</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">
-                                    <i class="fa-solid fa-utensils fa-lg me-2"></i> មិនមានទិន្នន័យម្ហូប។
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse ($foods as $index => $food)
+                                <tr>
+                                    <!-- Number -->
+                                    <td class="text-center">{{ $foods->firstItem() + $index }}</td>
+
+                                    <!-- Food Name -->
+                                    <td class="fw-semibold text-center">{{ $food->title }}</td>
+
+                                    <!-- Category -->
+                                    <td class="fw-semibold text-center">{{ $food->category->name ?? 'មិនមានប្រភេទ' }}</td>
+
+                                    <!-- Description with tooltip -->
+                                    <td class="text-truncate" style="max-width: 250px;" title="{{ $food->desc ?? '-' }}">
+                                        {{ $food->desc ?? '-' }}
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-sm btn-default me-1" data-bs-toggle="modal"
+                                            data-bs-target="#foodModal{{ $food->id }}" title="មើលលម្អិត">
+                                            <i class="fa-solid fa-eye"></i> មើល
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        <i class="fa-solid fa-utensils fa-lg me-2"></i> មិនមានទិន្នន័យម្ហូប។
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
             {{-- Pagination --}}
@@ -145,4 +148,15 @@
     </script>
 
     @include('admin.msg.index')
+    <style>
+        .scroll {
+            display: block;
+            max-height: 450px;
+            /* adjust height */
+            overflow-y: auto;
+            /* vertical scroll */
+            overflow-x: auto;
+            /* horizontal scroll if too many columns */
+        }
+    </style>
 @endsection

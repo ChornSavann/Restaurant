@@ -113,7 +113,8 @@
                 </div>
             </div>
 
-            <div class="card">
+
+            {{-- <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Latest Orders</h3>
                     <div class="card-tools">
@@ -192,7 +193,9 @@
                         View All Orders
                     </a>
                 </div>
-            </div>
+            </div> --}}
+
+            @include('admin.Foods.orders.show')
         </div>
     </div>
 

@@ -30,36 +30,48 @@
         </div>
 
         {{-- Table --}}
-        <div class="card shadow-sm">
-            <div class="card-body table-responsive">
-                <table class="table table-bordered text-center align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ល.រ</th>
-                            <th>ថ្ងៃខែ</th>
-                            <th>ឈ្មោះភ្ញៀវ</th>
-                            <th>សរុប</th>
-                            <th>ចំនួនម្ហូប</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($orders as $i => $order)
+            <div class="card-body table-responsive​​ shadow-sm ">
+                <div class="scroll">
+                    <table class="table table-bordered text-center align-middle table-sm">
+                        <thead class="table-dark">
                             <tr>
-                                <td>{{ $i + 1 }}</td>
-                                <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
-                                <td>{{ $order->customer->name ?? '-' }}</td>
-                                <td>{{ number_format($order->total_amount, 2) }} $</td>
-                                <td>{{ $order->orderItems->count() }}</td>
+                                <th>ល.រ</th>
+                                <th>ថ្ងៃខែ</th>
+                                <th>ឈ្មោះភ្ញៀវ</th>
+                                <th>សរុប</th>
+                                <th>ចំនួនម្ហូប</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-muted">មិនមានទិន្នន័យ</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse($orders as $i => $order)
+                                <tr>
+                                    <td>{{ $i + 1 }}</td>
+                                    <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
+                                    <td>{{ $order->customer->name ?? '-' }}</td>
+                                    <td>{{ number_format($order->total_amount, 2) }} $</td>
+                                    <td>{{ $order->orderItems->count() }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-muted">មិនមានទិន្នន័យ</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
-        </div>
 
     </div>
+    <style>
+        .scroll {
+            display: block;
+            max-height: 450px;
+            /* adjust height */
+            overflow-y: auto;
+            /* vertical scroll */
+            overflow-x: auto;
+            /* horizontal scroll if too many columns */
+        }
+    </style>
 @endsection

@@ -31,17 +31,14 @@ use App\Models\Chef;
 
 
 //usercontroller
-// Route::get('/home',[Usercontroller::class,'home'])->name('master.home');
+
 Route::get('/', [UserController::class, 'login'])->name('user.login');
 Route::get('/sigup', [Usercontroller::class, 'signup'])->name('user.signup');
 Route::post('/signup/login', [Usercontroller::class, 'logincheck'])->name('user.logincheck');
 Route::post('/signup', [Usercontroller::class, 'registercheck'])->name('user.registercheck');
 
-Route::get('/dashboard', [Usercontroller::class, 'godashboard'])->name('dashboard');
+// Route::get('/dashboard', [Usercontroller::class, 'godashboard'])->name('dashboard');
 Route::get('/logout', [Usercontroller::class, 'logout'])->name('logout');
-// Route::post('/logout', [Usercontroller::class, 'logout'])->name('logout');
-
-
 
 //Ordre
 Route::get('/orders/index', [OrderController::class, 'index'])->name('orders.index');
@@ -126,8 +123,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/admin/discounts/{id}', [DiscountController::class, 'update'])->name('discount.update');
     Route::delete('/discount/{id}', [DiscountController::class, 'destroy'])->name('discount.destroy');
 
-
-
     //chefs
     Route::get('/chefs', [ChefController::class, 'index'])->name('chefs.index');
     Route::get('/create', [ChefController::class, 'create'])->name('chefs.create');
@@ -151,8 +146,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/report/customer', [Reportcontroller::class, 'customer'])->name('report.customer');
     Route::get('/report/stock', [Reportcontroller::class, 'stock'])->name('report.stock');
 
-
-
     //Delivery
     Route::get('/delivery', [DeliveryController::class, 'index'])->name('delivery.index');
     Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
@@ -168,6 +161,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // User Dashboard (Home page)
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
-   
 
 });

@@ -15,7 +15,7 @@
                         website. Please contact us for more information.
                     </p>
                     <div class="row">
-                        @foreach ($category as $cate )
+                        @foreach ($category as $cate)
                         <div class="col-4">
                                 @if ($cate->image)
                                 <img src="{{ asset('category/images/'.$cate->image) }}" alt="{{ $cate->name }}">
@@ -41,6 +41,125 @@
 
 
 
+{{-- <section class="section" id="about">
+    <div class="container">
+        <div class="row">
+            <!-- Left Text Content -->
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="left-text-content">
+                    <div class="section-heading">
+                        <h6>About Us</h6>
+                        <h2>We Leave A Delicious Memory For You</h2>
+                    </div>
+                    <p>
+                        Klassy Cafe is one of the best
+                        <a href="https://templatemo.com/tag/restaurant" target="_blank" rel="sponsored">restaurant HTML
+                            templates</a>
+                        with Bootstrap v4.5.2 CSS framework. You can download and feel free to use this website template
+                        layout for your restaurant business. You are allowed to use this template for commercial
+                        purposes.
+                        <br><br>
+                        You are NOT allowed to redistribute the template ZIP file on any template download website.
+                        Please contact us for more information.
+                    </p>
+
+                    <div class="scroll-row">
+                        @foreach ($category as $cate)
+                            <div class="scroll-item thumb">
+                                @if ($cate->image)
+                                    <img src="{{ asset('category/images/' . $cate->image) }}" alt="{{ $cate->name }}"
+                                        class="category-image">
+                                @else
+                                    <img src="https://placehold.co/600x400" alt="No Image" class="category-image">
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Video Content -->
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="right-content">
+                    <div class="thumb position-relative">
+                        <a rel="nofollow" href="http://youtube.com"
+                            class="play-button position-absolute top-50 start-50 translate-middle">
+                            <i class="fa fa-play fa-3x text-white"></i>
+                        </a>
+                        <img src="{{ asset('assets/images/about-video-bg.jpg') }}" alt="About Video Background"
+                            class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Custom CSS -->
+<style>
+    .category-image {
+        width: 100%;
+        height: 200px;
+        /* Fixed height to keep images same size */
+        object-fit: cover;
+        /* Crop and cover the area */
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+    }
+
+    .category-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .thumb {
+        position: relative;
+    }
+
+    .play-button {
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .scroll-row {
+        display: flex;
+        overflow-x: auto;
+        /* Enables horizontal scroll */
+        gap: 10px;
+        /* Space between items */
+        padding: 10px;
+        scroll-behavior: smooth;
+        white-space: nowrap;
+        /* Prevents wrapping */
+    }
+
+    .scroll-row::-webkit-scrollbar {
+        height: 8px;
+        /* Custom scrollbar height */
+    }
+
+    .scroll-row::-webkit-scrollbar-thumb {
+        background: #bbb;
+        border-radius: 10px;
+    }
+
+    .scroll-item {
+        flex: 0 0 auto;
+        /* Prevent shrinking */
+        width: 200px;
+        /* Set fixed width */
+    }
+
+    .scroll-item img {
+        width: 100%;
+        border-radius: 10px;
+    }
+</style> --}}
+
+
+
 <section class="section" id="about">
     <div class="container">
         <div class="row">
@@ -53,15 +172,18 @@
                     </div>
                     <p>
                         Klassy Cafe is one of the best
-                        <a href="https://templatemo.com/tag/restaurant" target="_blank" rel="sponsored">restaurant HTML templates</a>
-                        with Bootstrap v4.5.2 CSS framework. You can download and feel free to use this website template layout for your restaurant business. You are allowed to use this template for commercial purposes.
+                        <a href="https://templatemo.com/tag/restaurant" target="_blank" rel="sponsored">restaurant HTML
+                            templates</a>
+                        with Bootstrap v4.5.2 CSS framework.
                         <br><br>
-                        You are NOT allowed to redistribute the template ZIP file on any template download website. Please contact us for more information.
+                        You are NOT allowed to redistribute the template ZIP file on any template download website.
+                        Please contact us for more information.
                     </p>
 
-                    <div class="row">
+                    <!-- Scrollable Images -->
+                    <div class="scroll-row" id="scroll-row">
                         @foreach ($category as $cate)
-                            <div class="col-4 mb-3">
+                            <div class="scroll-item thumb">
                                 @if ($cate->image)
                                     <img src="{{ asset('category/images/' . $cate->image) }}"
                                          alt="{{ $cate->name }}"
@@ -81,10 +203,13 @@
             <div class="col-lg-6 col-md-6 col-xs-12">
                 <div class="right-content">
                     <div class="thumb position-relative">
-                        <a rel="nofollow" href="http://youtube.com" class="play-button position-absolute top-50 start-50 translate-middle">
+                        <a rel="nofollow" href="http://youtube.com"
+                            class="play-button position-absolute top-50 start-50 translate-middle">
                             <i class="fa fa-play fa-3x text-white"></i>
                         </a>
-                        <img src="{{ asset('assets/images/about-video-bg.jpg') }}" alt="About Video Background" class="img-fluid rounded shadow">
+                        <img src="{{ asset('assets/images/about-video-bg.jpg') }}"
+                             alt="About Video Background"
+                             class="img-fluid rounded shadow">
                     </div>
                 </div>
             </div>
@@ -96,21 +221,75 @@
 <style>
     .category-image {
         width: 100%;
-        height: 200px; /* Fixed height to keep images same size */
-        object-fit: cover; /* Crop and cover the area */
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        transition: transform 0.3s ease;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
+
+    /* Motion effect on hover */
     .category-image:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transform: scale(1.08) rotate(-1deg);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
-    .thumb {
-        position: relative;
+
+    .scroll-row {
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+        padding: 10px;
+        scroll-behavior: smooth;
+        cursor: grab;
+        user-select: none;
     }
-    .play-button {
-        cursor: pointer;
-        z-index: 2;
+
+    .scroll-row:active {
+        cursor: grabbing;
+    }
+
+    .scroll-row::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .scroll-row::-webkit-scrollbar-thumb {
+        background: #bbb;
+        border-radius: 10px;
+    }
+
+    .scroll-item {
+        flex: 0 0 auto;
+        width: 220px;
     }
 </style>
+
+<!-- Drag Scroll JS -->
+<script>
+    const slider = document.getElementById('scroll-row');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2; // scroll speed
+        slider.scrollLeft = scrollLeft - walk;
+    });
+</script>

@@ -46,61 +46,64 @@
                 </div>
 
                 <div class="card-body p-0">
-                    <table class="table table-striped table-hover align-middle mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th style="width:10px">#</th>
-                                <th>រូបភាព</th>
-                                <th>ឈ្មោះ</th>
-                                <th>ពិពណ៌នា</th>
-                                <th style="width:160px">សកម្មភាព</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($categories as $index => $category)
+                    <div class="scroll">
+                        <table class="table table-striped table-hover align-middle mb-0">
+                            <thead class="table-light">
                                 <tr>
-                                    <td>{{ $categories->firstItem() + $index }}</td>
-                                    <td>
-                                        @if ($category->image)
-                                            <img src="{{ asset('category/images/' . $category->image) }}"
-                                                alt="{{ $category->name }}"
-                                                style="width:80px; height:60px; object-fit:cover; border-radius:5px;">
-                                        @else
-                                            <img src="https://placehold.co/80x60" alt="No Image" style="border-radius:5px;">
-                                        @endif
-                                    </td>
-                                    <td>{{ $category->name }}</td>
-                                    <td>{{ $category->description ?? '-' }}</td>
-                                    <td>
-                                        {{-- View Button --}}
-                                        <a href="#" class="btn btn-sm btn-outline-secondary me-1"
-                                            data-bs-toggle="modal" data-bs-target="#categoryModal{{ $category->id }}"
-                                            title="View Details">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
+                                    <th style="width:10px">#</th>
+                                    <th>រូបភាព</th>
+                                    <th>ឈ្មោះ</th>
+                                    <th>ពិពណ៌នា</th>
+                                    <th style="width:160px">សកម្មភាព</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($categories as $index => $category)
+                                    <tr>
+                                        <td>{{ $categories->firstItem() + $index }}</td>
+                                        <td>
+                                            @if ($category->image)
+                                                <img src="{{ asset('category/images/' . $category->image) }}"
+                                                    alt="{{ $category->name }}"
+                                                    style="width:80px; height:60px; object-fit:cover; border-radius:5px;">
+                                            @else
+                                                <img src="https://placehold.co/80x60" alt="No Image" style="border-radius:5px;">
+                                            @endif
+                                        </td>
+                                        <td>{{ $category->name }}</td>
+                                        <td>{{ $category->description ?? '-' }}</td>
+                                        <td>
+                                            {{-- View Button --}}
+                                            <a href="#" class="btn btn-sm btn-outline-secondary me-1"
+                                                data-bs-toggle="modal" data-bs-target="#categoryModal{{ $category->id }}"
+                                                title="View Details">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
 
-                                        <a href="{{ route('category.edit', $category->id) }}"
-                                            class="btn btn-sm btn-outline-primary me-1">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <form action="{{ route('category.delete', $category->id) }}" method="POST"
-                                            style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button onclick="return confirm('តើអ្នកប្រាកដថាចង់លុបប្រភេទនេះ?')"
-                                                class="btn btn-sm btn-outline-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center">មិនមានប្រភេទម្ហូបទេ</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                                            <a href="{{ route('category.edit', $category->id) }}"
+                                                class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <form action="{{ route('category.delete', $category->id) }}" method="POST"
+                                                style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('តើអ្នកប្រាកដថាចង់លុបប្រភេទនេះ?')"
+                                                    class="btn btn-sm btn-outline-danger">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center">មិនមានប្រភេទម្ហូបទេ</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
 
                 {{-- Pagination --}}
@@ -166,5 +169,15 @@
             }
         }, 5000);
     </script>
-
+ <style>
+    .scroll {
+        display: block;
+        max-height: 450px;
+        /* adjust height */
+        overflow-y: auto;
+        /* vertical scroll */
+        overflow-x: auto;
+        /* horizontal scroll if too many columns */
+    }
+</style>
 @endsection

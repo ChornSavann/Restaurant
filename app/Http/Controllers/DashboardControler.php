@@ -62,10 +62,10 @@ class DashboardControler extends Controller
             ->whereDate('created_at', Carbon::today())
             ->paginate(4);
 
-        $countstock=Stocks::count();
-        $countCategory=Category::count();
-        $countchef=Chef::count();
-        $countDelivery=Delivery::count();
+        $countstock = Stocks::count();
+        $countCategory = Category::count();
+        $countchef = Chef::count();
+        $countDelivery = Delivery::count();
 
         return view('admin.Dashboard.index', compact(
             'orders',
@@ -89,36 +89,45 @@ class DashboardControler extends Controller
         ));
     }
 
-    // public function print($id)
+
+    // public function todayOrders()
     // {
-    //     $order = Order::with('orderItems.food')->findOrFail($id);
+    //     // Get today's date
+    //     $today = Carbon::today();
 
-    //     // $order = Order::with('orderItems.food')->findOrFail($id);
+    //     // Fetch pending orders created today, with related foods
+    //     $orders = Order::with('orderItems.food')
+    //         ->where('status', 'pending')
+    //         ->whereDate('created_at', $today)
+    //         ->orderBy('created_at', 'desc')
+    //         ->get();
 
-    //     $pdf = Pdf::loadView('admin.orders.invoice', compact('order'));
-
-    //     return $pdf->download('invoice_' . $order->id . '.pdf');
+    //     // Pass orders to view
+    //     return view('admin.Foods.orders.show', compact('orders'));
     // }
-
-
 
     public function todayOrders()
     {
         // Get today's date
         $today = Carbon::today();
 
-        // Fetch pending orders created today, with related foods
+        // Fetch pending orders created today, including related foods
         $orders = Order::with('orderItems.food')
             ->where('status', 'pending')
             ->whereDate('created_at', $today)
-            ->orderBy('created_at', 'desc')
+            ->orderByDesc('created_at')
             ->get();
 
-        // Pass orders to view
+        // Prepare popularity data for sparklines (example)
+        $orders->map(function ($order) {
+            // Replace with real popularity data if available
+            $order->popularity_data = implode(',', [rand(1, 10), rand(1, 10), rand(1, 10), rand(1, 10)]);
+            return $order;
+        });
+
+        // Pass orders to the view
         return view('admin.Foods.orders.show', compact('orders'));
     }
-
-
     public function show($id)
     {
         $order = Order::with('food')->findOrFail($id);
@@ -137,5 +146,6 @@ class DashboardControler extends Controller
 
         return view('admin.report.Salereport', compact('totalSales', 'lastYearSales', 'change_amount'));
     }
+    
 
 }
